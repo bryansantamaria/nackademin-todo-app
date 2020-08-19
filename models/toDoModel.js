@@ -5,7 +5,11 @@ const toDoCollection = new Datastore({
 });
 
 const insertToDo = async (title, done) => {
-  const doc = await toDoCollection.insert({ title, done });
+  const doc = await toDoCollection.insert({
+    title,
+    done,
+    created: new Date().toLocaleString(),
+  });
 
   return doc;
 };
@@ -17,9 +21,18 @@ const findToDos = async () => {
 };
 
 const updateToDo = async (id, title, done) => {
+  const item = await toDoCollection.findOne({ _id: id });
+  console.log(item);
   const doc = await toDoCollection.update(
     { _id: id },
-    { $set: { title, done } },
+    {
+      $set: {
+        title,
+        done,
+        created: item.created,
+        lastUpdated: new Date().toLocaleString(),
+      },
+    },
     {}
   );
   return doc;
