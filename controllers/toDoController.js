@@ -1,4 +1,4 @@
-const { insertToDo, findToDos } = require("../models/toDoModel");
+const { insertToDo, findToDos, updateToDo } = require("../models/toDoModel");
 
 const createToDo = async (req, res) => {
   try {
@@ -20,4 +20,14 @@ const getToDos = async (req, res) => {
   }
 };
 
-module.exports = { createToDo, getToDos };
+const updToDo = async (req, res) => {
+  try {
+    const { title, done } = req.body;
+    const doc = await updateToDo(req.params.id, title, done);
+    return res.status(200).json(doc);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
+
+module.exports = { createToDo, getToDos, updToDo };
