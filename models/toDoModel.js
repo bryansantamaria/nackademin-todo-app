@@ -10,4 +10,10 @@ const createToDo = async (title, done) => {
   return doc;
 };
 
-module.exports = { createToDo };
+const getToDos = async () => {
+  const doc = await toDoCollection.find({});
+
+  return doc;
+};
+
+module.exports = { createToDo, getToDos };
