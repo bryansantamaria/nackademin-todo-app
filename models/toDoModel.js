@@ -16,4 +16,13 @@ const findToDos = async () => {
   return doc;
 };
 
-module.exports = { insertToDo, findToDos };
+const updateToDo = async (id, title, done) => {
+  const doc = await toDoCollection.update(
+    { _id: id },
+    { $set: { title, done } },
+    {}
+  );
+  return doc;
+};
+
+module.exports = { insertToDo, findToDos, updateToDo };
