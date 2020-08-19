@@ -1,9 +1,9 @@
-const { createToDo } = require("../models/toDoModel");
+const { insertToDo, findToDos } = require("../models/toDoModel");
 
-const addToDo = async (req, res) => {
+const createToDo = async (req, res) => {
   try {
     const { title, done } = req.body;
-    const doc = await createToDo(title, done);
+    const doc = await insertToDo(title, done);
 
     return res.status(200).json(doc);
   } catch (error) {
@@ -11,4 +11,13 @@ const addToDo = async (req, res) => {
   }
 };
 
-module.exports = { addToDo };
+const getToDos = async (req, res) => {
+  try {
+    const doc = await findToDos();
+    return res.status(200).json(doc);
+  } catch (error) {
+    return res.status(401).send(error);
+  }
+};
+
+module.exports = { createToDo, getToDos };

@@ -4,16 +4,16 @@ const toDoCollection = new Datastore({
   autoload: true,
 });
 
-const createToDo = async (title, done) => {
+const insertToDo = async (title, done) => {
   const doc = await toDoCollection.insert({ title, done });
 
   return doc;
 };
 
-const getToDos = async () => {
+const findToDos = async () => {
   const doc = await toDoCollection.find({});
 
   return doc;
 };
 
-module.exports = { createToDo, getToDos };
+module.exports = { insertToDo, findToDos };
