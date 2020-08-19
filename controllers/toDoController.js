@@ -1,4 +1,9 @@
-const { insertToDo, findToDos, updateToDo } = require("../models/toDoModel");
+const {
+  insertToDo,
+  findToDos,
+  updateToDo,
+  deleteToDo,
+} = require("../models/toDoModel");
 
 const createToDo = async (req, res) => {
   try {
@@ -7,7 +12,7 @@ const createToDo = async (req, res) => {
 
     return res.status(200).json(doc);
   } catch (error) {
-    res.status(401).send(error);
+    res.status(400).json(error);
   }
 };
 
@@ -16,7 +21,7 @@ const getToDos = async (req, res) => {
     const doc = await findToDos();
     return res.status(200).json(doc);
   } catch (error) {
-    return res.status(401).send(error);
+    return res.status(400).json(error);
   }
 };
 
@@ -26,8 +31,17 @@ const updToDo = async (req, res) => {
     const doc = await updateToDo(req.params.id, title, done);
     return res.status(200).json(doc);
   } catch (error) {
-    return res.status(400).send(error);
+    return res.status(400).json(error);
   }
 };
 
-module.exports = { createToDo, getToDos, updToDo };
+const delToDo = async (req, res) => {
+  try {
+    const doc = await deleteToDo(req.params.id);
+    return res.status(200).json(doc);
+  } catch (error) {
+    return res.status(400).json(error);
+  }
+};
+
+module.exports = { createToDo, getToDos, updToDo, delToDo };

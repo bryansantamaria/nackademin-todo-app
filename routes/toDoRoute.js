@@ -3,12 +3,14 @@ const {
   createToDo,
   getToDos,
   updToDo,
+  delToDo,
 } = require("../controllers/toDoController");
 
 const router = new Router();
 
-router.post("/create", createToDo);
 router.get("/", getToDos);
-router.put("/update", updToDo);
+router.post("/create", createToDo);
+router.put("/update/:id", updToDo);
+router.delete("/delete/:id", delToDo);
 
 module.exports = router;

@@ -25,4 +25,8 @@ const updateToDo = async (id, title, done) => {
   return doc;
 };
 
-module.exports = { insertToDo, findToDos, updateToDo };
+const deleteToDo = async (id) => {
+  const doc = await toDoCollection.remove({ _id: id });
+  return doc;
+};
+module.exports = { insertToDo, findToDos, updateToDo, deleteToDo };
