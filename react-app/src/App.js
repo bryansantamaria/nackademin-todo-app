@@ -27,13 +27,30 @@ class App extends Component {
       .then((res) => this.setState({ todos: [...this.state.todos, res.data] }));
   };
 
+  complete = (id) => {
+    return console.log("Completed", id);
+  };
+
+  delete = (id) => {
+    return console.log("Deleted", id);
+  };
+
+  update = (id) => {
+    return console.log("Update", id);
+  };
+
   render() {
     console.log(this.state.todos);
     return (
       <div className="App">
         <header className="App-header">
           <CreateToDo createToDo={this.createToDo} />
-          <ToDoContainer todos={this.state.todos} />
+          <ToDoContainer
+            todos={this.state.todos}
+            completeToDo={this.complete}
+            delete={this.delete}
+            update={this.update}
+          />
           <p> But first I will focus on creating the BACKEND! :D</p>
         </header>
       </div>

@@ -8,7 +8,13 @@ class ToDoContainer extends Component {
       <div className="toDoContainer">
         <ul className="nobull">
           {this.props.todos.map((todo) => (
-            <ToDoItem key={todo._id} todo={todo} />
+            <ToDoItem
+              key={todo._id}
+              todo={todo}
+              completeToDo={this.props.complete}
+              delete={this.props.delete}
+              update={this.props.update}
+            />
           ))}
         </ul>
       </div>
