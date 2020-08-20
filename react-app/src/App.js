@@ -32,7 +32,12 @@ class App extends Component {
   };
 
   delete = (id) => {
-    return console.log("Deleted", id);
+    console.log("Deleted", id);
+    axios.delete(`http://localhost:8080/todo/delete/${id}`).then((res) =>
+      this.setState({
+        todos: [...this.state.todos.filter((todo) => todo._id !== id)],
+      })
+    );
   };
 
   update = (id) => {
@@ -47,11 +52,12 @@ class App extends Component {
           <CreateToDo createToDo={this.createToDo} />
           <ToDoContainer
             todos={this.state.todos}
-            completeToDo={this.complete}
+            complete={this.complete}
             delete={this.delete}
             update={this.update}
           />
-          <p> But first I will focus on creating the BACKEND! :D</p>
+          <p> CSS COMING!!</p>
+          <p>But first I will focus on creating the BACKEND! :D</p>
         </header>
       </div>
     );

@@ -11,7 +11,7 @@ class ToDoContainer extends Component {
             <ToDoItem
               key={todo._id}
               todo={todo}
-              completeToDo={this.props.complete}
+              complete={this.props.complete}
               delete={this.props.delete}
               update={this.props.update}
             />
