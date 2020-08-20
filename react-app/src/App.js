@@ -5,7 +5,10 @@ import CreateToDo from "./components/CreateToDo";
 import ToDoContainer from "./components/ToDoContainer";
 
 class App extends Component {
-  state = { todos: [] };
+  constructor(props) {
+    super(props);
+    this.state = { todos: [] };
+  }
 
   //Application has rendered on the client side
   componentDidMount() {
