@@ -28,6 +28,14 @@ class App extends Component {
   };
 
   complete = (id) => {
+    this.setState({
+      todos: this.state.todos.map((todo) => {
+        if (todo._id === id) {
+          todo.done = !todo.done;
+        }
+        return todo;
+      }),
+    });
     return console.log("Completed", id);
   };
 
