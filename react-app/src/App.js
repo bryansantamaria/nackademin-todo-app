@@ -39,13 +39,15 @@ class App extends Component {
     return console.log("Completed", id);
   };
 
+  //Copy current todos array, filter out item being deleted and update state.
   delete = (id) => {
+    const toDoList = [...this.state.todos];
+    const newTodos = toDoList.filter((todo) => todo._id !== id);
+
+    axios
+      .delete(`http://localhost:8080/todo/delete/${id}`)
+      .then((res) => this.setState({ todos: newTodos }));
     console.log("Deleted", id);
-    axios.delete(`http://localhost:8080/todo/delete/${id}`).then((res) =>
-      this.setState({
-        todos: [...this.state.todos.filter((todo) => todo._id !== id)],
-      })
-    );
   };
 
   update = (id) => {
