@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./stylesheets/styles.css";
-import CreateToDo from "./components/createToDo";
+import CreateToDo from "./components/CreateToDo";
+import ToDoContainer from "./components/ToDoContainer";
 
 class App extends Component {
   state = { todos: [] };
 
+  //Application has rendered on the client side
   componentDidMount() {
     axios
       .get("http://localhost:8080/todo")
       .then((res) => this.setState({ todos: res.data }));
   }
 
+  //Body posts title & done, then recieves data from end point and updates state.
   createToDo = (title) => {
     axios
       .post("http://localhost:8080/todo/create", {
@@ -27,6 +30,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <CreateToDo createToDo={this.createToDo} />
+          <ToDoContainer todos={this.state.todos} />
           <p> But first I will focus on creating the BACKEND! :D</p>
         </header>
       </div>
