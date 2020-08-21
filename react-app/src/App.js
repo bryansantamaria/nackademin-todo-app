@@ -3,6 +3,13 @@ import axios from "axios";
 import "./stylesheets/styles.css";
 import CreateToDo from "./components/CreateToDo";
 import ToDoContainer from "./components/ToDoContainer";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+} from "@material-ui/core";
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +43,6 @@ class App extends Component {
         return todo;
       }),
     });
-    return console.log("Completed", id);
   };
 
   //Copy current todos array, filter out item being deleted and update state.
@@ -59,15 +65,21 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <CreateToDo createToDo={this.createToDo} />
-          <ToDoContainer
-            todos={this.state.todos}
-            complete={this.complete}
-            delete={this.delete}
-            update={this.update}
-          />
-          <p> CSS COMING!!</p>
-          <p>But first I will focus on creating the BACKEND! :D</p>
+          <div>
+            <Card className="card-container">
+              <CardContent>
+                <ToDoContainer
+                  todos={this.state.todos}
+                  complete={this.complete}
+                  delete={this.delete}
+                  update={this.update}
+                />
+              </CardContent>
+              <CardActions>
+                <CreateToDo createToDo={this.createToDo} />
+              </CardActions>
+            </Card>
+          </div>
         </header>
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TextField } from "@material-ui/core";
 
 class CreateToDo extends Component {
   state = { title: "" };
@@ -18,13 +19,15 @@ class CreateToDo extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <TextField
           type="text"
           name="title"
+          id="standard-basic"
           value={this.state.title}
           onChange={this.onChange}
           placeholder="Add to do..."
         />
+
         <input type="submit" value="Submit" className="submitBtn" />
       </form>
     );

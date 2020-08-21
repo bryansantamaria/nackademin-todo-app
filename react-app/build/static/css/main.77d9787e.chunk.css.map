@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA,EAEE,WACF,CAEA,QACE,oBACF,CAEA,gBACE,cAAe,CACf,eACF","file":"main.77d9787e.chunk.css","sourcesContent":["* {\n  margin-top: 50px;\n  margin: auto;\n}\n\n.nobull {\n  list-style-type: none;\n}\n\n.card-container {\n  max-width: 50vw;\n  max-height: 70vh;\n}\n"]}
