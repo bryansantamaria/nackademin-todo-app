@@ -3,6 +3,7 @@ const {
   findToDos,
   updateToDo,
   deleteToDo,
+  sortByDate,
 } = require("../models/toDoModel");
 
 const createToDo = async (req, res) => {
@@ -44,4 +45,12 @@ const delToDo = async (req, res) => {
   }
 };
 
-module.exports = { createToDo, getToDos, updToDo, delToDo };
+const sortDate = async (req, res) => {
+  try {
+    const doc = await sortByDate(req.params.order);
+    return res.status(200).json(doc);
+  } catch (error) {}
+  return res.status(400).json(error);
+};
+
+module.exports = { createToDo, getToDos, updToDo, delToDo, sortDate };

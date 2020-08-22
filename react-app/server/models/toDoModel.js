@@ -42,4 +42,11 @@ const deleteToDo = async (id) => {
   const doc = await toDoCollection.remove({ _id: id });
   return doc;
 };
-module.exports = { insertToDo, findToDos, updateToDo, deleteToDo };
+
+const sortByDate = async (order) => {
+  const doc = await toDoCollection.find({}).sort({ created: order }).exec();
+  console.log(doc);
+  return doc;
+};
+sortByDate();
+module.exports = { insertToDo, findToDos, updateToDo, deleteToDo, sortByDate };
