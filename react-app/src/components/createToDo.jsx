@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 
 class CreateToDo extends Component {
   state = { title: "" };
@@ -7,28 +7,58 @@ class CreateToDo extends Component {
   //Set the state to whatever the user writes in createToDo from app.js
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.createToDo(this.state.title);
+
+    if (this.props.selectedTodo === null) {
+      this.props.createToDo(this.state.title);
+    } else {
+      this.props.update(this.state.title);
+    }
+
     this.setState({ title: "" });
+  };
+
+  submitBtn = () => {
+    return this.props.editBtnState ? "Update" : "Submit";
+  };
+
+  inputField = () => {
+    return this.props.editBtnState ? this.props.inputField : "Add to do...";
   };
 
   //Target the name attribute title and set the state value
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      title: e.target.value,
+    });
   };
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className="form_container">
         <TextField
-          type="text"
+          type="input"
+          autoFocus
           name="title"
           id="standard-basic"
+          variant="outlined"
+          size="small"
+          required
           value={this.state.title}
           onChange={this.onChange}
-          placeholder="Add to do..."
+          placeholder={this.inputField()}
         />
 
-        <input type="submit" value="Submit" className="submitBtn" />
+        <Button
+          className="btn-todoitem submitBtn"
+          type="submit"
+          value={this.submitBtn()}
+          variant="contained"
+          color="inherit"
+          id="submitBtn"
+          onClick={() => this.props.handleBtnState(false)}
+        >
+          {this.submitBtn()}
+        </Button>
       </form>
     );
   }

@@ -15,7 +15,7 @@ const insertToDo = async (title, done) => {
 };
 
 const findToDos = async () => {
-  const doc = await toDoCollection.find({});
+  const doc = await toDoCollection.find({}).limit(5).sort({ created: -1 });
 
   return doc;
 };
@@ -44,14 +44,32 @@ const deleteToDo = async (id) => {
 };
 
 const sortByCreated = async (order) => {
-  const doc = await toDoCollection.find({}).sort({ created: order }).exec();
+  const doc = await toDoCollection
+    .find({})
+    .sort({ created: order })
+    .limit(5)
+    .exec();
   console.log(doc);
   return doc;
 };
 
 const sortByUpdated = async (order) => {
-  const doc = await toDoCollection.find({}).sort({ lastUpdated: order }).exec();
+  const doc = await toDoCollection
+    .find({})
+    .sort({ lastUpdated: order })
+    .limit(5)
+    .exec();
   console.log(doc);
+  return doc;
+};
+
+const limitPaginate = async (perPage, skip) => {
+  const doc = await toDoCollection
+    .find({})
+    .sort({ created: -1 })
+    .skip(perPage * skip)
+    .limit(perPage)
+    .exec();
   return doc;
 };
 module.exports = {
@@ -61,4 +79,5 @@ module.exports = {
   deleteToDo,
   sortByCreated,
   sortByUpdated,
+  limitPaginate,
 };

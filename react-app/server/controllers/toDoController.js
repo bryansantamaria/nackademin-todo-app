@@ -5,6 +5,7 @@ const {
   deleteToDo,
   sortByCreated,
   sortByUpdated,
+  limitPaginate,
 } = require("../models/toDoModel");
 
 const createToDo = async (req, res) => {
@@ -62,6 +63,17 @@ const sortUpdated = async (req, res) => {
   return res.status(400).json(error);
 };
 
+const paginate = async (req, res) => {
+  try {
+    let perPage = 5;
+    let skip = Math.max(0, req.params.skip);
+    const doc = await limitPaginate(perPage, skip);
+    return res.status(200).json(doc);
+  } catch {
+    return res.status(400).json(error);
+  }
+};
+
 module.exports = {
   createToDo,
   getToDos,
@@ -69,4 +81,5 @@ module.exports = {
   delToDo,
   sortCreate,
   sortUpdated,
+  paginate,
 };

@@ -1,13 +1,85 @@
 * {
-  margin-top: 50px;
-  margin: auto;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.App-header {
+  margin: auto !important;
 }
 
 .nobull {
   list-style-type: none;
+  padding-inline-start: 10px;
 }
 
-.card-container {
-  max-width: 50vw;
-  max-height: 70vh;
+.toDoContainer {
+  text-align: center;
+  margin: auto !important;
+  max-width: 70vw;
+  max-height: 80vh;
+}
+
+.listItemText {
+  padding: 5px !important;
+  margin-left: 5px !important;
+}
+
+.btn-todoitem {
+  margin-left: 5px !important;
+}
+
+.orderBy:hover {
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 1.5rem;
+}
+
+.toDoItem {
+  margin-left: 5px !important;
+}
+
+#standard-basic {
+  width: 55vw !important;
+}
+
+.MuiInputBase-root {
+  margin-top: 12px;
+}
+
+h3 {
+  margin: 0;
+}
+
+.bottomNavigator {
+  padding: 7px;
+  height: 30px;
+  background-color: #ffffff;
+  position: -webkit-sticky;
+  position: sticky;
+  border-top: 0.1px rgb(185, 178, 178) solid;
+  bottom: 0;
+}
+
+.paginationBtn {
+  border: none;
+  background-color: #ffffff;
+  font-size: 1.5rem;
+  float: right;
+}
+
+.paginationBtn:hover {
+  cursor: pointer;
+}
+
+#submitBtn {
+  margin-top: 12px;
+  color: white;
+  background-color: rgb(59, 148, 59);
+  float: right;
+}
+
+.form_container {
+  max-width: 70vw;
+  margin: auto !important;
 }
