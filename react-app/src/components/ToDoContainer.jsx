@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ToDoItem from "./ToDoItem";
+import CreateToDo from "./CreateToDo";
 import {
-  Typography,
   Table,
   TableBody,
   TableCell,
@@ -29,14 +29,38 @@ class ToDoContainer extends Component {
     );
   };
 
+  addUserIfAdmin = () => {
+    return this.props.users.role === "admin" ? (
+      <span>
+        <a className="addUserIcon" href="/create">
+          <i className="fas fa-user-plus userIcons" href="/create"></i>
+        </a>{" "}
+        <span id="add">Add</span>
+      </span>
+    ) : (
+      <span></span>
+    );
+  };
+
   render() {
     return (
       <div className="toDoContainer">
-        <Typography variant="h2" component="h2" className="ToDoHeader">
-          {" "}
-          To do
-        </Typography>
-        <Paper>
+        <div id="toDoHeader">
+          <i className="fas fa-user userIcons" id="user">
+            {" "}
+          </i>
+          <span id="userOnline">
+            {" "}
+            Hi {this.props.users.name} ({this.props.users.role})
+          </span>
+          <div id="userGrid">
+            {this.addUserIfAdmin()}
+            <a id="logoutBtn" className="fas fa-sign-out-alt" href="/login"></a>
+            <span id="logout">Logout</span>
+          </div>
+        </div>
+
+        <Paper id="container">
           <TableContainer component={Paper} style={{ maxHeight: "70vh" }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -95,6 +119,14 @@ class ToDoContainer extends Component {
               </button>
             </div>
           </TableContainer>
+          <CreateToDo
+            createToDo={this.props.createToDo}
+            update={this.props.update}
+            selectedTodo={this.props.selectedTodo}
+            inputField={this.props.inputField}
+            editBtnState={this.props.editBtnState}
+            handleBtnState={this.props.handleBtnState}
+          />
         </Paper>
       </div>
     );
