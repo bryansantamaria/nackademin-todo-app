@@ -55,7 +55,9 @@ class ToDoContainer extends Component {
           </span>
           <div id="userGrid">
             {this.addUserIfAdmin()}
-            <a id="logoutBtn" className="fas fa-sign-out-alt" href="/login"></a>
+            <a id="logoutBtn" href="/auth">
+              <i className="fas fa-sign-out-alt"></i>
+            </a>
             <span id="logout">Logout</span>
           </div>
         </div>

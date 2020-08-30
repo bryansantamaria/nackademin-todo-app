@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getTodos = async (url, token) => {
-  console.log(token);
   const data = await axios
     .get(url, {
       headers: {
@@ -28,7 +27,6 @@ export const getUser = async (url, token) => {
 };
 
 export const postToDo = async (url, title, token) => {
-  console.log(token);
   const data = await axios
     .post(
       url,
@@ -148,7 +146,7 @@ export const postAccount = async (
 
 export const postLogin = async (email, password) => {
   const data = await axios
-    .post("http://localhost:8080/login", {
+    .post("http://localhost:8080/auth", {
       email,
       password,
     })

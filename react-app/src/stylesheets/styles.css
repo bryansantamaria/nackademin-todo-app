@@ -17,9 +17,33 @@ body {
   margin-top: 150px;
   width: 55vw;
   height: 30vh;
+  padding: 10px;
+  color: rgb(50, 50, 56);
+}
+
+#submitCreate {
+  color: white;
+  background-color: rgb(59, 148, 59);
+  float: right;
+  display: flex-end;
+}
+
+#loginBottomContainer {
+  margin-top: 3vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#submitLogin {
+  align-self: center;
+  width: 30vw;
+  background-color: #6782b7;
+  color: white;
 }
 
 .accForm {
+  color: rgb(50, 50, 56);
   width: 55vw;
 }
 
@@ -52,7 +76,7 @@ body {
 }
 
 #userOnline {
-  margin-top: 15px;
+  margin-top: 19px;
   padding: 5px;
   color: rgb(50, 50, 56);
   float: left;
@@ -83,8 +107,9 @@ body {
   grid-column: 2/3;
   color: rgb(50, 50, 56);
   font-size: 1.5rem;
-  padding: 7px;
+  margin-top: 5px;
   text-decoration: none;
+  padding-right: 5px;
 }
 
 #add {
@@ -101,7 +126,6 @@ body {
   grid-column: 2/3;
   color: rgb(50, 50, 56);
   font-size: 11px;
-  padding-right: 5px;
 }
 
 .margin-top {
@@ -110,17 +134,6 @@ body {
 
 .MuiTableCell-root {
   padding: 12px !important;
-}
-
-#submitCreate {
-  color: white;
-  background-color: rgb(59, 148, 59);
-  float: right;
-  display: flex-end;
-}
-
-#loginBottom {
-  margin-top: 19.2vh;
 }
 
 .nobull {
@@ -170,11 +183,19 @@ body {
 }
 
 h3 {
+  color: rgb(50, 50, 56);
   margin: 0;
 }
 
 h1 {
+  color: rgb(50, 50, 56);
+  text-align: center;
   margin: 0;
+}
+
+.logInTitles {
+  margin-bottom: 2px;
+  margin-top: 10px;
 }
 
 .bottomNavigator {

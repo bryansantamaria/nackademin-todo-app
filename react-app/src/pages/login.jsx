@@ -26,43 +26,47 @@ class Login extends Component {
       <div id="login-container">
         <form onSubmit={this.onSubmit} className="accForm">
           <Card className="card">
-            <h1>Login</h1>
+            <h1>Sign in</h1>
 
-            <TextField
-              className="createInputs"
-              type="email"
-              name="email"
-              variant="outlined"
-              size="small"
-              required
-              value={this.state.email}
-              onChange={(e) => this.setState({ email: e.target.value })}
-              placeholder="Email..."
-            />
-
+            <label htmlFor="email">
+              <h3 className="logInTitles">Email adress</h3>
+              <TextField
+                className="createInputs"
+                type="email"
+                name="email"
+                variant="outlined"
+                size="small"
+                required
+                value={this.state.email}
+                onChange={(e) => this.setState({ email: e.target.value })}
+                placeholder="Enter email..."
+              />
+            </label>
+            <label htmlFor="password">
+              <h3 className="logInTitles">Password</h3>
+            </label>
             <TextField
               className="createInputs"
               type="password"
-              name="title"
+              name="password"
               variant="outlined"
               size="small"
               required
               value={this.state.password}
               onChange={(e) => this.setState({ password: e.target.value })}
-              placeholder="Password..."
+              placeholder="Enter password..."
             />
             <div>
-              <div id="loginBottom">
+              <div id="loginBottomContainer">
                 <Button
-                  className="btn-todoitem"
                   type="submit"
-                  value="Create Account"
+                  value="submit"
                   variant="contained"
-                  id="submitCreate"
+                  id="submitLogin"
                   color="inherit"
                   onClick={this.login}
                 >
-                  Login
+                  Submit
                 </Button>{" "}
               </div>
             </div>

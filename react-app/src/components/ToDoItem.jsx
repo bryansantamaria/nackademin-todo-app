@@ -53,7 +53,7 @@ class ToDoItem extends Component {
             color="primary"
             size="small"
           >
-            <i class="fas fa-edit"></i>
+            <i className="fas fa-edit"></i>
           </Button>
         </TableCell>
       </TableRow>

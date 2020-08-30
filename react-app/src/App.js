@@ -240,7 +240,7 @@ class App extends Component {
           <BrowserRouter>
             <Switch>
               <Route
-                path="/login"
+                path="/auth"
                 render={(props) => (
                   <Login {...props} auth={this.isAuthenticated} />
                 )}
@@ -276,7 +276,7 @@ class App extends Component {
                 editBtnState={this.state.editBtnState}
                 handleBtnState={this.handleBtnState}
               />
-              <Redirect to={{ pathname: "/login" }} />
+              <Redirect to={{ pathname: "/auth" }} />
             </Switch>
           </BrowserRouter>
         </header>

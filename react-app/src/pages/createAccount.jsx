@@ -85,7 +85,7 @@ class CreateAccount extends Component {
             <div>
               <div className="margin-top">
                 <span>Already have an account?</span> <br />
-                <a className="loginAnchor" href="/login">
+                <a className="loginAnchor" href="/auth">
                   <span>Sign in</span>
                 </a>{" "}
                 <Button
