@@ -19,8 +19,10 @@ class ToDoItem extends Component {
         <TableCell component="th" scope="row" style={this.getLineThrough()}>
           <Checkbox
             edge="start"
+            type="checkbox"
             onChange={() => this.props.complete(_id)}
             className="checkboxes"
+            checked={this.props.todo.done}
             tabIndex={-1}
             color="primary"
           />
@@ -41,7 +43,7 @@ class ToDoItem extends Component {
             color="secondary"
             size="small"
           >
-            Delete
+            <i className="fas fa-trash-alt"></i>
           </Button>
           <Button
             className="btn-todoitem"
@@ -51,7 +53,7 @@ class ToDoItem extends Component {
             color="primary"
             size="small"
           >
-            Edit
+            <i class="fas fa-edit"></i>
           </Button>
         </TableCell>
       </TableRow>
