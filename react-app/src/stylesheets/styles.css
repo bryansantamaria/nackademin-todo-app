@@ -1,9 +1,126 @@
 * {
   font-family: "Courier New", Courier, monospace;
+  margin: 0;
 }
 
-.App-header {
-  margin: auto !important;
+body {
+  background: url("../images//Wave\(2\).svg") no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+#login-container {
+  margin: auto;
+  margin-top: 150px;
+  width: 55vw;
+  height: 30vh;
+}
+
+.accForm {
+  width: 55vw;
+}
+
+.card {
+  padding: 20px;
+  min-height: 40vh;
+}
+.createInputs {
+  margin-top: 10px !important;
+  width: 50vw !important;
+}
+
+#toDoHeader {
+  height: 60px;
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #fafafad3;
+}
+
+.loginAnchor {
+  color: rgb(107, 107, 241);
+  text-decoration: none;
+  margin-left: 13vh;
+}
+
+.userIcons {
+  font-size: 1.4rem;
+  padding: 7px;
+}
+
+#userOnline {
+  margin-top: 15px;
+  padding: 5px;
+  color: rgb(50, 50, 56);
+  float: left;
+}
+
+#user {
+  color: rgb(50, 50, 56);
+  margin-left: 5px;
+  margin-top: 10px;
+  float: left;
+}
+
+#userGrid {
+  display: grid;
+  float: right;
+  grid-template-rows: 40px 10px;
+  grid-template-columns: 45px 45px;
+}
+.addUserIcon {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  padding-right: 5px;
+  color: rgb(50, 50, 56);
+  text-decoration: none;
+}
+#logoutBtn {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  color: rgb(50, 50, 56);
+  font-size: 1.5rem;
+  padding: 7px;
+  text-decoration: none;
+}
+
+#add {
+  grid-row: 2/3;
+  grid-column: 1/2;
+  color: rgb(50, 50, 56);
+  font-size: 11px;
+  align-items: baseline;
+  padding-right: 5px;
+}
+
+#logout {
+  grid-row: 2/3;
+  grid-column: 2/3;
+  color: rgb(50, 50, 56);
+  font-size: 11px;
+  padding-right: 5px;
+}
+
+.margin-top {
+  margin-top: 12px;
+}
+
+.MuiTableCell-root {
+  padding: 12px !important;
+}
+
+#submitCreate {
+  color: white;
+  background-color: rgb(59, 148, 59);
+  float: right;
+  display: flex-end;
+}
+
+#loginBottom {
+  margin-top: 19.2vh;
 }
 
 .nobull {
@@ -13,7 +130,8 @@
 
 .toDoContainer {
   text-align: center;
-  margin: auto !important;
+  margin: auto;
+  margin-top: 50px;
   max-width: 70vw;
   max-height: 80vh;
 }
@@ -24,7 +142,10 @@
 }
 
 .btn-todoitem {
-  margin-left: 5px !important;
+  font-size: 0.9rem !important;
+  padding: 5px !important;
+  margin-left: 6px !important;
+  margin-top: 4px !important;
 }
 
 .orderBy:hover {
@@ -40,14 +161,19 @@
 }
 
 #standard-basic {
-  width: 55vw !important;
+  width: 65vw !important;
 }
 
 .MuiInputBase-root {
-  margin-top: 12px;
+  display: flex;
+  float: left !important;
 }
 
 h3 {
+  margin: 0;
+}
+
+h1 {
   margin: 0;
 }
 
@@ -73,7 +199,6 @@ h3 {
 }
 
 #submitBtn {
-  margin-top: 12px;
   color: white;
   background-color: rgb(59, 148, 59);
   float: right;
@@ -81,5 +206,5 @@ h3 {
 
 .form_container {
   max-width: 70vw;
-  margin: auto !important;
+  display: flex;
 }
