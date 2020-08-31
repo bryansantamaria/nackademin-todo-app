@@ -11,8 +11,9 @@ const PORT = 8080;
 app.use(cors());
 app.use(express.json());
 
-app.use("/", usersRoute);
-app.use("/todo", toDosRoute);
+app.use("/users", usersRoute);
+
+app.use("/todos", toDosRoute);
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
