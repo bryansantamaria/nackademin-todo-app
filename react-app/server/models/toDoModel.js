@@ -1,13 +1,12 @@
-const { toDoCollection } = require("../database/dataBase");
+const { toDoCollection, testToDoCollection } = require("../database/dataBase");
 
 const insertToDo = async (title, done, userId) => {
-  const doc = await toDoCollection.insert({
+  const doc = await testToDoCollection.insert({
     title,
     done,
     userId,
     created: new Date().toLocaleString(),
   });
-
   return doc;
 };
 

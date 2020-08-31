@@ -9,4 +9,9 @@ const userCollection = new Datastore({
   autoload: true,
 });
 
-module.exports = { toDoCollection, userCollection };
+const testToDoCollection = new Datastore({
+  filename: "./database/testToDos.db",
+  autoload: true,
+});
+
+module.exports = { toDoCollection, userCollection, testToDoCollection };
