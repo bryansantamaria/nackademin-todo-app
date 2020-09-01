@@ -34,7 +34,7 @@ class App extends Component {
       users: {},
     };
     this.limit = 0;
-    this.localHost = "http://localhost:8080/todo/";
+    this.localHost = "http://localhost:8080/todos/";
   }
 
   //Application has rendered on the client side
@@ -230,7 +230,7 @@ class App extends Component {
       console.log("Authorized");
       this.setState({ isAuthenticated: true, token: isAuthenticated });
     }
-    window.location.href = "http://localhost:3000/todo";
+    window.location.href = "http://localhost:3000/todos";
   };
 
   render() {
@@ -255,7 +255,7 @@ class App extends Component {
 
               <PrivateRoute
                 exact
-                path={"/todo"}
+                path={"/todos"}
                 component={ToDoContainer}
                 isAuthenticated={this.state.token}
                 users={this.state.users}

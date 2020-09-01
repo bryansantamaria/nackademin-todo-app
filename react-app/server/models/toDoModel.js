@@ -1,7 +1,7 @@
 const { toDoCollection, testToDoCollection } = require("../database/dataBase");
 
 const insertToDo = async (title, done, userId) => {
-  const doc = await testToDoCollection.insert({
+  const doc = await toDoCollection.insert({
     title,
     done,
     userId,
@@ -137,6 +137,13 @@ const ownerOfPost = async (item, userId) => {
   return item.userId === userId;
 };
 
+const ownerOfPost2 = async (userId) => {
+  const item = await toDoCollection.findOne({ userId: userId });
+  console.log("Owner of post: ");
+  console.log(item.userId === userId);
+  return item.userId === userId;
+};
+
 module.exports = {
   insertToDo,
   findToDosAdmin,
@@ -151,4 +158,5 @@ module.exports = {
   sortByUpdatedUser,
   limitPaginateAdmin,
   limitPaginateUser,
+  ownerOfPost2,
 };

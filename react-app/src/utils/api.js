@@ -124,7 +124,7 @@ export const postAccount = async (
 ) => {
   const data = await axios
     .post(
-      "http://localhost:8080/create",
+      "http://localhost:8080/users/create",
       {
         firstName,
         lastName,
@@ -146,7 +146,7 @@ export const postAccount = async (
 
 export const postLogin = async (email, password) => {
   const data = await axios
-    .post("http://localhost:8080/auth", {
+    .post("http://localhost:8080/users/auth", {
       email,
       password,
     })

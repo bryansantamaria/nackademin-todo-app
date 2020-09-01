@@ -1,9 +1,15 @@
 const chai = require("chai");
 chai.should();
 
-const { insertToDo, findToDosAdmin } = require("../models/toDoModel");
+const {
+  insertToDo,
+  findToDosAdmin,
+  ownerOfPost2,
+} = require("../models/toDoModel");
 
 describe("toDoModel", () => {
+
+  //Insert item
   it("Should insert title, done and userId in testToDo.db", async () => {
     const result = await insertToDo(123, false, 1348543);
 
@@ -18,10 +24,18 @@ describe("toDoModel", () => {
     result.should.be.an("object");
   });
 
+  //Get items
   it("Should find all to do items (5 items).", async () => {
-    const result1 = await findToDosAdmin();
-    result1.should.have.lengthOf(5);
+    const result = await findToDosAdmin();
+    result.should.have.lengthOf(5);
 
-    result1.should.be.an("array");
+    result.should.be.an("array");
   });
+
+  //Owner of post
+  it("Should check if user is owner of todo item", async () => {
+    const result = await ownerOfPost2();
+  });
+
+  //Admin
 });
