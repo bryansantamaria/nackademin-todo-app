@@ -16,10 +16,10 @@ const {
 	isOwner,
 } = require('../models/itemModel');
 
-const createToDo = async (req, res) => {
+const createItem = async (req, res) => {
 	try {
-		const { title, done } = req.body;
-		const doc = await insertItem(title, done, req.user.userId);
+		const { title, done, toDoId } = req.body;
+		const doc = await insertItem(title, done, req.user.userId, toDoId);
 
 		return res.status(200).json(doc);
 	} catch (error) {
@@ -27,14 +27,14 @@ const createToDo = async (req, res) => {
 	}
 };
 
-const getToDos = async (req, res) => {
+const getItems = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 
-		console.log('Enter getToDos');
+		console.log('Enter getItems');
 		if (await checkAuthorization(role)) {
 			const doc = await findAsAdmin();
-			console.log(doc);
+			// console.log(doc);
 			return res.status(200).json(doc);
 		} else {
 			const doc = await findAsUser(userId);
@@ -45,7 +45,7 @@ const getToDos = async (req, res) => {
 	}
 };
 
-const updToDo = async (req, res) => {
+const updItems = async (req, res) => {
 	try {
 		const { title, done } = req.body;
 		const { userId, role } = req.user;
@@ -62,7 +62,7 @@ const updToDo = async (req, res) => {
 	}
 };
 
-const delToDo = async (req, res) => {
+const delItems = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 
@@ -125,10 +125,10 @@ const paginate = async (req, res) => {
 };
 
 module.exports = {
-	createToDo,
-	getToDos,
-	updToDo,
-	delToDo,
+	createItem,
+	getItems,
+	updItems,
+	delItems,
 	sortCreate,
 	sortUpdated,
 	paginate,

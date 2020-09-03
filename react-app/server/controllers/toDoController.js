@@ -6,6 +6,7 @@ const {
 	deleteAsUser,
 	checkAuthorization,
 	isOwner,
+	getTodoItems,
 } = require('../models/toDoModel');
 
 const create = async (req, res) => {
@@ -53,8 +54,27 @@ const del = async (req, res) => {
 	}
 };
 
+const toDoWithItems = async (req, res) => {
+	try {
+		const { userId, role } = req.user;
+		const { id } = req.params;
+		if (await checkAuthorization(role)) {
+			const doc = await getTodoItems({});
+			return res.status(200).json(doc);
+		}
+		if (await isOwner(req.params.id, userId)) {
+			console.log('enter as user');
+			const doc = await getTodoItems({ toDoId: id });
+			return res.status(200).json(doc);
+		}
+	} catch (error) {
+		return res.status(403).json(error);
+	}
+};
+
 module.exports = {
 	create,
 	get,
 	del,
+	toDoWithItems,
 };

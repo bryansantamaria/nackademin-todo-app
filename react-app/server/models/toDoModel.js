@@ -1,63 +1,67 @@
-const { toDoCollection } = require("../database/dataBase");
+const { toDoCollection, itemCollection } = require('../database/dataBase');
 
 const insertToDo = async (title, userId) => {
-  const doc = await toDoCollection.insert({
-    title,
-    userId,
-  });
-  return doc;
+	const doc = await toDoCollection.insert({
+		title,
+		userId,
+	});
+	return doc;
 };
 
 const getAsAdmin = async () => {
-  const doc = await toDoCollection.find({}).limit(5).sort({ created: -1 });
-  return doc;
+	const doc = await toDoCollection.find({}).limit(5).sort({ created: -1 });
+	return doc;
 };
 
 const getAsUser = async (id) => {
-  const doc = await toDoCollection
-    .find({ userId: id })
-    .limit(5)
-    .sort({ created: -1 });
-  return doc;
+	const doc = await toDoCollection.find({ userId: id }).limit(5).sort({ created: -1 });
+	return doc;
 };
 
 const deleteAsAdmin = async (postId) => {
-  const doc = await toDoCollection.remove({ _id: postId });
-  return doc ? true : false;
+	const doc = await toDoCollection.remove({ _id: postId });
+	return doc ? true : false;
 };
 
 const deleteAsUser = async (postId) => {
-  const doc = await toDoCollection.findOne({ _id: postId });
-  return doc ? true : false;
+	const doc = await toDoCollection.findOne({ _id: postId });
+	return doc ? true : false;
+};
+
+const getTodoItems = async (filter) => {
+	const item = await itemCollection.find(filter);
+	console.log(item);
+	return item;
 };
 
 const isOwner = async (postId, userId) => {
-  const todoItem = await toDoCollection.findOne({ _id: postId });
-  console.log("Is Owner: " + todoItem.userId === userId);
-  return todoItem.userId === userId;
+	const todoItem = await toDoCollection.findOne({ _id: postId });
+	console.log('Is Owner: ' + todoItem.userId === userId);
+	return todoItem.userId === userId;
 };
 
 const checkAuthorization = async (role) => {
-  console.log("role: " + role);
-  if (role === "admin") {
-    return true;
-  } else {
-    return false;
-  }
+	console.log('role: ' + role);
+	if (role === 'admin') {
+		return true;
+	} else {
+		return false;
+	}
 };
 
 const clear = async () => {
-  const doc = await toDoCollection.remove({}, { multi: true });
-  return doc;
+	const doc = await toDoCollection.remove({}, { multi: true });
+	return doc;
 };
 
 module.exports = {
-  insertToDo,
-  getAsAdmin,
-  getAsUser,
-  deleteAsAdmin,
-  deleteAsUser,
-  isOwner,
-  checkAuthorization,
-  clear,
+	insertToDo,
+	getAsAdmin,
+	getAsUser,
+	deleteAsAdmin,
+	deleteAsUser,
+	getTodoItems,
+	isOwner,
+	checkAuthorization,
+	clear,
 };

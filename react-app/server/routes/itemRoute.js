@@ -1,9 +1,9 @@
 const { Router } = require('express');
 const {
-	createToDo,
-	getToDos,
-	updToDo,
-	delToDo,
+	createItem,
+	getItems,
+	updItems,
+	delItems,
 	sortCreate,
 	sortUpdated,
 	paginate,
@@ -12,10 +12,10 @@ const { authenticate } = require('../middlewares/auth');
 
 const router = new Router();
 
-router.get('/', authenticate, getToDos);
-router.post('/create', authenticate, createToDo);
-router.patch('/update/:id', authenticate, updToDo);
-router.delete('/delete/:id', authenticate, delToDo);
+router.get('/', authenticate, getItems);
+router.post('/create', authenticate, createItem);
+router.patch('/update/:id', authenticate, updItems);
+router.delete('/delete/:id', authenticate, delItems);
 router.get('/sort/created:order', authenticate, sortCreate);
 router.get('/sort/lastUpdated:order', authenticate, sortUpdated);
 router.get('/limit/:skip', authenticate, paginate);

@@ -21,7 +21,7 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			'Santamaria',
 			'bryan@gmail.com',
 			'lol',
-			'admin'
+			'user'
 		);
 		this.currentTest.userId = user._id;
 
@@ -78,7 +78,6 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res).to.be.json;
-				console.log(res.body);
 			});
 	});
 
