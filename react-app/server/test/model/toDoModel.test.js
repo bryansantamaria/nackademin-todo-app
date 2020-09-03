@@ -18,7 +18,7 @@ describe("toDoModel", () => {
     this.currentTest.password = user.password;
     this.currentTest.user = user;
   });
-  // Insert user,
+
   it("Should insert a toDo-list with a userId (owner)", async function () {
     const todo = await ToDos.insertToDo("First Todo Title", this.test.userId);
 
@@ -28,5 +28,21 @@ describe("toDoModel", () => {
       _id: todo._id,
     });
     todo.should.be.an("object");
+    ToDos.clear();
+  });
+
+  it("Should get all toDo-lists for an admin", async function () {
+    await ToDos.insertToDo("First Todo Title", this.test.userId);
+    const getToDo = await ToDos.getAllAdmin();
+    console.log(getToDo);
+  });
+
+  it("Should get all toDo-lists for a specific user (not Admin)", async function () {
+    const todo = await ToDos.insertToDo("First Todo Title", this.test.userId);
+    await ToDos.insertToDo("Second Todo Title", this.test.userId);
+    const getToDo = await ToDos.getAllUser(todo.userId);
+
+    console.log(getToDo);
+    ToDos.clear();
   });
 });

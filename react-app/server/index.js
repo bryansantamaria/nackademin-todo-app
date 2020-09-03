@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const usersRoute = require("./routes/userRoute");
-const toDosRoute = require("./routes/itemRoute.js");
+const itemRoute = require("./routes/itemRoute.js");
 const cors = require("cors");
 
 const app = express();
@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use("/users", usersRoute);
 
-app.use("/todos", toDosRoute);
+app.use("/todos", itemRoute);
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
