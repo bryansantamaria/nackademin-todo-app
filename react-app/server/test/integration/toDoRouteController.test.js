@@ -9,6 +9,7 @@ chai.should();
 
 const UserModel = require('../.././models/userModel');
 const ToDoModel = require('../.././models/toDoModel');
+const ItemModel = require('../.././models/itemModel');
 
 describe('Test RESTful resource toDoRouter & toDoController', () => {
 	beforeEach(async function () {
@@ -31,7 +32,7 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 		);
 	});
 
-	it('Should create a post with a post request', async function () {
+	it('Should create a Todo with a post request', async function () {
 		const body = {
 			title: 'Test toDo from HTTP',
 		};
@@ -61,6 +62,23 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 					userId: todo.userId,
 					_id: todo._id,
 				});
+			});
+	});
+
+	it('Should Get a specific Todo with all Todo-items', async function () {
+		const todo = await ToDoModel.insertToDo('First Todo Title', this.test.userId);
+		await ItemModel.insertItem('Item Title1', false, this.test.userId, todo._id);
+		await ItemModel.insertItem('Item Title2', false, this.test.userId, todo._id);
+		await ItemModel.insertItem('Item Title3', false, this.test.userId, todo._id);
+
+		request(app)
+			.get(`/todos/${todo._id}/items`)
+			.set('Authorization', `Bearer ${this.test.token}`)
+			.send()
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res).to.be.json;
+				console.log(res.body);
 			});
 	});
 
