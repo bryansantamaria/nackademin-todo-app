@@ -1,11 +1,11 @@
 const {
-  insertToDo,
-  findToDosAdmin,
-  findToDosUser,
-  updateToDoAdmin,
-  updateToDoUser,
-  deleteToDoAdmin,
-  deleteToDoUser,
+  insertItem,
+  findAsAdmin,
+  findAsUser,
+  updateAsAdmin,
+  updateAsUser,
+  deleteAsAdmin,
+  deleteAsUser,
   sortByCreatedAdmin,
   sortByCreatedUser,
   sortByUpdatedAdmin,
@@ -17,7 +17,7 @@ const {
 const createToDo = async (req, res) => {
   try {
     const { title, done } = req.body;
-    const doc = await insertToDo(title, done, req.user.userId);
+    const doc = await insertItem(title, done, req.user.userId);
 
     return res.status(200).json(doc);
   } catch (error) {
@@ -30,10 +30,10 @@ const getToDos = async (req, res) => {
     const { userId, role } = req.user;
 
     if (await checkAuthorization(role)) {
-      const doc = await findToDosAdmin();
+      const doc = await findAsAdmin();
       return res.status(200).json(doc);
     } else {
-      const doc = await findToDosUser(userId);
+      const doc = await findAsUser(userId);
       return res.status(200).json(doc);
     }
   } catch (error) {
@@ -47,10 +47,10 @@ const updToDo = async (req, res) => {
     const { userId, role } = req.user;
 
     if (await checkAuthorization(role)) {
-      const doc = await updateToDoAdmin(req.params.id, title, done);
+      const doc = await updateAsAdmin(req.params.id, title, done);
       return res.status(200).json(doc);
     } else {
-      const doc = await updateToDoUser(req.params.id, title, done, userId);
+      const doc = await updateAsUser(req.params.id, title, done, userId);
       return res.status(200).json(doc);
     }
   } catch (error) {
@@ -63,10 +63,10 @@ const delToDo = async (req, res) => {
     const { userId, role } = req.user;
 
     if (await checkAuthorization(role)) {
-      const doc = await deleteToDoAdmin(req.params.id);
+      const doc = await deleteAsAdmin(req.params.id);
       return res.status(200).json(doc);
     } else {
-      const doc = await deleteToDoUser(req.params.id, userId);
+      const doc = await deleteAsUser(req.params.id, userId);
       return res.status(200).json(doc);
     }
   } catch (error) {

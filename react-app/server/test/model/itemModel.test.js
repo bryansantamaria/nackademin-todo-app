@@ -3,6 +3,7 @@ chai.should();
 
 const Users = require("../../models/userModel");
 const ToDos = require("../../models/toDoModel");
+const item = require("../../models/itemModel");
 
 describe("userModel", () => {
   beforeEach(async function () {

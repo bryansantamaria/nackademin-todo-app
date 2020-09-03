@@ -1,6 +1,6 @@
 const { toDoCollection, userCollection } = require("../database/dataBase");
 
-const insertToDo = async (title, done, userId) => {
+const insertItem = async (title, done, userId) => {
   const doc = await toDoCollection.insert({
     title,
     done,
@@ -10,12 +10,12 @@ const insertToDo = async (title, done, userId) => {
   return doc;
 };
 
-const findToDosAdmin = async () => {
+const findAsAdmin = async () => {
   const doc = await toDoCollection.find({}).limit(5).sort({ created: -1 });
   return doc;
 };
 
-const findToDosUser = async (id) => {
+const findAsUser = async (id) => {
   const doc = await toDoCollection
     .find({ userId: id })
     .limit(5)
@@ -23,7 +23,7 @@ const findToDosUser = async (id) => {
   return doc;
 };
 
-const updateToDoAdmin = async (postId, title, done) => {
+const updateAsAdmin = async (postId, title, done) => {
   const item = await toDoCollection.findOne({ _id: postId });
   const doc = await toDoCollection.update(
     { _id: postId },
@@ -40,7 +40,7 @@ const updateToDoAdmin = async (postId, title, done) => {
   return doc;
 };
 
-const updateToDoUser = async (postId, title, done, userId) => {
+const updateAsUser = async (postId, title, done, userId) => {
   const item = await toDoCollection.findOne({ _id: postId });
   const isOwner = await ownerOfPost(item, userId);
   if (isOwner) {
@@ -60,12 +60,12 @@ const updateToDoUser = async (postId, title, done, userId) => {
   }
 };
 
-const deleteToDoAdmin = async (postId) => {
+const deleteAsAdmin = async (postId) => {
   const doc = await toDoCollection.remove({ _id: postId });
   return doc;
 };
 
-const deleteToDoUser = async (postId, userId) => {
+const deleteAsUser = async (postId, userId) => {
   const item = await toDoCollection.findOne({ _id: postId });
   const isOwner = await ownerOfPost(item, userId);
 
@@ -163,13 +163,13 @@ const getOwner = async (postId) => {
 };
 
 module.exports = {
-  insertToDo,
-  findToDosAdmin,
-  findToDosUser,
-  updateToDoAdmin,
-  updateToDoUser,
-  deleteToDoAdmin,
-  deleteToDoUser,
+  insertItem,
+  findAsAdmin,
+  findAsUser,
+  updateAsAdmin,
+  updateAsUser,
+  deleteAsAdmin,
+  deleteAsUser,
   sortByCreatedAdmin,
   sortByCreatedUser,
   sortByUpdatedAdmin,
