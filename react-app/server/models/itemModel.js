@@ -1,4 +1,4 @@
-const { itemCollection, userCollection } = require('../database/dataBase');
+const { itemCollection } = require('../database/dataBase');
 
 const insertItem = async (title, done, userId, toDoId) => {
 	const doc = await itemCollection.insert({
@@ -13,6 +13,7 @@ const insertItem = async (title, done, userId, toDoId) => {
 
 const findAsAdmin = async () => {
 	const doc = await itemCollection.find({}).limit(5).sort({ created: -1 });
+	console.log(doc);
 	return doc;
 };
 

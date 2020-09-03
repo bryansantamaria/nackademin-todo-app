@@ -31,8 +31,10 @@ const getToDos = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 
+		console.log('Enter getToDos');
 		if (await checkAuthorization(role)) {
 			const doc = await findAsAdmin();
+			console.log(doc);
 			return res.status(200).json(doc);
 		} else {
 			const doc = await findAsUser(userId);
