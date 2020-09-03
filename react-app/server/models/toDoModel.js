@@ -1,4 +1,4 @@
-const { toDoCollection, testToDoCollection } = require("../database/dataBase");
+const { toDoCollection, userCollection } = require("../database/dataBase");
 
 const insertToDo = async (title, done, userId) => {
   const doc = await toDoCollection.insert({
@@ -145,6 +145,23 @@ const ownerOfPost2 = async (postId, userId) => {
   return item.userId === userId;
 };
 
+const clearItems = async () => {
+  const doc = await toDoCollection.remove({}, { multi: true });
+  return doc;
+};
+
+const isOwner = async (postId, userId) => {
+  const todoItem = await toDoCollection.findOne({ _id: postId });
+
+  return todoItem.userId === userId;
+};
+
+const getOwner = async (postId) => {
+  const doc = await toDoCollection.findOne({ _id: postId });
+  const user = await userCollection.findOne({ _id: doc.userId });
+  return user;
+};
+
 module.exports = {
   insertToDo,
   findToDosAdmin,
@@ -160,4 +177,7 @@ module.exports = {
   limitPaginateAdmin,
   limitPaginateUser,
   ownerOfPost2,
+  clearItems,
+  isOwner,
+  getOwner,
 };

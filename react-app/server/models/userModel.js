@@ -43,4 +43,9 @@ const verifyToken = async (token, secret) => {
   return validToken;
 };
 
-module.exports = { createUser, loginUser, verifyToken };
+const clear = async () => {
+  const doc = await userCollection.remove({}, { multi: true });
+  return doc;
+};
+
+module.exports = { createUser, loginUser, verifyToken, clear };
