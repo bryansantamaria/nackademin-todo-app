@@ -46,4 +46,48 @@ describe("userModel", () => {
     });
     item.should.be.an("object");
   });
+
+  it("Should find all items as Admin", async function () {
+    await Item.insertItem(
+      "Item Nr1",
+      false,
+      this.test.userId,
+      this.test.toDoId
+    );
+
+    const item = await Item.findAsAdmin();
+
+    item[0].should.have.keys([
+      "title",
+      "done",
+      "created",
+      "userId",
+      "toDoId",
+      "_id",
+    ]);
+    item.should.be.an("array");
+    item.should.have.lengthOf(1);
+  });
+
+  it("Should find all items as User", async function () {
+    await Item.insertItem(
+      "Item Nr1",
+      false,
+      this.test.userId,
+      this.test.toDoId
+    );
+
+    const item = await Item.findAsUser(this.test.userId);
+
+    item[0].should.have.keys([
+      "title",
+      "done",
+      "created",
+      "userId",
+      "toDoId",
+      "_id",
+    ]);
+    item.should.be.an("array");
+    item.should.have.lengthOf(1);
+  });
 });
