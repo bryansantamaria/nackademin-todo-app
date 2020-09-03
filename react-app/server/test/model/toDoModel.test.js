@@ -2,8 +2,9 @@ const chai = require("chai");
 chai.should();
 
 const Users = require("../../models/userModel");
+const ToDos = require("../../models/toDoModel");
 
-describe("userModel", () => {
+describe("toDoModel", () => {
   beforeEach(async function () {
     await Users.clear();
     const user = await Users.createUser(
@@ -18,15 +19,14 @@ describe("userModel", () => {
     this.currentTest.user = user;
   });
   // Insert user,
-  it("Should create a user and check if user has exact keys and values", async function () {
-    await this.test.user.should.deep.equal({
-      firstName: "Bryan",
-      lastName: "Santamaria",
-      email: "bryan@gmail.com",
-      password: this.test.password,
-      role: "admin",
-      _id: this.test.userId,
+  it("Should insert a toDo-list with a userId (owner)", async function () {
+    const todo = await ToDos.insertToDo("First Todo Title", this.test.userId);
+
+    todo.should.deep.equal({
+      title: "First Todo Title",
+      userId: this.test.userId,
+      _id: todo._id,
     });
-    this.test.user.should.be.an("object");
+    todo.should.be.an("object");
   });
 });
