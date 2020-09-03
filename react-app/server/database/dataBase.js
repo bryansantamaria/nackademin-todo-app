@@ -41,4 +41,4 @@ switch (process.env.ENVIRONMENT) {
     userCollection.remove({});
 }
 
-module.exports = { postCollection, toDoItemCollection, userCollection };
+module.exports = { toDoCollection, toDoItemCollection, userCollection };

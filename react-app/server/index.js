@@ -6,7 +6,6 @@ const toDosRoute = require("./routes/toDoRoute.js");
 const cors = require("cors");
 
 const app = express();
-const PORT = 8080;
 
 app.use(cors());
 app.use(express.json());
@@ -22,8 +21,4 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening to port: ${PORT}`);
-});
-
-module.exports = { app };
+module.exports = app;

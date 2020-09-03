@@ -5,7 +5,7 @@ const {
   insertToDo,
   findToDosAdmin,
   ownerOfPost2,
-} = require("../models/toDoModel");
+} = require("../../models/toDoModel");
 
 describe("toDoModel", () => {
   //Insert item
