@@ -2,7 +2,13 @@ const { userCollection } = require("../database/dataBase");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const createUser = async (firstName, lastName, email, password, role) => {
+const createUser = async (
+  firstName,
+  lastName,
+  email,
+  password,
+  role = "user"
+) => {
   const doc = await userCollection.findOne({ email: email });
   if (role === "admin") {
     if (!doc) {
@@ -12,7 +18,7 @@ const createUser = async (firstName, lastName, email, password, role) => {
         lastName,
         password: hash,
         email,
-        role: "user",
+        role: role,
       });
       return doc;
     }

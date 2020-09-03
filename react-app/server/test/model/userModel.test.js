@@ -1,41 +1,42 @@
 const chai = require("chai");
 chai.should();
 
-const {
-  insertToDo,
-  findToDosAdmin,
-  ownerOfPost2,
-} = require("../../models/toDoModel");
+const Users = require("../../models/userModel");
+const ToDos = require("../../models/toDoModel");
 
 describe("toDoModel", () => {
-  //Insert item
-  it("Should insert title, done and userId in testToDo.db", async () => {
-    const result = await insertToDo(123, false, 1348543);
-
-    result.should.deep.equal({
-      title: 123,
-      done: false,
-      userId: 1348543,
-      created: result.created,
-      _id: result._id,
+  beforeEach(async function () {
+    await Users.clear();
+    const user = await Users.createUser(
+      "Bryan",
+      "Santamaria",
+      "bryan@gmail.com",
+      "lol",
+      "admin"
+    );
+    this.currentTest.userId = user._id;
+    this.currentTest.password = user.password;
+    this.currentTest.user = user;
+  });
+  // Insert user,
+  it("Should insert a toDo-list with a userId (owner)", async function () {
+    await this.test.user.should.deep.equal({
+      firstName: "Bryan",
+      lastName: "Santamaria",
+      email: "bryan@gmail.com",
+      password: this.test.password,
+      role: "admin",
+      _id: this.test.userId,
     });
+    this.test.user.should.be.an("object");
 
-    result.should.be.an("object");
+    const todo = await ToDos.insertToDo("First Todo Title", this.test.userId);
+
+    todo.should.deep.equal({
+      title: "First Todo Title",
+      userId: this.test.userId,
+      _id: todo._id,
+    });
+    todo.should.be.an("object");
   });
-
-  //Get items
-  it("Should find all to do items (5 items).", async () => {
-    const result = await findToDosAdmin();
-    result.should.have.lengthOf(5);
-
-    result.should.be.an("array");
-  });
-
-  //Owner of post
-  it("Should check if user is owner of todo item", async () => {
-    const result = await ownerOfPost2("aMZlRdwyU4LyRhAU");
-    result.should.be.equal(true);
-  });
-
-  //Admin
 });

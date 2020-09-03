@@ -15,14 +15,14 @@ switch (process.env.ENVIRONMENT) {
     });
 
     itemCollection = new Datastore({
-      filename: "./database/toDoItem.db",
+      filename: "./database/Items.db",
       autoload: true,
     });
     break;
 
   case "test":
     toDoCollection = new Datastore({
-      filename: "./database/test_toDos.db",
+      filename: "./database/test_ToDos.db",
       autoload: true,
     });
 
@@ -32,7 +32,7 @@ switch (process.env.ENVIRONMENT) {
     });
 
     itemCollection = new Datastore({
-      filename: "./database/testToDos.db",
+      filename: "./database/test_Items.db",
       autoload: true,
     });
 
