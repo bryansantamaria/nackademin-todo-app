@@ -1,4 +1,4 @@
-const { toDoCollection, userCollection } = require("../database/dataBase");
+const { toDoCollection } = require("../database/dataBase");
 
 const insertToDo = async (title, userId) => {
   const doc = await toDoCollection.insert({

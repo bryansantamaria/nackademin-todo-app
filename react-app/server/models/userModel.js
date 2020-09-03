@@ -40,12 +40,12 @@ const loginUser = async (email, password) => {
       expiresIn: "1h",
     }
   );
-  console.log(token);
   return token;
 };
 
 const verifyToken = async (token, secret) => {
   const validToken = await jwt.verify(token, secret);
+  // console.log(validToken);
   return validToken;
 };
 
