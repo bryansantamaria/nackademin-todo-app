@@ -33,16 +33,40 @@ describe("toDoModel", () => {
 
   it("Should get all toDo-lists for an admin", async function () {
     await ToDos.insertToDo("First Todo Title", this.test.userId);
-    const getToDo = await ToDos.getAllAdmin();
-    console.log(getToDo);
+    const getToDo = await ToDos.getAsAdmin();
+
+    getToDo[0].should.have.keys(["title", "userId", "_id"]);
+    getToDo.should.be.an("array");
+    ToDos.clear();
   });
 
   it("Should get all toDo-lists for a specific user (not Admin)", async function () {
     const todo = await ToDos.insertToDo("First Todo Title", this.test.userId);
     await ToDos.insertToDo("Second Todo Title", this.test.userId);
-    const getToDo = await ToDos.getAllUser(todo.userId);
+    const getToDo = await ToDos.getAsUser(todo.userId);
 
-    console.log(getToDo);
+    getToDo[1].should.have.keys(["title", "userId", "_id"]);
+    getToDo.should.be.an("array");
+    ToDos.clear();
+  });
+
+  it("Should delete a specific toDo-list as user and return true", async function () {
+    const todo = await ToDos.insertToDo(
+      "User Todo soon to be deleted",
+      this.test.userId
+    );
+    const deleteTodo = await ToDos.deleteAsUser(todo._id);
+    deleteTodo.should.be.equal(true);
+    ToDos.clear();
+  });
+
+  it("Should delete a specific toDo-list as Admin and return true", async function () {
+    const todo = await ToDos.insertToDo(
+      "Admin Todo soon to be deleted",
+      this.test.userId
+    );
+    const deleteTodo = await ToDos.deleteAsAdmin(todo._id);
+    deleteTodo.should.be.equal(true);
     ToDos.clear();
   });
 });

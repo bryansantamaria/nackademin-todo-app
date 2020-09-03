@@ -8,17 +8,27 @@ const insertToDo = async (title, userId) => {
   return doc;
 };
 
-const getAllAdmin = async () => {
+const getAsAdmin = async () => {
   const doc = await toDoCollection.find({}).limit(5).sort({ created: -1 });
   return doc;
 };
 
-const getAllUser = async (id) => {
+const getAsUser = async (id) => {
   const doc = await toDoCollection
     .find({ userId: id })
     .limit(5)
     .sort({ created: -1 });
   return doc;
+};
+
+const deleteAsAdmin = async (postId) => {
+  const doc = await toDoCollection.remove({ _id: postId });
+  return doc ? true : false;
+};
+
+const deleteAsUser = async (postId) => {
+  const doc = await toDoCollection.findOne({ _id: postId });
+  return doc ? true : false;
 };
 
 const clear = async () => {
@@ -28,7 +38,9 @@ const clear = async () => {
 
 module.exports = {
   insertToDo,
-  getAllAdmin,
-  getAllUser,
+  getAsAdmin,
+  getAsUser,
+  deleteAsAdmin,
+  deleteAsUser,
   clear,
 };

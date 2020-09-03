@@ -1,8 +1,12 @@
-{"title":"First Todo Title","userId":"GFB2ji3BzzCc9nxA","_id":"jAt1tchJekyRbnwl"}
-{"$$deleted":true,"_id":"jAt1tchJekyRbnwl"}
-{"title":"First Todo Title","userId":"zcSsqG4T81NHyrRY","_id":"pkKKpxkpUE668haU"}
-{"title":"First Todo Title","userId":"547kMVkRQbPChBf3","_id":"KX4GM9lBKmDJJWHJ"}
-{"title":"Second Todo Title","userId":"547kMVkRQbPChBf3","_id":"mHgr7MYSq6BuDgvI"}
-{"$$deleted":true,"_id":"KX4GM9lBKmDJJWHJ"}
-{"$$deleted":true,"_id":"mHgr7MYSq6BuDgvI"}
-{"$$deleted":true,"_id":"pkKKpxkpUE668haU"}
+{"title":"First Todo Title","userId":"urxwZIYQlwcaiedI","_id":"s4Tu5LYF7jc1lbCD"}
+{"$$deleted":true,"_id":"s4Tu5LYF7jc1lbCD"}
+{"title":"First Todo Title","userId":"chQB42WGfM57ITub","_id":"beMR41mTGauNOGNB"}
+{"$$deleted":true,"_id":"beMR41mTGauNOGNB"}
+{"title":"First Todo Title","userId":"vjeOfEkZSiKFdpKt","_id":"OugyKRzpWednimL0"}
+{"title":"Second Todo Title","userId":"vjeOfEkZSiKFdpKt","_id":"QNmUsQrMoWHF14Dj"}
+{"$$deleted":true,"_id":"OugyKRzpWednimL0"}
+{"$$deleted":true,"_id":"QNmUsQrMoWHF14Dj"}
+{"title":"User Todo soon to be deleted","userId":"feI0H2bO3GoqzFK1","_id":"l82SjPseJ9hUOI2R"}
+{"$$deleted":true,"_id":"l82SjPseJ9hUOI2R"}
+{"title":"Admin Todo soon to be deleted","userId":"VJITbercDJBvKR4N","_id":"kfssV6Urxnv2lKYN"}
+{"$$deleted":true,"_id":"kfssV6Urxnv2lKYN"}
