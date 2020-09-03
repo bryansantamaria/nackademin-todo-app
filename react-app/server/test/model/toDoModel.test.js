@@ -7,6 +7,7 @@ const ToDos = require("../../models/toDoModel");
 describe("toDoModel", () => {
   beforeEach(async function () {
     await Users.clear();
+    await ToDos.clear();
     const user = await Users.createUser(
       "Bryan",
       "Santamaria",
@@ -28,7 +29,6 @@ describe("toDoModel", () => {
       _id: todo._id,
     });
     todo.should.be.an("object");
-    ToDos.clear();
   });
 
   it("Should get all toDo-lists for an admin", async function () {
@@ -37,7 +37,7 @@ describe("toDoModel", () => {
 
     getToDo[0].should.have.keys(["title", "userId", "_id"]);
     getToDo.should.be.an("array");
-    ToDos.clear();
+    getToDo.should.have.lengthOf(1);
   });
 
   it("Should get all toDo-lists for a specific user (not Admin)", async function () {
@@ -47,7 +47,7 @@ describe("toDoModel", () => {
 
     getToDo[1].should.have.keys(["title", "userId", "_id"]);
     getToDo.should.be.an("array");
-    ToDos.clear();
+    getToDo.should.have.lengthOf(2);
   });
 
   it("Should delete a specific toDo-list as user and return true", async function () {
@@ -57,7 +57,6 @@ describe("toDoModel", () => {
     );
     const deleteTodo = await ToDos.deleteAsUser(todo._id);
     deleteTodo.should.be.equal(true);
-    ToDos.clear();
   });
 
   it("Should delete a specific toDo-list as Admin and return true", async function () {
@@ -67,6 +66,5 @@ describe("toDoModel", () => {
     );
     const deleteTodo = await ToDos.deleteAsAdmin(todo._id);
     deleteTodo.should.be.equal(true);
-    ToDos.clear();
   });
 });
