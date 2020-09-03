@@ -1,2 +1,2 @@
-{"firstName":"testasAdmin","lastName":"AdminLastName","password":"$2a$10$3QRJMyOOJ/FauV5Hha6Pb.GoSi8VpOCDbCtlr2JHjld8syO.IX.Hu","email":"testasAdmin@lol.se","role":"user","_id":"BvuUpTpgMHYeCHIz"}
-{"firstName":"Bryan","lastName":"Santamaria","password":"$2a$10$buM4oKqse9V.g60bWbOfeuQUCDIavsRVGpyWp5hrkf42iEOr1JgJO","email":"bryaan.santamaria@gmail.com","role":"admin","_id":"aMZlRdwyU4LyRhAU"}
+{"firstName":"Bryan","lastName":"Santamaria","password":"$2a$10$TaTqlJ8UhTyFo3Rn0P7is.nJzgKnrdjfefrSC/uxmUTqT6aP3.73u","email":"bryaan.santamaria@gmail.com","role":"admin","_id":"ZEktM9xU5nbdCsc2"}
+{"firstName":"Ella","lastName":"Schwarz","password":"$2a$10$RON0cH5qpg4Vbi6QBlICWOwcuu7x1Cm.joRzqFbQjfmLMeaDNITsq","email":"ellaschwarzt@gmail.com","role":"user","_id":"WJSmd4YBC9xB2ZyJ"}

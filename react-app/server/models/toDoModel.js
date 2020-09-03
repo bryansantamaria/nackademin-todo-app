@@ -32,15 +32,18 @@ const deleteAsUser = async (postId) => {
 };
 
 const isOwner = async (postId, userId) => {
-  const todoItem = await itemCollection.findOne({ _id: postId });
-
+  const todoItem = await toDoCollection.findOne({ _id: postId });
+  console.log("Is Owner: " + todoItem.userId === userId);
   return todoItem.userId === userId;
 };
 
-const getOwner = async (postId) => {
-  const doc = await itemCollection.findOne({ _id: postId });
-  const user = await userCollection.findOne({ _id: doc.userId });
-  return user;
+const checkAuthorization = async (role) => {
+  console.log("role: " + role);
+  if (role === "admin") {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const clear = async () => {
@@ -55,6 +58,6 @@ module.exports = {
   deleteAsAdmin,
   deleteAsUser,
   isOwner,
-  getOwner,
+  checkAuthorization,
   clear,
 };
