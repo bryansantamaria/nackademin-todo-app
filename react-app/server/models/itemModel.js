@@ -25,14 +25,12 @@ const findAsUser = async (id) => {
 };
 
 const updateAsAdmin = async (postId, title, done) => {
-  const item = await itemCollection.findOne({ _id: postId });
   const doc = await itemCollection.update(
     { _id: postId },
     {
       $set: {
         title,
         done,
-        created: item.created,
         lastUpdated: new Date().toLocaleString(),
       },
     },
@@ -42,23 +40,21 @@ const updateAsAdmin = async (postId, title, done) => {
 };
 
 const updateAsUser = async (postId, title, done, userId) => {
-  const item = await itemCollection.findOne({ _id: postId });
-  const isOwner = await ownerOfPost(item, userId);
-  if (isOwner) {
-    const doc = await itemCollection.update(
-      { _id: postId },
-      {
-        $set: {
-          title,
-          done,
-          created: item.created,
-          lastUpdated: new Date().toLocaleString(),
-        },
+  // const isOwner = await ownerOfPost(item, userId);
+  // if (isOwner) {
+  const doc = await itemCollection.update(
+    { _id: postId },
+    {
+      $set: {
+        title,
+        done,
+        lastUpdated: new Date().toLocaleString(),
       },
-      {}
-    );
-    return doc;
-  }
+    },
+    {}
+  );
+  return doc;
+  // }
 };
 
 const deleteAsAdmin = async (postId) => {
