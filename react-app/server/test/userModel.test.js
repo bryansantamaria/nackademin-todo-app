@@ -8,7 +8,6 @@ const {
 } = require("../models/toDoModel");
 
 describe("toDoModel", () => {
-
   //Insert item
   it("Should insert title, done and userId in testToDo.db", async () => {
     const result = await insertToDo(123, false, 1348543);
@@ -34,7 +33,8 @@ describe("toDoModel", () => {
 
   //Owner of post
   it("Should check if user is owner of todo item", async () => {
-    const result = await ownerOfPost2();
+    const result = await ownerOfPost2("aMZlRdwyU4LyRhAU");
+    result.should.be.equal(true);
   });
 
   //Admin

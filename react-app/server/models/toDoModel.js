@@ -137,8 +137,9 @@ const ownerOfPost = async (item, userId) => {
   return item.userId === userId;
 };
 
-const ownerOfPost2 = async (userId) => {
-  const item = await toDoCollection.findOne({ userId: userId });
+const ownerOfPost2 = async (postId, userId) => {
+  const item = await toDoCollection.findOne({ _id: postId });
+  item ? true : false;
   console.log("Owner of post: ");
   console.log(item.userId === userId);
   return item.userId === userId;
