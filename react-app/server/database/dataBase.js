@@ -1,7 +1,7 @@
 const Datastore = require("nedb-promises");
 require("dotenv").config();
 
-let toDoCollection, toDoItemCollection, userCollection;
+let toDoCollection, itemCollection, userCollection;
 switch (process.env.ENVIRONMENT) {
   case "development":
     toDoCollection = new Datastore({
@@ -14,7 +14,7 @@ switch (process.env.ENVIRONMENT) {
       autoload: true,
     });
 
-    toDoItemCollection = new Datastore({
+    itemCollection = new Datastore({
       filename: "./database/toDoItem.db",
       autoload: true,
     });
@@ -31,14 +31,14 @@ switch (process.env.ENVIRONMENT) {
       autoload: true,
     });
 
-    toDoItemCollection = new Datastore({
+    itemCollection = new Datastore({
       filename: "./database/testToDos.db",
       autoload: true,
     });
 
     toDoCollection.remove({});
-    toDoItemCollection.remove({});
+    itemCollection.remove({});
     userCollection.remove({});
 }
 
-module.exports = { toDoCollection, toDoItemCollection, userCollection };
+module.exports = { toDoCollection, itemCollection, userCollection };

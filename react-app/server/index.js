@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const usersRoute = require("./routes/userRoute");
-const toDosRoute = require("./routes/toDoRoute.js");
+const toDosRoute = require("./routes/itemRoute.js");
 const cors = require("cors");
 
 const app = express();
