@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const router = new Router();
-const { create } = require("../controllers/toDoController");
+const { get, create, del } = require("../controllers/toDoController");
 const { authenticate } = require("../middlewares/auth");
 
-router.get("/", authenticate);
+router.get("/", authenticate, get);
 router.post("/create", authenticate, create);
-router.delete("/delete/:id", authenticate);
+router.delete("/delete/:id", authenticate, del);
 
 module.exports = router;

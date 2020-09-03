@@ -10,20 +10,20 @@ const createUser = async (
   role = "user"
 ) => {
   const doc = await userCollection.findOne({ email: email });
-  if (role === "admin") {
-    if (!doc) {
-      const hash = bcrypt.hashSync(password, 10);
-      const doc = await userCollection.insert({
-        firstName,
-        lastName,
-        password: hash,
-        email,
-        role: role,
-      });
-      return doc;
-    }
-    return console.log("EMAIL already registered!");
+  // if (role === "admin") {
+  if (!doc) {
+    const hash = bcrypt.hashSync(password, 10);
+    const doc = await userCollection.insert({
+      firstName,
+      lastName,
+      password: hash,
+      email,
+      role: role,
+    });
+    return doc;
   }
+  return console.log("EMAIL already registered!");
+  // }
 };
 
 const loginUser = async (email, password) => {
