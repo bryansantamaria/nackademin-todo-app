@@ -2,7 +2,7 @@ const { userCollection } = require('../database/dataBase');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const createUser = async (firstName, lastName, email, password, role) => {
+const createUser = async (firstName, lastName, email, password) => {
 	const doc = await userCollection.findOne({ email: email });
 	if (!doc) {
 		const hash = bcrypt.hashSync(password, 10);
@@ -11,7 +11,7 @@ const createUser = async (firstName, lastName, email, password, role) => {
 			lastName,
 			password: hash,
 			email,
-			role: role,
+			role: 'user',
 		});
 		return doc;
 	}

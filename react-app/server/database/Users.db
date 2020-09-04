@@ -1,2 +1,3 @@
 {"firstName":"Ella","lastName":"Schwarz","password":"$2a$10$RON0cH5qpg4Vbi6QBlICWOwcuu7x1Cm.joRzqFbQjfmLMeaDNITsq","email":"ellaschwarzt@gmail.com","role":"user","_id":"WJSmd4YBC9xB2ZyJ"}
 {"firstName":"Bryan","lastName":"Santamaria","password":"$2a$10$TaTqlJ8UhTyFo3Rn0P7is.nJzgKnrdjfefrSC/uxmUTqT6aP3.73u","email":"bryaan.santamaria@gmail.com","role":"admin","_id":"ZEktM9xU5nbdCsc2"}
+{"firstName":"Andresito","lastName":"Santamaria","password":"$2a$10$jBDWvXAVNkodZIodV7SJg.7Ilq9uanJlPDoUCShIcZlZSYeelSZc.","email":"andresito@gmail.com","role":"user","_id":"y66xYNqOO4lc0ZVc"}
