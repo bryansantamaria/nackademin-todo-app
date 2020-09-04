@@ -6,6 +6,7 @@ const {
 	deleteAsUser,
 	checkAuthorization,
 	isOwner,
+	updateTodo,
 	getTodoItems,
 } = require('../models/toDoModel');
 
@@ -41,7 +42,6 @@ const del = async (req, res) => {
 		const { userId, role } = req.user;
 
 		if (await checkAuthorization(role)) {
-			console.log('Removed item as Admin!');
 			const doc = await deleteAsAdmin(req.params.id);
 			return res.status(200).json(doc);
 		}
@@ -63,8 +63,26 @@ const toDoWithItems = async (req, res) => {
 			return res.status(200).json(doc);
 		}
 		if (await isOwner(req.params.id, userId)) {
-			console.log('enter as user');
 			const doc = await getTodoItems({ toDoId: id });
+			return res.status(200).json(doc);
+		}
+	} catch (error) {
+		return res.status(403).json(error);
+	}
+};
+
+const update = async (req, res) => {
+	try {
+		const { title } = req.body;
+		const { userId, role } = req.user;
+		console.log('inside update');
+		if (await checkAuthorization(role)) {
+			console.log('admin update');
+			const doc = await updateTodo(req.params.id, title);
+			return res.status(200).json(doc);
+		} else if (await isOwner(req.params.id, userId)) {
+			console.log('user update');
+			const doc = await updateTodo(req.params.id, title);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {
@@ -77,4 +95,5 @@ module.exports = {
 	get,
 	del,
 	toDoWithItems,
+	update,
 };

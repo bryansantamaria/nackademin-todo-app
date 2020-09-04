@@ -13,7 +13,6 @@ const insertItem = async (title, done, userId, toDoId) => {
 
 const findAsAdmin = async () => {
 	const doc = await itemCollection.find({}).limit(5).sort({ created: -1 });
-	console.log(doc);
 	return doc;
 };
 
@@ -37,7 +36,7 @@ const updateAsAdmin = async (postId, title, done) => {
 	return doc;
 };
 
-const updateAsUser = async (postId, title, done, userId) => {
+const updateAsUser = async (postId, title, done) => {
 	const doc = await itemCollection.update(
 		{ _id: postId },
 		{

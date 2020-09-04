@@ -30,8 +30,22 @@ const deleteAsUser = async (postId) => {
 
 const getTodoItems = async (filter) => {
 	const item = await itemCollection.find(filter);
-	console.log(item);
 	return item;
+};
+
+const updateTodo = async (toDoId, title) => {
+	const doc = await toDoCollection.update(
+		{ _id: toDoId },
+		{
+			$set: {
+				title,
+				lastUpdated: new Date().toLocaleString(),
+			},
+		},
+		{ returnUpdatedDocs: true }
+	);
+	console.log(doc);
+	return doc;
 };
 
 const isOwner = async (postId, userId) => {
@@ -61,6 +75,7 @@ module.exports = {
 	deleteAsAdmin,
 	deleteAsUser,
 	getTodoItems,
+	updateTodo,
 	isOwner,
 	checkAuthorization,
 	clear,

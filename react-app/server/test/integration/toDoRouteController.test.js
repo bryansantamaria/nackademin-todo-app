@@ -21,7 +21,7 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			'Santamaria',
 			'bryan@gmail.com',
 			'lol',
-			'user'
+			'admin'
 		);
 		this.currentTest.userId = user._id;
 
@@ -85,12 +85,35 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 		const toDo = await ToDoModel.insertToDo('First Todo Title', this.test.userId);
 
 		request(app)
-			.delete(`/todos/delete/${toDo._id}`)
+			.delete(`/todos/${toDo._id}/delete`)
 			.set('Authorization', `Bearer ${this.test.token}`)
 			.send()
 			.end((err, res) => {
 				expect(err).to.be.null;
 				expect(res).to.have.status(200);
+			});
+	});
+
+	it('Should updated a specific Todo-list title with given ID', async function () {
+		const toDo = await ToDoModel.insertToDo('First Todo Title', this.test.userId);
+
+		const body = {
+			title: 'Updated title from patch',
+		};
+		request(app)
+			.patch(`/todos/${toDo._id}/update`)
+			.set('Authorization', `Bearer ${this.test.token}`)
+			.send(body)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				console.log(res.body);
+				expect(err).to.be.null;
+				expect(res.body).to.include({
+					title: 'Updated title from patch',
+					userId: toDo.userId,
+					_id: toDo._id,
+					lastUpdated: res.body.lastUpdated,
+				});
 			});
 	});
 });
