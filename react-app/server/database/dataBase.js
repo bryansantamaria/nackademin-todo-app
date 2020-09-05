@@ -35,10 +35,6 @@ switch (process.env.ENVIRONMENT) {
 			filename: './database/test_Items.db',
 			autoload: true,
 		});
-
-	// toDoCollection.remove({});
-	// itemCollection.remove({});
-	// userCollection.remove({});
 }
 
 module.exports = { toDoCollection, itemCollection, userCollection };

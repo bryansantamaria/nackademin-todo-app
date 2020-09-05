@@ -20,8 +20,9 @@ const findAsAdmin = async () => {
 };
 
 const findAsUser = async (id) => {
+	console.log('ENTER FIND AS USER:');
 	const toDo = await toDoCollection.find({ userId: id }).limit(5).sort({ created: -1 });
-	console.log(toDo);
+	console.log(toDo[0]._id);
 	const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
 	console.log(doc);
 	return doc;

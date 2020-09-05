@@ -32,12 +32,15 @@ const getItems = async (req, res) => {
 		const { userId, role } = req.user;
 
 		console.log('Enter getItems');
+		console.log(req.user);
 		if (await checkAuthorization(role)) {
 			const doc = await findAsAdmin();
 			// console.log(doc);
 			return res.status(200).json(doc);
 		} else {
+			console.log('I AM MORTAL');
 			const doc = await findAsUser(userId);
+			console.log(doc);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {
