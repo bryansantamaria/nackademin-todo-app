@@ -58,8 +58,9 @@ const toDoWithItems = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 		const { id } = req.params;
+		console.log(id);
 		if (await checkAuthorization(role)) {
-			const doc = await getTodoItems({});
+			const doc = await getTodoItems({ toDoId: id });
 			return res.status(200).json(doc);
 		}
 		if (await isOwner(req.params.id, userId)) {
