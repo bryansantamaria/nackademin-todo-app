@@ -106,7 +106,6 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			.send(body)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
-				console.log(res.body);
 				expect(err).to.be.null;
 				expect(res.body).to.include({
 					title: 'Updated title from patch',

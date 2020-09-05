@@ -1,4 +1,4 @@
-const { itemCollection } = require('../database/dataBase');
+const { itemCollection, toDoCollection } = require('../database/dataBase');
 
 const insertItem = async (title, done, userId, toDoId) => {
 	const doc = await itemCollection.insert({
@@ -12,12 +12,18 @@ const insertItem = async (title, done, userId, toDoId) => {
 };
 
 const findAsAdmin = async () => {
-	const doc = await itemCollection.find({}).limit(5).sort({ created: -1 });
+	const toDo = await toDoCollection.find({}).limit(5).sort({ created: -1 });
+	console.log(toDo);
+	const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
+	console.log(doc);
 	return doc;
 };
 
 const findAsUser = async (id) => {
-	const doc = await itemCollection.find({ userId: id }).limit(5).sort({ created: -1 });
+	const toDo = await toDoCollection.find({ userId: id }).limit(5).sort({ created: -1 });
+	console.log(toDo);
+	const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
+	console.log(doc);
 	return doc;
 };
 
