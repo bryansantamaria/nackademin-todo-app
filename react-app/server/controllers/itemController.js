@@ -7,8 +7,7 @@ const {
 	deleteAsAdmin,
 	deleteAsUser,
 	sortByCreated,
-	sortByUpdatedAdmin,
-	sortByUpdatedUser,
+	sortByUpdated,
 	limitPaginateAdmin,
 	limitPaginateUser,
 	checkAuthorization,
@@ -78,12 +77,11 @@ const delItems = async (req, res) => {
 const sortCreate = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
+		const toDoId = await getToDoId(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
-			const toDoId = await getToDoId(userId, req.params.toDoId);
 			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		} else {
-			const toDoId = await getToDoId(userId, req.params.toDoId);
 			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		}
@@ -94,11 +92,12 @@ const sortCreate = async (req, res) => {
 const sortUpdated = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
+		const toDoId = await getToDoId(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
-			const doc = await sortByUpdatedAdmin(req.params.order);
+			const doc = await sortByUpdated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		} else {
-			const doc = await sortByUpdatedUser(req.params.order, userId);
+			const doc = await sortByUpdated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {}
@@ -110,12 +109,12 @@ const paginate = async (req, res) => {
 		const { userId, role } = req.user;
 		let perPage = 5;
 		let skip = Math.max(0, req.params.skip);
-
+		const toDoId = await getToDoId(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
-			const doc = await limitPaginateAdmin(perPage, skip);
+			const doc = await limitPaginateAdmin(perPage, skip, toDoId._id);
 			return res.status(200).json(doc);
 		} else {
-			const doc = await limitPaginateUser(perPage, skip, userId);
+			const doc = await limitPaginateUser(perPage, skip, toDoId._id);
 			return res.status(200).json(doc);
 		}
 	} catch {

@@ -29,7 +29,7 @@ const deleteAsUser = async (postId) => {
 };
 
 const getTodoItems = async (filter) => {
-	const item = await itemCollection.find(filter);
+	const item = await itemCollection.find(filter).limit(5);
 	return item;
 };
 
