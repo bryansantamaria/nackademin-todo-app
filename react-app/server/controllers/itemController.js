@@ -6,13 +6,13 @@ const {
 	updateAsUser,
 	deleteAsAdmin,
 	deleteAsUser,
-	sortByCreatedAdmin,
-	sortByCreatedUser,
+	sortByCreated,
 	sortByUpdatedAdmin,
 	sortByUpdatedUser,
 	limitPaginateAdmin,
 	limitPaginateUser,
 	checkAuthorization,
+	getToDoId,
 	isOwner,
 } = require('../models/itemModel');
 
@@ -30,17 +30,11 @@ const createItem = async (req, res) => {
 const getItems = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
-
-		console.log('Enter getItems');
-		console.log(req.user);
 		if (await checkAuthorization(role)) {
 			const doc = await findAsAdmin();
-			// console.log(doc);
 			return res.status(200).json(doc);
 		} else {
-			console.log('I AM MORTAL');
 			const doc = await findAsUser(userId);
-			console.log(doc);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {
@@ -85,10 +79,12 @@ const sortCreate = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 		if (await checkAuthorization(role)) {
-			const doc = await sortByCreatedAdmin(req.params.order);
+			const toDoId = await getToDoId(userId, req.params.toDoId);
+			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		} else {
-			const doc = await sortByCreatedUser(req.params.order, userId);
+			const toDoId = await getToDoId(userId, req.params.toDoId);
+			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {}
