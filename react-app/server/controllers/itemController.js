@@ -8,8 +8,7 @@ const {
 	deleteAsUser,
 	sortByCreated,
 	sortByUpdated,
-	limitPaginateAdmin,
-	limitPaginateUser,
+	limitPagination,
 	checkAuthorization,
 	getToDoId,
 	isOwner,
@@ -111,10 +110,10 @@ const paginate = async (req, res) => {
 		let skip = Math.max(0, req.params.skip);
 		const toDoId = await getToDoId(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
-			const doc = await limitPaginateAdmin(perPage, skip, toDoId._id);
+			const doc = await limitPagination(perPage, skip, toDoId._id);
 			return res.status(200).json(doc);
 		} else {
-			const doc = await limitPaginateUser(perPage, skip, toDoId._id);
+			const doc = await limitPagination(perPage, skip, toDoId._id);
 			return res.status(200).json(doc);
 		}
 	} catch {

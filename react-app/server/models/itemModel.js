@@ -89,17 +89,7 @@ const sortByUpdated = async (order, toDoId) => {
 	return doc;
 };
 
-const limitPaginateAdmin = async (perPage, skip, toDoId) => {
-	const doc = await itemCollection
-		.find({ toDoId: toDoId })
-		.sort({ created: -1 })
-		.skip(perPage * skip)
-		.limit(perPage)
-		.exec();
-	return doc;
-};
-
-const limitPaginateUser = async (perPage, skip, userId, toDoId) => {
+const limitPagination = async (perPage, skip, toDoId) => {
 	const doc = await itemCollection
 		.find({ toDoId: toDoId })
 		.sort({ created: -1 })
@@ -139,8 +129,7 @@ module.exports = {
 	deleteAsUser,
 	sortByCreated,
 	sortByUpdated,
-	limitPaginateAdmin,
-	limitPaginateUser,
+	limitPagination,
 	isOwner,
 	checkAuthorization,
 	getToDoId,
