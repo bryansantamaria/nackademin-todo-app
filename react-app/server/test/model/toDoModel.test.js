@@ -46,13 +46,13 @@ describe('toDoModel', () => {
 
 	it('Should delete a specific toDo-list as user and return true', async function () {
 		const todo = await ToDos.insertToDo('User Todo soon to be deleted', this.test.userId);
-		const deleteTodo = await ToDos.deleteAsUser(todo._id);
+		const deleteTodo = await ToDos.deleteToDo(todo._id);
 		deleteTodo.should.be.equal(true);
 	});
 
 	it('Should delete a specific toDo-list as Admin and return true', async function () {
 		const todo = await ToDos.insertToDo('Admin Todo soon to be deleted', this.test.userId);
-		const deleteTodo = await ToDos.deleteAsAdmin(todo._id);
+		const deleteTodo = await ToDos.deleteToDo(todo._id);
 		deleteTodo.should.be.equal(true);
 	});
 });

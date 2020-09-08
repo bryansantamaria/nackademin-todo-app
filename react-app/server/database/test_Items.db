@@ -1,19 +1,25 @@
-{"title":"ITEM IN BRYAN TODO","done":false,"userId":"OQqReXOV9KkbQMWY","toDoId":"HoFQr2BnC1FUTn3W","created":"2020-09-07 09:14:06","_id":"CyeRPA7IZNxvibc6"}
-{"title":"Item Title1","done":false,"userId":"6DxEZcb6UvFO0mMl","toDoId":"xE8653pz45hEJIes","created":"2020-09-07 09:14:07","_id":"9COWSXUzAOW8cqEm"}
-{"title":"Item Title2","done":false,"userId":"6DxEZcb6UvFO0mMl","toDoId":"xE8653pz45hEJIes","created":"2020-09-07 09:14:07","_id":"d1NnRJw5qDWm8xSL"}
-{"title":"Item Title3","done":false,"userId":"6DxEZcb6UvFO0mMl","toDoId":"xE8653pz45hEJIes","created":"2020-09-07 09:14:07","_id":"hwBwjeFXIwsPwpBl"}
-{"$$deleted":true,"_id":"9COWSXUzAOW8cqEm"}
-{"$$deleted":true,"_id":"CyeRPA7IZNxvibc6"}
-{"$$deleted":true,"_id":"d1NnRJw5qDWm8xSL"}
-{"$$deleted":true,"_id":"hwBwjeFXIwsPwpBl"}
-{"title":"Item Nr1","done":false,"userId":"BY27KW0yX5skwVHn","toDoId":"qzngW9scepY2NMQE","created":"2020-09-07 09:14:08","_id":"FxivSvZxa8XNsFJt"}
-{"$$deleted":true,"_id":"FxivSvZxa8XNsFJt"}
-{"title":"Item Nr1","done":false,"userId":"2Jc0hGStDjAZN83e","toDoId":"1U380rfD2ii2pae9","created":"2020-09-07 09:14:08","_id":"3LUGy8oeICmVajJO"}
-{"$$deleted":true,"_id":"3LUGy8oeICmVajJO"}
-{"title":"Item Nr1","done":false,"userId":"TEOXtV9BNlKypXtZ","toDoId":"wR4RaRslGVTSFeXp","created":"2020-09-07 09:14:08","_id":"XTH5aT8HtPvTNTcv"}
-{"$$deleted":true,"_id":"XTH5aT8HtPvTNTcv"}
-{"title":"Item Nr1","done":false,"userId":"KAVal9bYb4ORDqYB","toDoId":"tDQFRVPuEmXQbTGh","created":"2020-09-07 09:14:08","_id":"u3o5Jt87f0LCyIY3"}
-{"title":"Item Nr1 Updated","done":false,"userId":"KAVal9bYb4ORDqYB","toDoId":"tDQFRVPuEmXQbTGh","created":"2020-09-07 09:14:08","_id":"u3o5Jt87f0LCyIY3","lastUpdated":"2020-09-07 09:14:08"}
-{"$$deleted":true,"_id":"u3o5Jt87f0LCyIY3"}
-{"title":"Item Nr1","done":false,"userId":"MhSwJxAZN2pX3kap","toDoId":"IhUEb0s2Pgg6Td4c","created":"2020-09-07 09:14:08","_id":"qT78iVpEBeEdTKhJ"}
-{"$$deleted":true,"_id":"qT78iVpEBeEdTKhJ"}
+{"title":"ITEM IN BRYAN TODO","done":false,"userId":"9mLqrUhaKZeOSEbo","toDoId":"b9iG0fSeCz19CsYr","created":"2020-09-08 09:40:51","_id":"GOJXeWBsOBgfzH1v"}
+{"title":"Item Title1","done":false,"userId":"7qOHarFc3MLNUc7v","toDoId":"UB2T1YJUCWeEyAL3","created":"2020-09-08 09:40:52","_id":"YNFeRbDORlpzoyOz"}
+{"title":"Item Title2","done":false,"userId":"7qOHarFc3MLNUc7v","toDoId":"UB2T1YJUCWeEyAL3","created":"2020-09-08 09:40:52","_id":"kCH9sgeTHwtTAGgk"}
+{"title":"Item Title3","done":false,"userId":"7qOHarFc3MLNUc7v","toDoId":"UB2T1YJUCWeEyAL3","created":"2020-09-08 09:40:52","_id":"JKFfo19AYI8fKx6Z"}
+{"title":"DEL Item Nr1","done":false,"userId":"sD37R2juqGYhXLHJ","toDoId":"JDUTXh2KTFNJwtTf","created":"2020-09-08 09:40:52","_id":"8FfvURjVsHEaNqhj"}
+{"title":"DEL Item Nr2","done":false,"userId":"sD37R2juqGYhXLHJ","toDoId":"JDUTXh2KTFNJwtTf","created":"2020-09-08 09:40:52","_id":"HfwPfWevTAOCv8Cz"}
+{"title":"DEL Item Nr3","done":false,"userId":"sD37R2juqGYhXLHJ","toDoId":"JDUTXh2KTFNJwtTf","created":"2020-09-08 09:40:52","_id":"EiMzfXVHzmcmBTl0"}
+{"$$deleted":true,"_id":"8FfvURjVsHEaNqhj"}
+{"$$deleted":true,"_id":"EiMzfXVHzmcmBTl0"}
+{"$$deleted":true,"_id":"HfwPfWevTAOCv8Cz"}
+{"$$deleted":true,"_id":"GOJXeWBsOBgfzH1v"}
+{"$$deleted":true,"_id":"JKFfo19AYI8fKx6Z"}
+{"$$deleted":true,"_id":"YNFeRbDORlpzoyOz"}
+{"$$deleted":true,"_id":"kCH9sgeTHwtTAGgk"}
+{"title":"Item Nr1","done":false,"userId":"ucvtKYql80l2e1f0","toDoId":"4jlC1OnfzOq0a7ZE","created":"2020-09-08 09:40:53","_id":"POH0Hh6icjpOGPjO"}
+{"$$deleted":true,"_id":"POH0Hh6icjpOGPjO"}
+{"title":"Item Nr1","done":false,"userId":"oLg3GVFPXRm4DXJ5","toDoId":"Qq6lwyvNmW9bw5wE","created":"2020-09-08 09:40:53","_id":"Q1HjoLLfKZQ6YcRR"}
+{"$$deleted":true,"_id":"Q1HjoLLfKZQ6YcRR"}
+{"title":"Item Nr1","done":false,"userId":"aSlabAjP33Tf8wjL","toDoId":"TIeN91NtGupkcThW","created":"2020-09-08 09:40:53","_id":"RwQcyM7VzDfMYIHI"}
+{"$$deleted":true,"_id":"RwQcyM7VzDfMYIHI"}
+{"title":"Item Nr1","done":false,"userId":"kSJMfnSkPaUl0r18","toDoId":"SQTbY09uS4616YCk","created":"2020-09-08 09:40:53","_id":"3sPdKgKGqstFhaun"}
+{"title":"Item Nr1 Updated","done":false,"userId":"kSJMfnSkPaUl0r18","toDoId":"SQTbY09uS4616YCk","created":"2020-09-08 09:40:53","_id":"3sPdKgKGqstFhaun","lastUpdated":"2020-09-08 09:40:53"}
+{"$$deleted":true,"_id":"3sPdKgKGqstFhaun"}
+{"title":"Item Nr1","done":false,"userId":"ni1szKR3mzoIUrV3","toDoId":"s2mWZDmn14Wx3ixS","created":"2020-09-08 09:40:53","_id":"yHQQgYo5KNWTyjkt"}
+{"$$deleted":true,"_id":"yHQQgYo5KNWTyjkt"}

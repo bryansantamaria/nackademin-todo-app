@@ -18,14 +18,10 @@ const getAsUser = async (id) => {
 	return doc;
 };
 
-const deleteAsAdmin = async (postId) => {
-	const doc = await toDoCollection.remove({ _id: postId });
-	return doc ? true : false;
-};
-
-const deleteAsUser = async (postId) => {
-	const doc = await toDoCollection.findOne({ _id: postId });
-	return doc ? true : false;
+const deleteToDo = async (toDoId) => {
+	const item = await itemCollection.remove({ toDoId: toDoId }, { multi: true });
+	const doc = await toDoCollection.remove({ _id: toDoId }, { multi: true });
+	return doc || item ? true : false;
 };
 
 const getTodoItems = async (filter) => {
@@ -72,8 +68,7 @@ module.exports = {
 	insertToDo,
 	getAsAdmin,
 	getAsUser,
-	deleteAsAdmin,
-	deleteAsUser,
+	deleteToDo,
 	getTodoItems,
 	updateTodo,
 	isOwner,

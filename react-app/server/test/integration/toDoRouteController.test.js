@@ -65,7 +65,7 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			});
 	});
 
-	it('Should Get a specific Todo with all Todo-items', async function () {
+	it('Should Get a specific Todo-list with all Todo-items', async function () {
 		const todo = await ToDoModel.insertToDo('First Todo Title', this.test.userId);
 		await ItemModel.insertItem('Item Title1', false, this.test.userId, todo._id);
 		await ItemModel.insertItem('Item Title2', false, this.test.userId, todo._id);
@@ -76,25 +76,31 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			.set('Authorization', `Bearer ${this.test.token}`)
 			.send()
 			.end((err, res) => {
+				console.log(res.body);
+				//Lägga till ett stickprov på säg index 2 att titeln bör vara X.
 				expect(res).to.have.status(200);
 				expect(res).to.be.json;
 			});
 	});
 
-	it('Should Delete a specific Todo-list with given ID', async function () {
+	it('Should Delete a specific Todo-list and its todo-items with given ID', async function () {
 		const toDo = await ToDoModel.insertToDo('First Todo Title', this.test.userId);
+		await ItemModel.insertItem('DEL Item Nr1', false, this.test.userId, toDo._id);
+		await ItemModel.insertItem('DEL Item Nr2', false, this.test.userId, toDo._id);
+		await ItemModel.insertItem('DEL Item Nr3', false, this.test.userId, toDo._id);
 
 		request(app)
 			.delete(`/todos/${toDo._id}/delete`)
 			.set('Authorization', `Bearer ${this.test.token}`)
 			.send()
 			.end((err, res) => {
+				console.log(res.body);
 				expect(err).to.be.null;
 				expect(res).to.have.status(200);
 			});
 	});
 
-	it('Should updated a specific Todo-list title with given ID', async function () {
+	it('Should update a specific Todo-list title with given ID', async function () {
 		const toDo = await ToDoModel.insertToDo('First Todo Title', this.test.userId);
 
 		const body = {

@@ -2,8 +2,7 @@ const {
 	insertToDo,
 	getAsAdmin,
 	getAsUser,
-	deleteAsAdmin,
-	deleteAsUser,
+	deleteToDo,
 	checkAuthorization,
 	isOwner,
 	updateTodo,
@@ -42,11 +41,12 @@ const del = async (req, res) => {
 		const { userId, role } = req.user;
 
 		if (await checkAuthorization(role)) {
-			const doc = await deleteAsAdmin(req.params.id);
+			console.log('Entering DEL');
+			const doc = await deleteToDo(req.params.id);
 			return res.status(200).json(doc);
 		}
 		if (await isOwner(req.params.id, userId)) {
-			const doc = await deleteAsUser(req.params.id, userId);
+			const doc = await deleteToDo(req.params.id);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {

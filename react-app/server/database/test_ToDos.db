@@ -1,35 +1,35 @@
-{"title":"BRYAN TODO","userId":"OQqReXOV9KkbQMWY","_id":"HoFQr2BnC1FUTn3W"}
-{"$$deleted":true,"_id":"HoFQr2BnC1FUTn3W"}
-{"title":"Test toDo from HTTP","userId":"aYkcALPQxCDaZbO5","_id":"uESWjL2ILouF4wT6"}
-{"$$deleted":true,"_id":"uESWjL2ILouF4wT6"}
-{"title":"First Todo Title","userId":"Kc1gtqwpkGjCCj2z","_id":"KOApIe6hKQ6XNIXI"}
-{"$$deleted":true,"_id":"KOApIe6hKQ6XNIXI"}
-{"title":"First Todo Title","userId":"6DxEZcb6UvFO0mMl","_id":"xE8653pz45hEJIes"}
-{"$$deleted":true,"_id":"xE8653pz45hEJIes"}
-{"title":"First Todo Title","userId":"TCKwmtSIwlYmHMYk","_id":"zmVJyiJRvHy4g4mf"}
-{"$$deleted":true,"_id":"zmVJyiJRvHy4g4mf"}
-{"title":"First Todo Title","userId":"MuvnGK8kmj7bsMhl","_id":"2blGXv0P93NkrNsA"}
-{"title":"Updated title from patch","userId":"MuvnGK8kmj7bsMhl","_id":"2blGXv0P93NkrNsA","lastUpdated":"2020-09-07 09:14:08"}
-{"$$deleted":true,"_id":"2blGXv0P93NkrNsA"}
-{"title":"Todo title for Item","userId":"BY27KW0yX5skwVHn","_id":"qzngW9scepY2NMQE"}
-{"$$deleted":true,"_id":"qzngW9scepY2NMQE"}
-{"title":"Todo title for Item","userId":"2Jc0hGStDjAZN83e","_id":"1U380rfD2ii2pae9"}
-{"$$deleted":true,"_id":"1U380rfD2ii2pae9"}
-{"title":"Todo title for Item","userId":"TEOXtV9BNlKypXtZ","_id":"wR4RaRslGVTSFeXp"}
-{"$$deleted":true,"_id":"wR4RaRslGVTSFeXp"}
-{"title":"Todo title for Item","userId":"KAVal9bYb4ORDqYB","_id":"tDQFRVPuEmXQbTGh"}
-{"$$deleted":true,"_id":"tDQFRVPuEmXQbTGh"}
-{"title":"Todo title for Item","userId":"MhSwJxAZN2pX3kap","_id":"IhUEb0s2Pgg6Td4c"}
-{"$$deleted":true,"_id":"IhUEb0s2Pgg6Td4c"}
-{"title":"First Todo Title","userId":"LJoEoLG97IUf15sg","_id":"jdk7rCj6UeQf1cPh"}
-{"$$deleted":true,"_id":"jdk7rCj6UeQf1cPh"}
-{"title":"First Todo Title","userId":"tAgAdSVu0tlVDGdc","_id":"VubH5UeNsxtVzQSa"}
-{"$$deleted":true,"_id":"VubH5UeNsxtVzQSa"}
-{"title":"First Todo Title","userId":"Cmyv9EwF1KoH5sC1","_id":"426DNYzcIpNWsR2q"}
-{"title":"Second Todo Title","userId":"Cmyv9EwF1KoH5sC1","_id":"ctmfTzGE50ClVMZe"}
-{"$$deleted":true,"_id":"426DNYzcIpNWsR2q"}
-{"$$deleted":true,"_id":"ctmfTzGE50ClVMZe"}
-{"title":"User Todo soon to be deleted","userId":"gl5EINrqotoSoqdq","_id":"hWEosgB17O4xpnr9"}
-{"$$deleted":true,"_id":"hWEosgB17O4xpnr9"}
-{"title":"Admin Todo soon to be deleted","userId":"iOuLUqd6yuic8A3F","_id":"GNoCEgXVSK86MJfu"}
-{"$$deleted":true,"_id":"GNoCEgXVSK86MJfu"}
+{"title":"BRYAN TODO","userId":"9mLqrUhaKZeOSEbo","_id":"b9iG0fSeCz19CsYr"}
+{"$$deleted":true,"_id":"b9iG0fSeCz19CsYr"}
+{"title":"Test toDo from HTTP","userId":"Fpro6KVGkUHJPzSi","_id":"ioEnKa3RosGc7KoO"}
+{"$$deleted":true,"_id":"ioEnKa3RosGc7KoO"}
+{"title":"First Todo Title","userId":"N0A7PH5tODtW3RZM","_id":"yuoU9ukGLVDsy0ek"}
+{"$$deleted":true,"_id":"yuoU9ukGLVDsy0ek"}
+{"title":"First Todo Title","userId":"7qOHarFc3MLNUc7v","_id":"UB2T1YJUCWeEyAL3"}
+{"$$deleted":true,"_id":"UB2T1YJUCWeEyAL3"}
+{"title":"First Todo Title","userId":"sD37R2juqGYhXLHJ","_id":"JDUTXh2KTFNJwtTf"}
+{"$$deleted":true,"_id":"JDUTXh2KTFNJwtTf"}
+{"title":"First Todo Title","userId":"9uFkptrtK1984W90","_id":"amQbMDr3ENSIyVIl"}
+{"title":"Updated title from patch","userId":"9uFkptrtK1984W90","_id":"amQbMDr3ENSIyVIl","lastUpdated":"2020-09-08 09:40:53"}
+{"$$deleted":true,"_id":"amQbMDr3ENSIyVIl"}
+{"title":"Todo title for Item","userId":"ucvtKYql80l2e1f0","_id":"4jlC1OnfzOq0a7ZE"}
+{"$$deleted":true,"_id":"4jlC1OnfzOq0a7ZE"}
+{"title":"Todo title for Item","userId":"oLg3GVFPXRm4DXJ5","_id":"Qq6lwyvNmW9bw5wE"}
+{"$$deleted":true,"_id":"Qq6lwyvNmW9bw5wE"}
+{"title":"Todo title for Item","userId":"aSlabAjP33Tf8wjL","_id":"TIeN91NtGupkcThW"}
+{"$$deleted":true,"_id":"TIeN91NtGupkcThW"}
+{"title":"Todo title for Item","userId":"kSJMfnSkPaUl0r18","_id":"SQTbY09uS4616YCk"}
+{"$$deleted":true,"_id":"SQTbY09uS4616YCk"}
+{"title":"Todo title for Item","userId":"ni1szKR3mzoIUrV3","_id":"s2mWZDmn14Wx3ixS"}
+{"$$deleted":true,"_id":"s2mWZDmn14Wx3ixS"}
+{"title":"First Todo Title","userId":"xOkJwvz55KPpK9Ni","_id":"iI3uJG7WXuTLtvjO"}
+{"$$deleted":true,"_id":"iI3uJG7WXuTLtvjO"}
+{"title":"First Todo Title","userId":"x0Mr7IrgELUUDtbt","_id":"yQNvp3I7DyOfFPFS"}
+{"$$deleted":true,"_id":"yQNvp3I7DyOfFPFS"}
+{"title":"First Todo Title","userId":"wHgXEk6iabkYDwmY","_id":"y5OnkCnn5DLBYpCn"}
+{"title":"Second Todo Title","userId":"wHgXEk6iabkYDwmY","_id":"NGaQ9AlzydP2T25k"}
+{"$$deleted":true,"_id":"NGaQ9AlzydP2T25k"}
+{"$$deleted":true,"_id":"y5OnkCnn5DLBYpCn"}
+{"title":"User Todo soon to be deleted","userId":"2VKQzzDzZBBQeGUn","_id":"xGH34YtSBXKnd2gh"}
+{"$$deleted":true,"_id":"xGH34YtSBXKnd2gh"}
+{"title":"Admin Todo soon to be deleted","userId":"wunwzdQQJWRMh59m","_id":"DjSemE8wnPRWy1Ag"}
+{"$$deleted":true,"_id":"DjSemE8wnPRWy1Ag"}
