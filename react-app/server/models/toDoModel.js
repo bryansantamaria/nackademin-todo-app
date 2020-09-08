@@ -19,8 +19,11 @@ const getAsUser = async (id) => {
 };
 
 const deleteToDo = async (toDoId) => {
+	console.log(toDoId);
 	const item = await itemCollection.remove({ toDoId: toDoId }, { multi: true });
+	console.log(item);
 	const doc = await toDoCollection.remove({ _id: toDoId }, { multi: true });
+	console.log(doc);
 	return doc || item ? true : false;
 };
 
