@@ -5,7 +5,6 @@ class CreateToDo extends Component {
 	state = { title: '', open: false };
 
 	submit = (title) => {
-		console.log(title);
 		this.props.createToDo(title);
 		this.setState({ open: false, title: '' });
 	};
@@ -25,7 +24,7 @@ class CreateToDo extends Component {
 		return (
 			<span id='AddToDo'>
 				<button id='AddToDoBtn' type='button' onClick={this.handleOpen}>
-					Add Todo list
+					Add List
 				</button>
 
 				<Modal
