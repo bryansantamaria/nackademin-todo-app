@@ -6,7 +6,8 @@ import PrivateRoute from './middlewares/privateRoute';
 import PrivateRouteCreate from './middlewares/privateRouteCreate';
 import Login from './pages/login';
 import CreateAccount from './pages/createAccount';
-
+import ErrorBoundary from './middlewares/ErrorBoundary';
+import Cookie from './components/Cookie';
 import {
 	getToDo,
 	postToDo,
@@ -15,7 +16,6 @@ import {
 	patchItem,
 	getOrderBy,
 	delItem,
-	getUser,
 	updateCompleted,
 	getToDoWithItems,
 	delToDo,
@@ -30,14 +30,16 @@ class App extends Component {
 			todos: [],
 			toDoItems: [],
 			toDoId: '',
+			toDoTitle: '',
 			selectedTodo: '',
 			selectedItem: null,
 			inputField: '',
 			editBtnState: false,
+			createBtnState: false,
 			toggleCreateOrder: false,
 			toggleUpdatedOrder: false,
 			isAuthenticated: false,
-			token: localStorage.getItem('token'),
+			token: sessionStorage.getItem('token'),
 			users: {},
 		};
 		this.limit = 0;
@@ -48,41 +50,64 @@ class App extends Component {
 		console.log('component did mount');
 		if (this.state.token) {
 			try {
-				const user = await getUser('http://localhost:8080/users', this.state.token);
-				this.setState({ users: user.data });
-				window.localStorage.setItem('role', user.data.role);
-			} catch (err) {
-				console.log(err);
-			}
-			try {
+				const name = sessionStorage.getItem('name');
+				const role = sessionStorage.getItem('role');
+				const user = { name: name, role: role };
+				this.setState({ users: user });
 				const toDo = await getToDo('http://localhost:8080/todos/', this.state.token);
-				const toDoItems = await getItems('http://localhost:8080/items/', this.state.token);
-				this.setState({
-					todos: toDo.data,
-					toDoItems: toDoItems.data,
-					toDoId: toDo.data[0]._id,
-				});
-				console.log(this.state.todos);
-				console.log(this.state.toDoItems);
+				if (toDo.data.length > 0) {
+					const toDoItems = await getItems('http://localhost:8080/items/', this.state.token);
+					this.setState({
+						todos: toDo.data,
+						toDoItems: toDoItems.data,
+						toDoId: toDo.data[0]._id,
+					});
+				}
 			} catch (error) {
-				console.log('ERR');
+				console.log('Err');
 			}
 		}
 	}
 
-	createToDo = async (title) => {
-		const res = await postToDo('http://localhost:8080/todos/create', title, this.state.token);
-		this.setState({ todos: [...this.state.todos, res.data] });
+	isAuthenticated = (auth) => {
+		console.log(auth);
+		const isAuthenticated = sessionStorage.getItem('token');
+
+		if (auth) {
+			console.log('Authorized');
+			this.setState({ isAuthenticated: true, token: isAuthenticated });
+			window.location.href = 'http://localhost:3000/items';
+		}
 	};
 
-	getToDo = async (id) => {
+	setCookie = async (userData) => {
+		window.sessionStorage.setItem('token', this.state.token);
+		window.sessionStorage.setItem('role', userData.role);
+		window.sessionStorage.setItem('name', userData.name);
+		this.setState({ users: userData });
+	};
+
+	createToDo = async (title) => {
+		const res = await postToDo('http://localhost:8080/todos/create', title, this.state.token);
+		this.setState({
+			todos: [...this.state.todos, res.data],
+			toDoId: res.data._id,
+			toDoTitle: title,
+			toDoItems: [],
+			createBtnState: true,
+		});
+	};
+
+	getToDoWithId = async (id, title) => {
 		console.log('GET TODOS');
 		const res = await getToDoWithItems(`http://localhost:8080/todos/${id}/items`, this.state.token);
-		this.setState({ toDoItems: res.data, toDoId: id });
+		if (res) {
+			this.setState({ toDoItems: res.data, toDoId: id, toDoTitle: title, createBtnState: false });
+		}
 	};
 
 	deleteToDo = async (id) => {
-		if (this.state.todos[0]._id || id) {
+		if (this.state.todos.length >= 0) {
 			await delToDo(`http://localhost:8080/todos/${id}/delete`, this.state.token);
 
 			const toDoLists = [...this.state.todos];
@@ -91,24 +116,25 @@ class App extends Component {
 			const toDoItems = [...this.state.toDoItems];
 			const newItems = toDoItems.filter((Item) => Item.toDoId !== id);
 
-			if (this.state.todos[0]._id) {
-				this.getToDo(this.state.todos[0]._id);
-			}
-			this.setState({ todos: newToDos, toDoItems: newItems });
+			this.setState({ todos: newToDos, toDoItems: newItems, createBtnState: false });
 		}
 	};
 
 	//Body posts title & done, then recieves data from end point and updates state.
 	createItem = async (title) => {
-		const res = await postItem(
-			'http://localhost:8080/items/create',
-			title,
-			this.state.toDoId,
-			this.state.token
-		);
-		console.log(this.state.toDoId);
-		this.setState({ toDoItems: [...this.state.toDoItems, res.data] });
-		console.log(this.state.toDoItems);
+		if (this.state.toDoId !== '') {
+			const res = await postItem(
+				'http://localhost:8080/items/create',
+				title,
+				this.state.toDoId,
+				this.state.token
+			);
+			console.log(this.state.toDoId);
+			this.setState({ toDoItems: [...this.state.toDoItems, res.data] });
+			console.log(this.state.toDoItems);
+		} else {
+			console.log('Wooops, create an todo-list first');
+		}
 	};
 
 	//Copy current items array, filter out item being deleted and update state.
@@ -136,100 +162,128 @@ class App extends Component {
 	};
 
 	orderByCreated = async () => {
-		console.log(this.state.toggleCreateOrder);
-		if (this.state.toggleCreateOrder) {
-			const res = await getOrderBy(
-				`http://localhost:8080/items/sort/created/${-1}&${this.state.toDoId}`,
-				this.state.token
-			);
-			let oldState = [...this.state.toDoItems];
-			oldState = res.data;
-			this.setState({
-				toDoItems: oldState,
-				toggleCreateOrder: false,
-			});
-		} else if (!this.state.toggleCreateOrder) {
-			const res = await getOrderBy(
-				`http://localhost:8080/items/sort/created/${1}&${this.state.toDoId}`,
-				this.state.token
-			);
-			let oldState = [...this.state.toDoItems];
-			oldState = res.data;
-			this.setState({
-				toDoItems: oldState,
-				toggleCreateOrder: true,
-			});
+		try {
+			if (this.state.toggleCreateOrder) {
+				const res = await getOrderBy(
+					`http://localhost:8080/items/sort/created/${-1}&${this.state.toDoId}`,
+					this.state.token
+				);
+				if (Array.isArray(res.data)) {
+					let oldState = [...this.state.toDoItems];
+					oldState = res.data;
+					this.setState({
+						toDoItems: oldState,
+						toggleCreateOrder: false,
+					});
+				}
+			} else if (!this.state.toggleCreateOrder) {
+				const res = await getOrderBy(
+					`http://localhost:8080/items/sort/created/${1}&${this.state.toDoId}`,
+					this.state.token
+				);
+				if (Array.isArray(res.data)) {
+					console.log(res.data);
+					let oldState = [...this.state.toDoItems];
+					oldState = res.data;
+					this.setState({
+						toDoItems: oldState,
+						toggleCreateOrder: true,
+					});
+				}
+			}
+		} catch (error) {
+			console.log('No items to sort by');
 		}
 	};
 
 	orderByUpdated = () => {
-		if (this.state.toggleUpdatedOrder) {
-			axios
-				.get(`http://localhost:8080/items/sort/lastUpdated${-1}&${this.state.toDoId}`, {
-					headers: {
-						Authorization: 'Bearer ' + this.state.token,
-					},
-				})
-				.then((res) => {
-					let oldState = [...this.state.toDoItems];
-					oldState = res.data;
-					this.setState({
-						toDoItems: oldState,
-						toggleUpdatedOrder: false,
+		try {
+			if (this.state.toggleUpdatedOrder) {
+				axios
+					.get(`http://localhost:8080/items/sort/lastUpdated${-1}&${this.state.toDoId}`, {
+						headers: {
+							Authorization: 'Bearer ' + this.state.token,
+						},
+					})
+					.then((res) => {
+						if (Array.isArray(res.data)) {
+							let oldState = [...this.state.toDoItems];
+							oldState = res.data;
+							this.setState({
+								toDoItems: oldState,
+								toggleUpdatedOrder: false,
+							});
+						}
 					});
-				});
-		} else if (!this.state.toggleUpdatedOrder) {
-			axios
-				.get(`http://localhost:8080/items/sort/lastUpdated${1}&${this.state.toDoId}`, {
-					headers: {
-						Authorization: 'Bearer ' + this.state.token,
-					},
-				})
-				.then((res) => {
-					let oldState = [...this.state.toDoItems];
-					oldState = res.data;
-					this.setState({
-						toDoItems: oldState,
-						toggleUpdatedOrder: true,
+			} else if (!this.state.toggleUpdatedOrder) {
+				axios
+					.get(`http://localhost:8080/items/sort/lastUpdated${1}&${this.state.toDoId}`, {
+						headers: {
+							Authorization: 'Bearer ' + this.state.token,
+						},
+					})
+					.then((res) => {
+						if (Array.isArray(res.data)) {
+							let oldState = [...this.state.toDoItems];
+							oldState = res.data;
+							this.setState({
+								toDoItems: oldState,
+								toggleUpdatedOrder: true,
+							});
+						}
 					});
-				});
+			}
+		} catch (error) {
+			console.log('no items to sortUpdatedBy');
 		}
 	};
 
 	paginateFwrd = () => {
-		axios
-			.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
-				headers: {
-					Authorization: 'Bearer ' + this.state.token,
-				},
-			})
-			.then((res) => {
-				let oldState = [...this.state.toDoItems];
-				oldState = res.data;
-				this.setState({
-					toDoItems: oldState,
+		try {
+			axios
+				.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
+					headers: {
+						Authorization: 'Bearer ' + this.state.token,
+					},
+				})
+				.then((res) => {
+					if (Array.isArray(res.data)) {
+						let oldState = [...this.state.toDoItems];
+						oldState = res.data;
+						this.setState({
+							toDoItems: oldState,
+						});
+					}
 				});
-			});
-		this.limit++;
+			this.limit++;
+		} catch (error) {
+			console.log('Nothing to paginate');
+		}
 	};
 
 	paginateBckwrd = () => {
+		try {
+			axios
+				.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
+					headers: {
+						Authorization: 'Bearer ' + this.state.token,
+					},
+				})
+				.then((res) => {
+					if (Array.isArray(res.data)) {
+						let oldState = [...this.state.toDoItems];
+						oldState = res.data;
+						this.setState({
+							toDoItems: oldState,
+						});
+					}
+				});
+		} catch (error) {
+			console.log('nothing to paginate');
+		}
 		if (this.limit !== 0) {
 			this.limit--;
 		}
-		axios
-			.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
-				headers: {
-					Authorization: 'Bearer ' + this.state.token,
-				},
-			})
-			.then((res) => {
-				let oldState = [...this.state.toDoItems];
-				oldState = res.data;
-				this.setState({
-					toDoItems: oldState,
-				});
-			});
 	};
 
 	selectItem = (id) => {
@@ -267,16 +321,6 @@ class App extends Component {
 		);
 	};
 
-	isAuthenticated = (auth) => {
-		const isAuthenticated = localStorage.getItem('token');
-
-		if (auth === isAuthenticated) {
-			console.log('Authorized');
-			this.setState({ isAuthenticated: true, token: isAuthenticated });
-		}
-		window.location.href = 'http://localhost:3000/items';
-	};
-
 	render() {
 		return (
 			<div className='App'>
@@ -284,6 +328,7 @@ class App extends Component {
 					<BrowserRouter>
 						<Switch>
 							<Route
+								exact
 								path='/auth'
 								render={(props) => <Login {...props} auth={this.isAuthenticated} />}
 							/>
@@ -294,34 +339,38 @@ class App extends Component {
 								component={CreateAccount}
 								token={this.state.token}
 							/>
-
-							<PrivateRoute
-								exact
-								path={'/items'}
-								component={ToDoContainer}
-								isAuthenticated={this.state.token}
-								users={this.state.users}
-								todos={this.state.todos}
-								deleteToDo={this.deleteToDo}
-								toDoItems={this.state.toDoItems}
-								getToDoWithId={this.getToDo}
-								createToDo={this.createToDo}
-								complete={this.complete}
-								delete={this.delete}
-								selectItem={this.selectItem}
-								orderByCreated={this.orderByCreated}
-								toggleCreateOrder={this.state.toggleCreateOrder}
-								orderByUpdated={this.orderByUpdated}
-								toggleUpdatedOrder={this.state.toggleUpdatedOrder}
-								paginateFwrd={this.paginateFwrd}
-								paginateBckwrd={this.paginateBckwrd}
-								createItem={this.createItem}
-								update={this.update}
-								selectedItem={this.state.selectedItem}
-								inputField={this.state.inputField}
-								editBtnState={this.state.editBtnState}
-								handleBtnState={this.handleBtnState}
-							/>
+							<ErrorBoundary>
+								<PrivateRoute
+									exact
+									path={'/items'}
+									component={ToDoContainer}
+									isAuthenticated={this.state.token}
+									users={this.state.users}
+									todos={this.state.todos}
+									toDoTitle={this.state.toDoTitle}
+									deleteToDo={this.deleteToDo}
+									createBtnState={this.state.createBtnState}
+									toDoItems={this.state.toDoItems}
+									getToDoWithId={this.getToDoWithId}
+									createToDo={this.createToDo}
+									complete={this.complete}
+									delete={this.delete}
+									selectItem={this.selectItem}
+									orderByCreated={this.orderByCreated}
+									toggleCreateOrder={this.state.toggleCreateOrder}
+									orderByUpdated={this.orderByUpdated}
+									toggleUpdatedOrder={this.state.toggleUpdatedOrder}
+									paginateFwrd={this.paginateFwrd}
+									paginateBckwrd={this.paginateBckwrd}
+									createItem={this.createItem}
+									update={this.update}
+									selectedItem={this.state.selectedItem}
+									inputField={this.state.inputField}
+									editBtnState={this.state.editBtnState}
+									handleBtnState={this.handleBtnState}
+								/>
+								<Cookie token={this.state.token} setCookie={this.setCookie} />
+							</ErrorBoundary>
 							<Redirect to={{ pathname: '/auth' }} />
 						</Switch>
 					</BrowserRouter>
