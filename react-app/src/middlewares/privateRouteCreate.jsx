@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 function PrivateRouteCreate({ component: Component, ...rest }) {
-	const isAdmin = localStorage.getItem('role');
+	const isAdmin = sessionStorage.getItem('role');
 	return (
 		<Route
 			{...rest}
@@ -10,7 +10,7 @@ function PrivateRouteCreate({ component: Component, ...rest }) {
 				isAdmin === 'admin' ? (
 					<Component exact path='/items' {...props} {...rest} />
 				) : (
-					<Redirect to='/login' />
+					<Redirect to='/auth' />
 				)
 			}
 		/>
