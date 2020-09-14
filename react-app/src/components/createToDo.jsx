@@ -1,67 +1,69 @@
-import React, { Component } from "react";
-import { TextField, Button } from "@material-ui/core";
+import React, { Component } from 'react';
+import { TextField, Button, Modal } from '@material-ui/core';
 
 class CreateToDo extends Component {
-  state = { title: "" };
+	state = { title: '', open: false };
 
-  //Set the state to whatever the user writes in createToDo from app.js
-  onSubmit = (e) => {
-    e.preventDefault();
+	submit = (title) => {
+		console.log(title);
+		this.props.createToDo(title);
+		this.setState({ open: false, title: '' });
+	};
+	handleOpen = () => {
+		this.setState({ open: true });
+	};
 
-    if (this.props.selectedTodo === null) {
-      this.props.createToDo(this.state.title);
-    } else {
-      this.props.update(this.state.title);
-    }
+	handleClose = () => {
+		this.setState({ open: false });
+	};
+	onChange = (e) => {
+		this.setState({
+			title: e.target.value,
+		});
+	};
+	render() {
+		return (
+			<span id='AddToDo'>
+				<button id='AddToDoBtn' type='button' onClick={this.handleOpen}>
+					Add Todo list
+				</button>
 
-    this.setState({ title: "" });
-  };
+				<Modal
+					className='modal'
+					open={this.state.open}
+					onClose={this.handleClose}
+					closeAfterTransition
+				>
+					<div className='modalBox'>
+						<h2 id='modalTitle'>Add list title</h2>
+						<TextField
+							type='input'
+							autoFocus
+							name='title'
+							id='modalInput'
+							variant='outlined'
+							size='small'
+							required
+							value={this.state.title}
+							onChange={this.onChange}
+							placeholder='Add to do list title...'
+						/>
 
-  submitBtn = () => {
-    return this.props.editBtnState ? "Update" : "Submit";
-  };
-
-  inputField = () => {
-    return this.props.editBtnState ? this.props.inputField : "Add to do...";
-  };
-
-  //Target the name attribute title and set the state value
-  onChange = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
-  };
-
-  render() {
-    return (
-      <form onSubmit={this.onSubmit} className="form_container">
-        <TextField
-          type="input"
-          autoFocus
-          name="title"
-          id="standard-basic"
-          variant="outlined"
-          size="small"
-          required
-          value={this.state.title}
-          onChange={this.onChange}
-          placeholder={this.inputField()}
-        />
-
-        <Button
-          className="btn-todoitem submitBtn"
-          type="submit"
-          value={this.submitBtn()}
-          variant="contained"
-          color="inherit"
-          id="submitBtn"
-          onClick={() => this.props.handleBtnState(false)}
-        >
-          {this.submitBtn()}
-        </Button>
-      </form>
-    );
-  }
+						<Button
+							type='submit'
+							value='Submit'
+							variant='contained'
+							color='inherit'
+							id='submitToDo'
+							onClick={() => this.submit(this.state.title)}
+						>
+							Submit
+						</Button>
+					</div>
+				</Modal>
+			</span>
+		);
+	}
 }
 
 export default CreateToDo;

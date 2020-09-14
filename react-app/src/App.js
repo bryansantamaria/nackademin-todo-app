@@ -8,13 +8,17 @@ import Login from './pages/login';
 import CreateAccount from './pages/createAccount';
 
 import {
-	getTodos,
+	getToDo,
 	postToDo,
-	patchToDo,
+	getItems,
+	postItem,
+	patchItem,
 	getOrderBy,
-	delToDo,
+	delItem,
 	getUser,
 	updateCompleted,
+	getToDoWithItems,
+	delToDo,
 } from './utils/api';
 
 import ToDoContainer from './components/ToDoContainer';
@@ -24,7 +28,10 @@ class App extends Component {
 		super(props);
 		this.state = {
 			todos: [],
-			selectedTodo: null,
+			toDoItems: [],
+			toDoId: '',
+			selectedTodo: '',
+			selectedItem: null,
 			inputField: '',
 			editBtnState: false,
 			toggleCreateOrder: false,
@@ -39,71 +46,117 @@ class App extends Component {
 	//Application has rendered on the client side
 	async componentDidMount() {
 		console.log('component did mount');
-		try {
-			if (this.state.token) {
-				const res = await getTodos('http://localhost:8080/items/', this.state.token);
+		if (this.state.token) {
+			try {
 				const user = await getUser('http://localhost:8080/users', this.state.token);
-				console.log(user.data);
-				this.setState({ todos: res.data, users: user.data });
+				this.setState({ users: user.data });
 				window.localStorage.setItem('role', user.data.role);
+			} catch (err) {
+				console.log(err);
 			}
-		} catch (error) {
-			console.log('ERROR');
-			console.log(error);
+			try {
+				const toDo = await getToDo('http://localhost:8080/todos/', this.state.token);
+				const toDoItems = await getItems('http://localhost:8080/items/', this.state.token);
+				this.setState({
+					todos: toDo.data,
+					toDoItems: toDoItems.data,
+					toDoId: toDo.data[0]._id,
+				});
+				console.log(this.state.todos);
+				console.log(this.state.toDoItems);
+			} catch (error) {
+				console.log('ERR');
+			}
 		}
 	}
 
-	//Body posts title & done, then recieves data from end point and updates state.
 	createToDo = async (title) => {
-		const res = await postToDo('http://localhost:8080/items/create', title, this.state.token);
+		const res = await postToDo('http://localhost:8080/todos/create', title, this.state.token);
 		this.setState({ todos: [...this.state.todos, res.data] });
 	};
 
-	//Copy current todos array, filter out item being deleted and update state.
+	getToDo = async (id) => {
+		console.log('GET TODOS');
+		const res = await getToDoWithItems(`http://localhost:8080/todos/${id}/items`, this.state.token);
+		this.setState({ toDoItems: res.data, toDoId: id });
+	};
+
+	deleteToDo = async (id) => {
+		if (this.state.todos[0]._id || id) {
+			await delToDo(`http://localhost:8080/todos/${id}/delete`, this.state.token);
+
+			const toDoLists = [...this.state.todos];
+			const newToDos = toDoLists.filter((todo) => todo._id !== id);
+
+			const toDoItems = [...this.state.toDoItems];
+			const newItems = toDoItems.filter((Item) => Item.toDoId !== id);
+
+			if (this.state.todos[0]._id) {
+				this.getToDo(this.state.todos[0]._id);
+			}
+			this.setState({ todos: newToDos, toDoItems: newItems });
+		}
+	};
+
+	//Body posts title & done, then recieves data from end point and updates state.
+	createItem = async (title) => {
+		const res = await postItem(
+			'http://localhost:8080/items/create',
+			title,
+			this.state.toDoId,
+			this.state.token
+		);
+		console.log(this.state.toDoId);
+		this.setState({ toDoItems: [...this.state.toDoItems, res.data] });
+		console.log(this.state.toDoItems);
+	};
+
+	//Copy current items array, filter out item being deleted and update state.
 	delete = async (id) => {
-		const toDoList = [...this.state.todos];
-		const newTodos = toDoList.filter((todo) => todo._id !== id);
-		await delToDo(`http://localhost:8080/items/delete/${id}`, this.state.token);
-		this.setState({ todos: newTodos });
+		const ItemList = [...this.state.toDoItems];
+		const newItems = ItemList.filter((Item) => Item._id !== id);
+		await delItem(`http://localhost:8080/items/delete/${id}`, this.state.token);
+		this.setState({ toDoItems: newItems });
 	};
 
 	update = async (title) => {
-		await patchToDo(
-			`http://localhost:8080/items/update/${this.state.selectedTodo}`,
+		await patchItem(
+			`http://localhost:8080/items/update/${this.state.selectedItem}`,
 			title,
 			this.state.token
 		);
-		const index = this.state.todos.findIndex((todo) => todo._id === this.state.selectedTodo);
-		const oldState = [...this.state.todos];
+		const index = this.state.toDoItems.findIndex((Item) => Item._id === this.state.selectedItem);
+		const oldState = [...this.state.toDoItems];
 		oldState[index].title = title;
 
 		this.setState({
-			todos: oldState,
-			selectedTodo: null,
+			toDoItems: oldState,
+			selectedItem: null,
 		});
 	};
 
 	orderByCreated = async () => {
+		console.log(this.state.toggleCreateOrder);
 		if (this.state.toggleCreateOrder) {
 			const res = await getOrderBy(
-				`http://localhost:8080/items/sort/created${-1}`,
+				`http://localhost:8080/items/sort/created/${-1}&${this.state.toDoId}`,
 				this.state.token
 			);
-			let oldState = [...this.state.todos];
+			let oldState = [...this.state.toDoItems];
 			oldState = res.data;
 			this.setState({
-				todos: oldState,
+				toDoItems: oldState,
 				toggleCreateOrder: false,
 			});
 		} else if (!this.state.toggleCreateOrder) {
 			const res = await getOrderBy(
-				`http://localhost:8080/items/sort/created${1}`,
+				`http://localhost:8080/items/sort/created/${1}&${this.state.toDoId}`,
 				this.state.token
 			);
-			let oldState = [...this.state.todos];
+			let oldState = [...this.state.toDoItems];
 			oldState = res.data;
 			this.setState({
-				todos: oldState,
+				toDoItems: oldState,
 				toggleCreateOrder: true,
 			});
 		}
@@ -112,31 +165,31 @@ class App extends Component {
 	orderByUpdated = () => {
 		if (this.state.toggleUpdatedOrder) {
 			axios
-				.get(`http://localhost:8080/items/sort/lastUpdated${-1}`, {
+				.get(`http://localhost:8080/items/sort/lastUpdated${-1}&${this.state.toDoId}`, {
 					headers: {
 						Authorization: 'Bearer ' + this.state.token,
 					},
 				})
 				.then((res) => {
-					let oldState = [...this.state.todos];
+					let oldState = [...this.state.toDoItems];
 					oldState = res.data;
 					this.setState({
-						todos: oldState,
+						toDoItems: oldState,
 						toggleUpdatedOrder: false,
 					});
 				});
 		} else if (!this.state.toggleUpdatedOrder) {
 			axios
-				.get(`http://localhost:8080/items/sort/lastUpdated${1}`, {
+				.get(`http://localhost:8080/items/sort/lastUpdated${1}&${this.state.toDoId}`, {
 					headers: {
 						Authorization: 'Bearer ' + this.state.token,
 					},
 				})
 				.then((res) => {
-					let oldState = [...this.state.todos];
+					let oldState = [...this.state.toDoItems];
 					oldState = res.data;
 					this.setState({
-						todos: oldState,
+						toDoItems: oldState,
 						toggleUpdatedOrder: true,
 					});
 				});
@@ -145,16 +198,16 @@ class App extends Component {
 
 	paginateFwrd = () => {
 		axios
-			.get(`http://localhost:8080/items/limit/${this.limit}`, {
+			.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
 				headers: {
 					Authorization: 'Bearer ' + this.state.token,
 				},
 			})
 			.then((res) => {
-				let oldState = [...this.state.todos];
+				let oldState = [...this.state.toDoItems];
 				oldState = res.data;
 				this.setState({
-					todos: oldState,
+					toDoItems: oldState,
 				});
 			});
 		this.limit++;
@@ -165,24 +218,25 @@ class App extends Component {
 			this.limit--;
 		}
 		axios
-			.get(`http://localhost:8080/items/limit/${this.limit}`, {
+			.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
 				headers: {
 					Authorization: 'Bearer ' + this.state.token,
 				},
 			})
 			.then((res) => {
-				let oldState = [...this.state.todos];
+				let oldState = [...this.state.toDoItems];
 				oldState = res.data;
 				this.setState({
-					todos: oldState,
+					toDoItems: oldState,
 				});
 			});
 	};
 
-	selectTodo = (id) => {
-		const editItem = this.state.todos.find((todo) => todo._id === id);
+	selectItem = (id) => {
+		console.log(id);
+		const editItem = this.state.toDoItems.find((Item) => Item._id === id);
 		this.setState({
-			selectedTodo: id,
+			selectedItem: id,
 			inputField: editItem.title,
 			editBtnState: true,
 		});
@@ -196,15 +250,15 @@ class App extends Component {
 
 	complete = async (id) => {
 		this.setState({
-			todos: this.state.todos.map((todo) => {
-				if (todo._id === id) {
-					todo.done = !todo.done;
+			toDoItems: this.state.toDoItems.map((Item) => {
+				if (Item._id === id) {
+					Item.done = !Item.done;
 				}
-				return todo;
+				return Item;
 			}),
 		});
-		const index = this.state.todos.findIndex((todo) => todo._id === id);
-		const { title, done } = this.state.todos[index];
+		const index = this.state.toDoItems.findIndex((Item) => Item._id === id);
+		const { title, done } = this.state.toDoItems[index];
 		await updateCompleted(
 			`http://localhost:8080/items/update/${id}`,
 			title,
@@ -220,7 +274,7 @@ class App extends Component {
 			console.log('Authorized');
 			this.setState({ isAuthenticated: true, token: isAuthenticated });
 		}
-		window.location.href = 'http://localhost:3000/todos';
+		window.location.href = 'http://localhost:3000/items';
 	};
 
 	render() {
@@ -243,23 +297,27 @@ class App extends Component {
 
 							<PrivateRoute
 								exact
-								path={'/todos'}
+								path={'/items'}
 								component={ToDoContainer}
 								isAuthenticated={this.state.token}
 								users={this.state.users}
 								todos={this.state.todos}
+								deleteToDo={this.deleteToDo}
+								toDoItems={this.state.toDoItems}
+								getToDoWithId={this.getToDo}
+								createToDo={this.createToDo}
 								complete={this.complete}
 								delete={this.delete}
-								selectTodo={this.selectTodo}
+								selectItem={this.selectItem}
 								orderByCreated={this.orderByCreated}
 								toggleCreateOrder={this.state.toggleCreateOrder}
 								orderByUpdated={this.orderByUpdated}
 								toggleUpdatedOrder={this.state.toggleUpdatedOrder}
 								paginateFwrd={this.paginateFwrd}
 								paginateBckwrd={this.paginateBckwrd}
-								createToDo={this.createToDo}
+								createItem={this.createItem}
 								update={this.update}
-								selectedTodo={this.state.selectedTodo}
+								selectedItem={this.state.selectedItem}
 								inputField={this.state.inputField}
 								editBtnState={this.state.editBtnState}
 								handleBtnState={this.handleBtnState}
