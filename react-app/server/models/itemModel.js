@@ -13,14 +13,18 @@ const insertItem = async (title, done, userId, toDoId) => {
 
 const findAsAdmin = async () => {
 	const toDo = await toDoCollection.find({}).sort({ created: -1 });
-	const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
-	return doc;
+	if (toDo.length > 0) {
+		const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
+		return doc;
+	}
 };
 
 const findAsUser = async (id) => {
 	const toDo = await toDoCollection.find({ userId: id }).sort({ created: -1 });
-	const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
-	return doc;
+	if (toDo.length > 0) {
+		const doc = await itemCollection.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
+		return doc;
+	}
 };
 
 const updateAsAdmin = async (postId, title, done) => {
