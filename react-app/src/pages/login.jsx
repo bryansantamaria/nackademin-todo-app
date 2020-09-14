@@ -11,7 +11,7 @@ class Login extends Component {
 
 		console.log(res);
 		if (res.data) {
-			window.localStorage.setItem('token', res.data);
+			window.sessionStorage.setItem('token', res.data);
 			console.log(res.data);
 			return this.props.auth(res.data);
 		}
