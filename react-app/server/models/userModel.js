@@ -1,8 +1,8 @@
-const { userCollection } = require('../database/dataBase');
+const { userCollection, itemCollection, toDoCollection } = require('../database/dataBase');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const createUser = async (firstName, lastName, email, password, role = 'user') => {
+const createUser = async (firstName, lastName, email, password) => {
 	const doc = await userCollection.findOne({ email: email });
 	if (!doc) {
 		const hash = bcrypt.hashSync(password, 10);
@@ -11,7 +11,7 @@ const createUser = async (firstName, lastName, email, password, role = 'user') =
 			lastName,
 			password: hash,
 			email,
-			role: role,
+			role: 'user',
 		});
 		return doc;
 	}
@@ -19,6 +19,7 @@ const createUser = async (firstName, lastName, email, password, role = 'user') =
 };
 
 const loginUser = async (email, password) => {
+	console.log('Enter login');
 	const doc = await userCollection.findOne({ email: email });
 	if (!doc) return json('Email not found');
 
@@ -45,8 +46,14 @@ const clear = async () => {
 	return doc;
 };
 
+const removeUser = async (id) => {
+	const doc = await userCollection.remove({ _id: id });
+	await itemCollection.remove({ userId: id }, { multi: true });
+	await toDoCollection.remove({ userId: id }, { multi: true });
+	return doc;
+};
+
 const checkAuthorization = async (role) => {
-	console.log('role: ' + role);
 	if (role === 'admin') {
 		return true;
 	} else {
@@ -58,6 +65,7 @@ module.exports = {
 	createUser,
 	loginUser,
 	verifyToken,
+	removeUser,
 	clear,
 	checkAuthorization,
 };
