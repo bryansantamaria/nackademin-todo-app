@@ -9,12 +9,12 @@ const insertToDo = async (title, userId) => {
 };
 
 const getAsAdmin = async () => {
-	const doc = await toDoCollection.find({}).limit(5).sort({ created: -1 });
+	const doc = await toDoCollection.find({}).limit(5).sort({ created: 1 });
 	return doc;
 };
 
 const getAsUser = async (id) => {
-	const doc = await toDoCollection.find({ userId: id }).limit(5).sort({ created: -1 });
+	const doc = await toDoCollection.find({ userId: id }).limit(5).sort({ created: 1 });
 	return doc;
 };
 
@@ -54,7 +54,6 @@ const isOwner = async (postId, userId) => {
 };
 
 const checkAuthorization = async (role) => {
-	console.log('role: ' + role);
 	if (role === 'admin') {
 		return true;
 	} else {
@@ -67,6 +66,16 @@ const clear = async () => {
 	return doc;
 };
 
+const getAllItems = async (filter) => {
+	const item = await itemCollection.find(filter).limit();
+	return item;
+};
+
+const getAllTodos = async (userId) => {
+	const todo = await toDoCollection.find({ userId: userId });
+	return todo;
+};
+
 module.exports = {
 	insertToDo,
 	getAsAdmin,
@@ -77,4 +86,6 @@ module.exports = {
 	isOwner,
 	checkAuthorization,
 	clear,
+	getAllItems,
+	getAllTodos,
 };
