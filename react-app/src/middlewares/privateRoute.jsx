@@ -9,7 +9,7 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
 				isAuthenticated ? (
 					<Component exact path='/items' {...props} {...rest} />
 				) : (
-					<Redirect to='/auth' />
+					<Redirect to='/' />
 				)
 			}
 		/>

@@ -23,9 +23,7 @@ class CreateToDo extends Component {
 	render() {
 		return (
 			<span id='AddToDo'>
-				<button id='AddToDoBtn' type='button' onClick={this.handleOpen}>
-					Add List
-				</button>
+				<i className='fas fa-plus' id='AddToDoBtn' onClick={this.handleOpen}></i>
 
 				<Modal
 					className='modal'
