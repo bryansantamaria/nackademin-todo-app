@@ -7,7 +7,7 @@ const {
 	sortCreate,
 	sortUpdated,
 	paginate,
-} = require('../controllers/ItemController');
+} = require('../controllers/itemController');
 const { authenticate } = require('../middlewares/auth');
 
 const router = new Router();
