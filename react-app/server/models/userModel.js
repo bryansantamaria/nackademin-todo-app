@@ -1,12 +1,24 @@
-const { userCollection, itemCollection, toDoCollection } = require('../database/dataBase');
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
+const userSchema = new mongoose.Schema({
+	firstName: String,
+	lastName: String,
+	email: { type: String, unique: true },
+	role: String,
+	password: String,
+	posts: Array,
+});
+
+const User = mongoose.model('User', userSchema);
+
 const createUser = async (firstName, lastName, email, password) => {
-	const doc = await userCollection.findOne({ email: email });
+	const doc = await User.findOne({ email: email });
 	if (!doc) {
 		const hash = bcrypt.hashSync(password, 10);
-		const doc = await userCollection.insert({
+		const doc = await User.insert({
 			firstName,
 			lastName,
 			password: hash,
@@ -20,7 +32,7 @@ const createUser = async (firstName, lastName, email, password) => {
 
 const loginUser = async (email, password) => {
 	console.log('Enter login');
-	const doc = await userCollection.findOne({ email: email });
+	const doc = await User.findOne({ email: email });
 	if (!doc) return json('Email not found');
 
 	const success = await bcrypt.compareSync(password, doc.password);
@@ -42,12 +54,12 @@ const verifyToken = async (token, secret) => {
 };
 
 const clear = async () => {
-	const doc = await userCollection.remove({}, { multi: true });
+	const doc = await User.remove({}, { multi: true });
 	return doc;
 };
 
 const removeUser = async (id) => {
-	const doc = await userCollection.remove({ _id: id });
+	const doc = await User.remove({ _id: id });
 	await itemCollection.remove({ userId: id }, { multi: true });
 	await toDoCollection.remove({ userId: id }, { multi: true });
 	return doc;
