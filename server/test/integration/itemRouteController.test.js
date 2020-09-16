@@ -1,3 +1,4 @@
+const Database = require('../../database/dataBase');
 const app = require('../../index');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -12,6 +13,13 @@ const ToDoModel = require('../.././models/toDoModel');
 const ItemModel = require('../.././models/itemModel');
 
 describe('Test RESTful resource ItemRouter & ItemController', () => {
+	before(async () => {
+		await Database.connect();
+	});
+
+	after(async () => {
+		await Database.disconnect();
+	});
 	beforeEach(async function () {
 		await UserModel.clear();
 		await ToDoModel.clear();
@@ -34,12 +42,7 @@ describe('Test RESTful resource ItemRouter & ItemController', () => {
 
 	it('Should create a Todo with a post request', async function () {
 		const toDo = await ToDoModel.insertToDo('BRYAN TODO', this.test.userId);
-		const item = await ItemModel.insertItem(
-			'ITEM IN BRYAN TODO',
-			false,
-			this.test.userId,
-			toDo._id
-		);
+		await ItemModel.insertItem('ITEM IN BRYAN TODO', false, this.test.userId, toDo._id);
 		const body = {
 			title: 'Test toDo from HTTP',
 		};

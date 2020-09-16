@@ -13,7 +13,7 @@ const itemSchema = new mongoose.Schema({
 const Item = mongoose.model('Item', itemSchema);
 
 const insertItem = async (title, done, userId, toDoId) => {
-	const doc = await Item.insert({
+	const doc = await Item.create({
 		title,
 		done,
 		userId,

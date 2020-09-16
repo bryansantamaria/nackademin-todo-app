@@ -1,3 +1,4 @@
+const Database = require('../../database/dataBase');
 const app = require('../../index');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -12,6 +13,13 @@ const ToDoModel = require('../.././models/toDoModel');
 const ItemModel = require('../.././models/itemModel');
 
 describe('Test RESTful resource toDoRouter & toDoController', () => {
+	before(async () => {
+		await Database.connect();
+	});
+
+	after(async () => {
+		await Database.disconnect();
+	});
 	beforeEach(async function () {
 		await UserModel.clear();
 		await ToDoModel.clear();

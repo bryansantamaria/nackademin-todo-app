@@ -20,7 +20,7 @@ const createUser = async (firstName, lastName, email, password) => {
 	const doc = await User.findOne({ email: email });
 	if (!doc) {
 		const hash = bcrypt.hashSync(password, 10);
-		const doc = await User.insert({
+		const doc = await User.create({
 			firstName,
 			lastName,
 			password: hash,

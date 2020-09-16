@@ -10,7 +10,7 @@ const toDoSchema = new mongoose.Schema({
 const ToDo = mongoose.model('ToDo', toDoSchema);
 
 const insertToDo = async (title, userId) => {
-	const doc = await ToDo.insert({
+	const doc = await ToDo.create({
 		title,
 		userId,
 	});

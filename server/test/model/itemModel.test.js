@@ -1,3 +1,4 @@
+const Database = require('../../database/dataBase');
 const chai = require('chai');
 chai.should();
 
@@ -6,6 +7,13 @@ const ToDos = require('../.././models/toDoModel');
 const Item = require('../.././models/itemModel');
 
 describe('Item Model', () => {
+	before(async () => {
+		await Database.connect();
+	});
+
+	after(async () => {
+		await Database.disconnect();
+	});
 	beforeEach(async function () {
 		await Users.clear();
 		await ToDos.clear();
