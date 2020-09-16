@@ -335,7 +335,7 @@ class App extends Component {
 
 							<PrivateRouteCreate
 								exact
-								path='/create'
+								path='https://secure-forest-23132.herokuapp.com/create'
 								component={CreateAccount}
 								token={this.state.token}
 							/>
