@@ -1,40 +1,41 @@
-const Datastore = require('nedb-promises');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-let toDoCollection, itemCollection, userCollection;
+let mongoDatabase;
+
 switch (process.env.ENVIRONMENT) {
 	case 'development':
-		toDoCollection = new Datastore({
-			filename: './database/ToDos.db',
-			autoload: true,
-		});
-
-		userCollection = new Datastore({
-			filename: './database/Users.db',
-			autoload: true,
-		});
-
-		itemCollection = new Datastore({
-			filename: './database/Items.db',
-			autoload: true,
-		});
-		break;
-
 	case 'test':
-		toDoCollection = new Datastore({
-			filename: './database/test_ToDos.db',
-			autoload: true,
-		});
-
-		userCollection = new Datastore({
-			filename: './database/test_Users.db',
-			autoload: true,
-		});
-
-		itemCollection = new Datastore({
-			filename: './database/test_Items.db',
-			autoload: true,
-		});
+		const { MongoMemoryServer } = require('mongodb-memory-server');
+		mongoDatabase = new MongoMemoryServer();
+		break;
+	case 'production':
+	case 'staging':
+		mongoDatabase = {
+			// mongodb+srv://user:password@host/dbname
+			getUri: async () =>
+				`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+		};
+		break;
 }
 
-module.exports = { toDoCollection, itemCollection, userCollection };
+async function connect() {
+	let uri = await mongoDatabase.getUri();
+
+	await mongoose.connect(uri, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false,
+		useCreateIndex: true,
+	});
+}
+
+async function disconnect() {
+	await mongoDatabase.stop();
+	await mongoose.disconnect();
+}
+
+module.exports = {
+	connect,
+	disconnect,
+};
