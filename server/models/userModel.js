@@ -9,14 +9,13 @@ const userSchema = new mongoose.Schema({
 	firstName: String,
 	lastName: String,
 	email: { type: String, unique: true },
-	role: String,
 	password: String,
-	posts: Array,
+	role: String,
 });
 
 const User = mongoose.model('User', userSchema);
 
-const createUser = async (firstName, lastName, email, password) => {
+const createUser = async (firstName, lastName, email, password, role = 'user') => {
 	const doc = await User.findOne({ email: email });
 	if (!doc) {
 		const hash = bcrypt.hashSync(password, 10);
@@ -25,7 +24,7 @@ const createUser = async (firstName, lastName, email, password) => {
 			lastName,
 			password: hash,
 			email,
-			role: 'user',
+			role: role,
 		});
 		return doc._doc;
 	}
@@ -56,14 +55,14 @@ const verifyToken = async (token, secret) => {
 };
 
 const clear = async () => {
-	const doc = await User.remove({}, { multi: true });
+	const doc = await User.deleteMany({}, { multi: true });
 	return doc;
 };
 
 const removeUser = async (id) => {
-	const doc = await User.remove({ _id: id });
-	await removeUserItems.remove(id);
-	await removeUserToDo.remove(id);
+	const doc = await User.deleteOne({ _id: id });
+	await removeUserItems.deleteOne(id);
+	await removeUserToDo.deleteOne(id);
 	return doc;
 };
 

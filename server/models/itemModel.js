@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-//const { getAsAdmin, getAsUser, getOneToDo } = require('./toDoModel');
 const Schema = mongoose.Schema;
 
 const itemSchema = new mongoose.Schema({
@@ -29,13 +28,6 @@ const findItems = async (toDoId) => {
 	const doc = await Item.find({ toDoId: toDoId }).limit(5).sort({ created: -1 });
 	return doc;
 };
-
-// const findAsUser = async (toDoId) => {
-// 	if (toDo.length > 0) {
-// 		const doc = await Item.find({ toDoId: toDoId }).limit(5).sort({ created: -1 });
-// 		return doc;
-// 	}
-// };
 
 const updateAsAdmin = async (postId, title, done) => {
 	const doc = await Item.updateOne(
@@ -68,20 +60,14 @@ const updateAsUser = async (postId, title, done) => {
 };
 
 const deleteAsAdmin = async (postId) => {
-	const doc = await Item.remove({ _id: postId });
+	const doc = await Item.deleteOne({ _id: postId });
 	return doc;
 };
 
 const deleteAsUser = async (postId) => {
-	const doc = await Item.remove({ _id: postId });
+	const doc = await Item.deleteOne({ _id: postId });
 	return doc;
 };
-
-// const getToDoId = async (toDoId) => {
-// 	const doc = await getOneToDo(toDoId);
-// 	console.log(doc);
-// 	return doc;
-// };
 
 const sortByCreated = async (order, toDoId) => {
 	const doc = await Item.find({ toDoId: toDoId }).sort({ created: order }).limit(5).exec();
@@ -105,7 +91,7 @@ const limitPagination = async (perPage, skip, toDoId) => {
 const isOwner = async (postId, userId) => {
 	const todoItem = await Item.findOne({ _id: postId });
 
-	return todoItem.userId === userId;
+	return todoItem.userId == userId ? true : false;
 };
 
 const checkAuthorization = async (role) => {
@@ -118,11 +104,11 @@ const checkAuthorization = async (role) => {
 };
 
 const deleteItems = async (toDoId) => {
-	const item = await Item.remove({ toDoId: toDoId }, { multi: true });
+	const item = await Item.deleteMany({ toDoId: toDoId }, { multi: true });
 	return item;
 };
 const clear = async () => {
-	const doc = await Item.remove({}, { multi: true });
+	const doc = await Item.deleteMany({}, { multi: true });
 	return doc;
 };
 
@@ -132,14 +118,12 @@ const todoWithItems = async (filter) => {
 };
 
 const removeUserItems = async (id) => {
-	const doc = await itemCollection.remove({ userId: id }, { multi: true });
+	const doc = await itemCollection.deleteMany({ userId: id }, { multi: true });
 	return doc;
 };
 
 module.exports = {
 	insertItem,
-	// findAsAdmin,
-	// findAsUser,
 	findItems,
 	updateAsAdmin,
 	updateAsUser,
@@ -150,7 +134,6 @@ module.exports = {
 	limitPagination,
 	isOwner,
 	checkAuthorization,
-	// getToDoId,
 	deleteItems,
 	todoWithItems,
 	clear,

@@ -6,7 +6,6 @@ const {
 	checkAuthorization,
 	isOwner,
 	updateTodo,
-	// getTodoItems,
 } = require('../models/toDoModel');
 const { deleteItems, todoWithItems } = require('../models/itemModel');
 
@@ -14,7 +13,6 @@ const create = async (req, res) => {
 	try {
 		const { title } = req.body;
 		const doc = await insertToDo(title, req.user.userId);
-
 		return res.status(200).json(doc);
 	} catch (error) {
 		return res.status(403).json(error);
@@ -26,14 +24,16 @@ const get = async (req, res) => {
 		const { userId, role } = req.user;
 
 		if (await checkAuthorization(role)) {
+			console.log('Entering as Admin');
 			const doc = await getAsAdmin();
 			return res.status(200).json(doc);
 		} else {
 			const doc = await getAsUser(userId);
+
 			return res.status(200).json(doc);
 		}
 	} catch (error) {
-		return res.status(403).json(error);
+		return res.status(401).json(error);
 	}
 };
 

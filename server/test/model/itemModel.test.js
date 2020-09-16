@@ -65,9 +65,7 @@ describe('Item Model', () => {
 	it('Should update a specific item with given itemId', async function () {
 		const item = await Item.insertItem('Item Nr1', false, this.test.userId, this.test.toDoId);
 		await Item.updateAsAdmin(item._id, 'Item Nr1 Updated', false);
-		console.log(item);
 		const updatedItem = await Item.findItems(this.test.toDoId);
-		console.log(updatedItem);
 
 		updatedItem.should.be.an('array');
 		updatedItem.should.have.lengthOf(1);

@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-// const { deleteItems, todoWithItems } = require('./itemModel');
 const Schema = mongoose.Schema;
 
 const toDoSchema = new mongoose.Schema({
 	title: String,
 	userId: { type: Schema.Types.ObjectId, ref: 'User' },
-	posts: Array,
+	lastUpdated: String,
 });
 
 const ToDo = mongoose.model('ToDo', toDoSchema);
@@ -30,22 +29,16 @@ const getAsUser = async (id) => {
 
 const getOneToDo = async (toDoId) => {
 	const doc = await ToDo.findOne({ _id: toDoId });
-	console.log(doc);
 	return doc;
 };
 
 const deleteToDo = async (toDoId) => {
-	const doc = await ToDo.remove({ _id: toDoId }, { multi: true });
+	const doc = await ToDo.deleteOne({ _id: toDoId });
 	return doc ? true : false;
 };
 
-// const getTodoItems = async (filter) => {
-// 	const item = await todoWithItems(filter);
-// 	return item;
-// };
-
 const updateTodo = async (toDoId, title) => {
-	const doc = await ToDo.update(
+	const doc = await ToDo.findOneAndUpdate(
 		{ _id: toDoId },
 		{
 			$set: {
@@ -53,16 +46,17 @@ const updateTodo = async (toDoId, title) => {
 				lastUpdated: new Date().toLocaleString(),
 			},
 		},
-		{ returnUpdatedDocs: true }
+		{ new: true }
 	);
 	console.log(doc);
 	return doc;
 };
 
 const isOwner = async (postId, userId) => {
+	console.log('Enter is owner');
 	const todoItem = await ToDo.findOne({ _id: postId });
-	console.log('Is Owner: ' + todoItem.userId === userId);
-	return todoItem.userId === userId;
+	console.log(todoItem.userId == userId ? true : false);
+	return todoItem.userId == userId ? true : false;
 };
 
 const checkAuthorization = async (role) => {
@@ -74,7 +68,7 @@ const checkAuthorization = async (role) => {
 };
 
 const clear = async () => {
-	const doc = await ToDo.remove({}, { multi: true });
+	const doc = await ToDo.deleteMany({}, { multi: true });
 	return doc;
 };
 
@@ -92,7 +86,6 @@ module.exports = {
 	getAsAdmin,
 	getAsUser,
 	deleteToDo,
-	// getTodoItems,
 	updateTodo,
 	isOwner,
 	checkAuthorization,
