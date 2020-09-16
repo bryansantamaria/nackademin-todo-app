@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { deleteItems, todoWithItems } = require('./itemModel');
 
 const toDoSchema = new mongoose.Schema({
 	title: String,
@@ -6,17 +7,7 @@ const toDoSchema = new mongoose.Schema({
 	posts: Array,
 });
 
-const itemSchema = new mongoose.Schema({
-	title: String,
-	done: Boolean,
-	userId: String,
-	toDoId: String,
-	created: String,
-	posts: Array,
-});
-
 const ToDo = mongoose.model('ToDo', toDoSchema);
-const Item = mongoose.model('Item', itemSchema);
 
 const insertToDo = async (title, userId) => {
 	const doc = await ToDo.insert({
@@ -36,17 +27,20 @@ const getAsUser = async (id) => {
 	return doc;
 };
 
-const deleteToDo = async (toDoId) => {
-	console.log(toDoId);
-	const item = await Item.remove({ toDoId: toDoId }, { multi: true });
-	console.log(item);
-	const doc = await ToDo.remove({ _id: toDoId }, { multi: true });
+const getOneToDo = async (toDoId) => {
+	const doc = await ToDo.findOne({ _id: toDoId });
 	console.log(doc);
+	return doc;
+};
+
+const deleteToDo = async (toDoId) => {
+	const item = await deleteItems(toDoId);
+	const doc = await ToDo.remove({ _id: toDoId }, { multi: true });
 	return doc || item ? true : false;
 };
 
 const getTodoItems = async (filter) => {
-	const item = await Item.find(filter).limit(5);
+	const item = await todoWithItems(filter);
 	return item;
 };
 
@@ -84,16 +78,15 @@ const clear = async () => {
 	return doc;
 };
 
-const getAllItems = async (filter) => {
-	const item = await Item.find(filter).limit();
-	return item;
-};
-
 const getAllTodos = async (userId) => {
 	const todo = await ToDo.find({ userId: userId });
 	return todo;
 };
 
+const removeUserToDo = async (id) => {
+	const doc = await ToDo.remove({ userId: id }, { multi: true });
+	return doc;
+};
 module.exports = {
 	insertToDo,
 	getAsAdmin,
@@ -104,6 +97,7 @@ module.exports = {
 	isOwner,
 	checkAuthorization,
 	clear,
-	getAllItems,
 	getAllTodos,
+	getOneToDo,
+	removeUserToDo,
 };

@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
-
-const toDoSchema = new mongoose.Schema({
-	title: String,
-	userId: String,
-	posts: Array,
-});
+const { getAsAdmin, getAsUser, getOneToDo } = require('./toDoModel');
 
 const itemSchema = new mongoose.Schema({
 	title: String,
@@ -15,7 +10,6 @@ const itemSchema = new mongoose.Schema({
 	posts: Array,
 });
 
-const ToDo = mongoose.model('ToDo', toDoSchema);
 const Item = mongoose.model('Item', itemSchema);
 
 const insertItem = async (title, done, userId, toDoId) => {
@@ -30,7 +24,7 @@ const insertItem = async (title, done, userId, toDoId) => {
 };
 
 const findAsAdmin = async () => {
-	const toDo = await ToDo.find({}).sort({ created: -1 });
+	const toDo = await getAsAdmin();
 	if (toDo.length > 0) {
 		const doc = await Item.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
 		return doc;
@@ -38,7 +32,7 @@ const findAsAdmin = async () => {
 };
 
 const findAsUser = async (id) => {
-	const toDo = await ToDo.find({ userId: id }).sort({ created: -1 });
+	const toDo = await getAsUser(id);
 	if (toDo.length > 0) {
 		const doc = await Item.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
 		return doc;
@@ -85,10 +79,8 @@ const deleteAsUser = async (postId) => {
 	return doc;
 };
 
-const getToDoId = async (id, toDoId) => {
-	console.log('ENTERING TO DO ID');
-	console.log(toDoId);
-	const doc = await ToDo.findOne({ _id: toDoId });
+const getToDoId = async (toDoId) => {
+	const doc = await getOneToDo(toDoId);
 	console.log(doc);
 	return doc;
 };
@@ -127,8 +119,22 @@ const checkAuthorization = async (role) => {
 	}
 };
 
+const deleteItems = async (toDoId) => {
+	const item = await Item.remove({ toDoId: toDoId }, { multi: true });
+	return item;
+};
 const clear = async () => {
 	const doc = await Item.remove({}, { multi: true });
+	return doc;
+};
+
+const todoWithItems = async (filter) => {
+	const item = await Item.find(filter).limit(5);
+	return item;
+};
+
+const removeUserItems = async (id) => {
+	const doc = await itemCollection.remove({ userId: id }, { multi: true });
 	return doc;
 };
 
@@ -146,5 +152,8 @@ module.exports = {
 	isOwner,
 	checkAuthorization,
 	getToDoId,
+	deleteItems,
+	todoWithItems,
 	clear,
+	removeUserItems,
 };
