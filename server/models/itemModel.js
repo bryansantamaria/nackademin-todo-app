@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
-const { getAsAdmin, getAsUser, getOneToDo } = require('./toDoModel');
+//const { getAsAdmin, getAsUser, getOneToDo } = require('./toDoModel');
+const Schema = mongoose.Schema;
 
 const itemSchema = new mongoose.Schema({
 	title: String,
 	done: Boolean,
-	userId: String,
-	toDoId: String,
+	userId: { type: Schema.Types.ObjectId, ref: 'User' },
+	toDoId: { type: Schema.Types.ObjectId, ref: 'ToDo' },
 	created: String,
-	posts: Array,
+	lastUpdated: String,
 });
 
 const Item = mongoose.model('Item', itemSchema);
@@ -19,28 +20,25 @@ const insertItem = async (title, done, userId, toDoId) => {
 		userId,
 		toDoId,
 		created: new Date().toLocaleString(),
+		lastUpdated: new Date().toLocaleString(),
 	});
+	return doc._doc;
+};
+
+const findItems = async (toDoId) => {
+	const doc = await Item.find({ toDoId: toDoId }).limit(5).sort({ created: -1 });
 	return doc;
 };
 
-const findAsAdmin = async () => {
-	const toDo = await getAsAdmin();
-	if (toDo.length > 0) {
-		const doc = await Item.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
-		return doc;
-	}
-};
-
-const findAsUser = async (id) => {
-	const toDo = await getAsUser(id);
-	if (toDo.length > 0) {
-		const doc = await Item.find({ toDoId: toDo[0]._id }).limit(5).sort({ created: -1 });
-		return doc;
-	}
-};
+// const findAsUser = async (toDoId) => {
+// 	if (toDo.length > 0) {
+// 		const doc = await Item.find({ toDoId: toDoId }).limit(5).sort({ created: -1 });
+// 		return doc;
+// 	}
+// };
 
 const updateAsAdmin = async (postId, title, done) => {
-	const doc = await Item.update(
+	const doc = await Item.updateOne(
 		{ _id: postId },
 		{
 			$set: {
@@ -51,11 +49,11 @@ const updateAsAdmin = async (postId, title, done) => {
 		},
 		{}
 	);
-	return doc;
+	return doc._doc;
 };
 
 const updateAsUser = async (postId, title, done) => {
-	const doc = await Item.update(
+	const doc = await Item.updateOne(
 		{ _id: postId },
 		{
 			$set: {
@@ -66,7 +64,7 @@ const updateAsUser = async (postId, title, done) => {
 		},
 		{}
 	);
-	return doc;
+	return doc._doc;
 };
 
 const deleteAsAdmin = async (postId) => {
@@ -79,11 +77,11 @@ const deleteAsUser = async (postId) => {
 	return doc;
 };
 
-const getToDoId = async (toDoId) => {
-	const doc = await getOneToDo(toDoId);
-	console.log(doc);
-	return doc;
-};
+// const getToDoId = async (toDoId) => {
+// 	const doc = await getOneToDo(toDoId);
+// 	console.log(doc);
+// 	return doc;
+// };
 
 const sortByCreated = async (order, toDoId) => {
 	const doc = await Item.find({ toDoId: toDoId }).sort({ created: order }).limit(5).exec();
@@ -140,8 +138,9 @@ const removeUserItems = async (id) => {
 
 module.exports = {
 	insertItem,
-	findAsAdmin,
-	findAsUser,
+	// findAsAdmin,
+	// findAsUser,
+	findItems,
 	updateAsAdmin,
 	updateAsUser,
 	deleteAsAdmin,
@@ -151,7 +150,7 @@ module.exports = {
 	limitPagination,
 	isOwner,
 	checkAuthorization,
-	getToDoId,
+	// getToDoId,
 	deleteItems,
 	todoWithItems,
 	clear,

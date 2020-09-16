@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const { deleteItems, todoWithItems } = require('./itemModel');
+// const { deleteItems, todoWithItems } = require('./itemModel');
+const Schema = mongoose.Schema;
 
 const toDoSchema = new mongoose.Schema({
 	title: String,
-	userId: String,
+	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	posts: Array,
 });
 
@@ -14,7 +15,7 @@ const insertToDo = async (title, userId) => {
 		title,
 		userId,
 	});
-	return doc;
+	return doc._doc;
 };
 
 const getAsAdmin = async () => {
@@ -34,15 +35,14 @@ const getOneToDo = async (toDoId) => {
 };
 
 const deleteToDo = async (toDoId) => {
-	const item = await deleteItems(toDoId);
 	const doc = await ToDo.remove({ _id: toDoId }, { multi: true });
-	return doc || item ? true : false;
+	return doc ? true : false;
 };
 
-const getTodoItems = async (filter) => {
-	const item = await todoWithItems(filter);
-	return item;
-};
+// const getTodoItems = async (filter) => {
+// 	const item = await todoWithItems(filter);
+// 	return item;
+// };
 
 const updateTodo = async (toDoId, title) => {
 	const doc = await ToDo.update(
@@ -92,7 +92,7 @@ module.exports = {
 	getAsAdmin,
 	getAsUser,
 	deleteToDo,
-	getTodoItems,
+	// getTodoItems,
 	updateTodo,
 	isOwner,
 	checkAuthorization,

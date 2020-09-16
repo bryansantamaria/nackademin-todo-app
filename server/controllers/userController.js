@@ -1,5 +1,6 @@
 const { createUser, loginUser, checkAuthorization, removeUser } = require('../models/userModel');
-const { getAsUser, getTodoItems, insertToDo } = require('../models/toDoModel');
+const { getAsUser, insertToDo } = require('../models/toDoModel');
+const { todoWithItems } = require('../models/itemModel');
 
 const userData = async (req, res) => {
 	try {
@@ -7,7 +8,7 @@ const userData = async (req, res) => {
 		let toDoWithItems = [];
 
 		for await (todo of usersToDos) {
-			let usersItems = await getTodoItems({ toDoId: todo._id });
+			let usersItems = await todoWithItems({ toDoId: todo._id });
 			toDoWithItems.push({ toDoTitle: todo.title, toDoItems: usersItems });
 		}
 

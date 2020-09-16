@@ -27,7 +27,7 @@ const createUser = async (firstName, lastName, email, password) => {
 			email,
 			role: 'user',
 		});
-		return doc;
+		return doc._doc;
 	}
 	return console.log('EMAIL already registered!');
 };

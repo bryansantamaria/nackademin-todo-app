@@ -1,7 +1,8 @@
 const {
 	insertItem,
-	findAsAdmin,
-	findAsUser,
+	// findAsAdmin,
+	// findAsUser,
+	findItems,
 	updateAsAdmin,
 	updateAsUser,
 	deleteAsAdmin,
@@ -10,9 +11,10 @@ const {
 	sortByUpdated,
 	limitPagination,
 	checkAuthorization,
-	getToDoId,
 	isOwner,
 } = require('../models/itemModel');
+
+const { getOneToDo, getAsAdmin, getAsUser } = require('../models/toDoModel');
 
 const createItem = async (req, res) => {
 	try {
@@ -29,10 +31,12 @@ const getItems = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 		if (await checkAuthorization(role)) {
-			const doc = await findAsAdmin();
+			const toDo = await getAsAdmin();
+			const doc = await findItems(toDo[0]._id);
 			return res.status(200).json(doc);
 		} else {
-			const doc = await findAsUser(userId);
+			const toDo = await getAsUser(userId);
+			const doc = await findItems(toDo[0]._id);
 			return res.status(200).json(doc);
 		}
 	} catch (error) {
@@ -76,7 +80,7 @@ const delItems = async (req, res) => {
 const sortCreate = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
-		const toDoId = await getToDoId(userId, req.params.toDoId);
+		const toDoId = await getOneToDo(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
 			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
@@ -91,7 +95,7 @@ const sortCreate = async (req, res) => {
 const sortUpdated = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
-		const toDoId = await getToDoId(userId, req.params.toDoId);
+		const toDoId = await getOneToDo(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
 			const doc = await sortByUpdated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
@@ -108,7 +112,7 @@ const paginate = async (req, res) => {
 		const { userId, role } = req.user;
 		let perPage = 5;
 		let skip = Math.max(0, req.params.skip);
-		const toDoId = await getToDoId(userId, req.params.toDoId);
+		const toDoId = await getOneToDo(userId, req.params.toDoId);
 		if (await checkAuthorization(role)) {
 			const doc = await limitPagination(perPage, skip, toDoId._id);
 			return res.status(200).json(doc);

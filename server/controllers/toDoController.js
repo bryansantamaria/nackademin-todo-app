@@ -6,8 +6,9 @@ const {
 	checkAuthorization,
 	isOwner,
 	updateTodo,
-	getTodoItems,
+	// getTodoItems,
 } = require('../models/toDoModel');
+const { deleteItems, todoWithItems } = require('../models/itemModel');
 
 const create = async (req, res) => {
 	try {
@@ -41,11 +42,12 @@ const del = async (req, res) => {
 		const { userId, role } = req.user;
 
 		if (await checkAuthorization(role)) {
-			console.log('Entering DEL');
+			await deleteItems(req.params.id);
 			const doc = await deleteToDo(req.params.id);
 			return res.status(200).json(doc);
 		}
 		if (await isOwner(req.params.id, userId)) {
+			await deleteItems(req.params.id);
 			const doc = await deleteToDo(req.params.id);
 			return res.status(200).json(doc);
 		}
@@ -58,13 +60,12 @@ const toDoWithItems = async (req, res) => {
 	try {
 		const { userId, role } = req.user;
 		const { id } = req.params;
-		console.log(id);
 		if (await checkAuthorization(role)) {
-			const doc = await getTodoItems({ toDoId: id });
+			const doc = await todoWithItems({ toDoId: id });
 			return res.status(200).json(doc);
 		}
 		if (await isOwner(req.params.id, userId)) {
-			const doc = await getTodoItems({ toDoId: id });
+			const doc = await todoWithItems({ toDoId: id });
 			return res.status(200).json(doc);
 		}
 	} catch (error) {
