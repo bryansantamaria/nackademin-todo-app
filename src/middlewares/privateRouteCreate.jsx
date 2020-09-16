@@ -6,12 +6,13 @@ function PrivateRouteCreate({ component: Component, ...rest }) {
 	return (
 		<Route
 			{...rest}
-			render={(props) =>
-				isAdmin === 'admin' ? (
-					<Component exact path='/items' {...props} {...rest} />
-				) : (
-					<Redirect to='/' />
-				)
+			render={
+				(props) => <Component exact path='/items' {...props} {...rest} />
+				// isAdmin === 'admin' ? (
+				// 	<Component exact path='/items' {...props} {...rest} />
+				// ) : (
+				// 	<Redirect to='/' />
+				// )
 			}
 		/>
 	);
