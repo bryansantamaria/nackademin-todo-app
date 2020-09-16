@@ -36,18 +36,25 @@ const deleteUser = async (req, res) => {
 const create = async (req, res) => {
 	const { firstName, lastName, email, password } = req.body;
 	try {
-		if (await checkAuthorization(req.user.role)) {
-			console.log('Authorized!!');
-			const doc = await createUser(firstName, lastName, email, password);
-			await insertToDo('My Tasks', doc._id);
-			return res.status(200).json(doc);
-		}
+		// if (await checkAuthorization(req.user.role)) {
+		console.log('Authorized!!');
+		console.log(firstName);
+		console.log(lastName);
+		console.log(email);
+		console.log(password);
+
+		const doc = await createUser(firstName, lastName, email, password);
+		console.log(doc);
+		await insertToDo('My Tasks', doc._id);
+		return res.status(200).json(doc);
+		// }
 	} catch (error) {
 		return res.status(401).json(error);
 	}
 };
 
 const login = async (req, res) => {
+	console.log('Entering Login EEE');
 	const { email, password } = req.body;
 	try {
 		const token = await loginUser(email, password);

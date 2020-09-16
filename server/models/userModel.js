@@ -15,8 +15,11 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-const createUser = async (firstName, lastName, email, password, role = 'user') => {
+const createUser = async (firstName, lastName, email, password, role = 'admin') => {
+	console.log('entering create user');
 	const doc = await User.findOne({ email: email });
+	console.log('After Doc :D');
+	console.log(doc);
 	if (!doc) {
 		const hash = bcrypt.hashSync(password, 10);
 		const doc = await User.create({
