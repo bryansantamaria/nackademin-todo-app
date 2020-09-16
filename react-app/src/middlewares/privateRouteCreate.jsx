@@ -10,7 +10,7 @@ function PrivateRouteCreate({ component: Component, ...rest }) {
 				isAdmin === 'admin' ? (
 					<Component exact path='/items' {...props} {...rest} />
 				) : (
-					<Redirect to='/auth' />
+					<Redirect to='/' />
 				)
 			}
 		/>

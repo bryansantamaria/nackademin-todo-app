@@ -66,7 +66,7 @@ class ToDoNavbar extends Component {
 					{' '}
 					Hi {this.props.users.name} ({this.props.users.role})
 				</span>
-				<CreateToDo createToDo={this.props.createToDo} />
+
 				<div id='selectContainer'>
 					<NativeSelect
 						id='select'
@@ -82,7 +82,7 @@ class ToDoNavbar extends Component {
 									</option>
 							  ))}
 					</NativeSelect>
-
+					<CreateToDo createToDo={this.props.createToDo} />
 					<i
 						className='fas fa-trash-alt'
 						id='btn-deleteToDo'
@@ -96,7 +96,7 @@ class ToDoNavbar extends Component {
 
 				<div id='userGrid'>
 					{this.addUserIfAdmin()}
-					<a id='logoutBtn' href='/auth' onClick={this.logout}>
+					<a id='logoutBtn' href='/' onClick={this.logout}>
 						<i className='fas fa-sign-out-alt'></i>
 					</a>
 					<span id='logout'>Logout</span>

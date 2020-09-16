@@ -130,15 +130,18 @@ body {
 
 #selectContainer {
 	float: left;
+	margin-left: 30px;
+	margin-top: 5px;
 	display: grid;
 	grid-template-rows: 40px;
-	grid-template-columns: 13vw 15px;
+	grid-template-columns: 13vw 25px 25px;
 }
 
-#selectLabel {
-	font-size: 13px;
-	margin-top: 5px;
+#btn-deleteToDo {
+	margin-top: 10px;
+	background: transparent;
 	color: rgb(50, 50, 56);
+	cursor: pointer;
 }
 
 #select {
@@ -148,15 +151,10 @@ body {
 	font-size: 0.9em;
 }
 
-.listOption {
-	color: rgb(50, 50, 56);
-}
-
 #AddToDo {
 	float: left;
 }
 #AddToDoBtn {
-	width: 14vw;
 	margin-top: 10px;
 	background-color: transparent;
 	color: rgb(50, 50, 56);
@@ -194,6 +192,9 @@ body {
 	color: white;
 }
 
+.listOption {
+	color: rgb(50, 50, 56);
+}
 .margin-top {
 	margin-top: 12px;
 }
@@ -225,13 +226,6 @@ body {
 	padding: 5px !important;
 	margin-left: 6px !important;
 	margin-top: 4px !important;
-}
-
-#btn-deleteToDo {
-	margin-top: 10px;
-	background: transparent;
-	color: black;
-	cursor: pointer;
 }
 
 .orderBy:hover {

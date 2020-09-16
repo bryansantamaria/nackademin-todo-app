@@ -329,7 +329,7 @@ class App extends Component {
 						<Switch>
 							<Route
 								exact
-								path='/auth'
+								path='/'
 								render={(props) => <Login {...props} auth={this.isAuthenticated} />}
 							/>
 
@@ -371,7 +371,7 @@ class App extends Component {
 								/>
 								<Cookie token={this.state.token} setCookie={this.setCookie} />
 							</ErrorBoundary>
-							<Redirect to={{ pathname: '/auth' }} />
+							<Redirect to={{ pathname: '/' }} />
 						</Switch>
 					</BrowserRouter>
 				</header>
