@@ -18,7 +18,7 @@ describe('userModel', () => {
 			lastName: 'Santamaria',
 			email: 'bryan@gmail.com',
 			password: this.test.password,
-			role: 'admin',
+			role: 'user',
 			_id: this.test.userId,
 		});
 		this.test.user.should.be.an('object');
