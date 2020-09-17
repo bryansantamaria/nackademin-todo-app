@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Database = require('../../database/dataBase');
 const app = require('../../index');
 const chai = require('chai');
