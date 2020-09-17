@@ -5,9 +5,9 @@ let mongoDatabase;
 
 switch (process.env.ENVIRONMENT) {
 	case 'development':
-		uri = `mongodb://localhost:27017`;
-		mongoose.connect(uri);
-		break;
+	// uri = `mongodb://localhost:27017`;
+	// mongoose.connect(uri);
+	// break;
 	case 'test':
 		const { MongoMemoryServer } = require('mongodb-memory-server');
 		mongoDatabase = new MongoMemoryServer();
