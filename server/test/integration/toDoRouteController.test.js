@@ -35,24 +35,24 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 		this.currentTest.userId = user._id;
 
 		this.currentTest.token = await UserModel.loginUser('bryan@gmail.com', 'lol');
+		console.log(this.currentTest.token);
 		this.currentTest.payload = await UserModel.verifyToken(
 			this.currentTest.token,
 			process.env.SECRET
 		);
 	});
 
-	it('Should create a Todo with a post request', function (done) {
+	it('Should create a Todo with a post request', async function () {
 		const body = {
 			title: 'Test toDo from HTTP',
 		};
-		request(app)
+		await request(app)
 			.post('/todos/create')
 			.set('Authorization', `Bearer ${this.test.token}`)
 			.send(body)
 			.then((res) => {
 				expect(res).to.have.status(200);
 				expect(res).to.be.json;
-				done();
 			});
 	});
 
