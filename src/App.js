@@ -76,7 +76,7 @@ class App extends Component {
 		if (auth) {
 			console.log('Authorized');
 			this.setState({ isAuthenticated: true, token: isAuthenticated });
-			window.location.href = '/items';
+			// window.location.href = '/items';
 		}
 	};
 
