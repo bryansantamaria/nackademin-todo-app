@@ -54,9 +54,9 @@ class App extends Component {
 				const role = sessionStorage.getItem('role');
 				const user = { name: name, role: role };
 				this.setState({ users: user });
-				const toDo = await getToDo('http://localhost:8080/todos/', this.state.token);
+				const toDo = await getToDo('/todos/', this.state.token);
 				if (toDo.data.length > 0) {
-					const toDoItems = await getItems('http://localhost:8080/items/', this.state.token);
+					const toDoItems = await getItems('/items/', this.state.token);
 					this.setState({
 						todos: toDo.data,
 						toDoItems: toDoItems.data,
@@ -76,7 +76,7 @@ class App extends Component {
 		if (auth) {
 			console.log('Authorized');
 			this.setState({ isAuthenticated: true, token: isAuthenticated });
-			window.location.href = 'http://localhost:3000/items';
+			window.location.href = '/items';
 		}
 	};
 
@@ -88,7 +88,7 @@ class App extends Component {
 	};
 
 	createToDo = async (title) => {
-		const res = await postToDo('http://localhost:8080/todos/create', title, this.state.token);
+		const res = await postToDo('/todos/create', title, this.state.token);
 		this.setState({
 			todos: [...this.state.todos, res.data],
 			toDoId: res.data._id,
@@ -100,7 +100,7 @@ class App extends Component {
 
 	getToDoWithId = async (id, title) => {
 		console.log('GET TODOS');
-		const res = await getToDoWithItems(`http://localhost:8080/todos/${id}/items`, this.state.token);
+		const res = await getToDoWithItems(`/todos/${id}/items`, this.state.token);
 		if (res) {
 			this.setState({ toDoItems: res.data, toDoId: id, toDoTitle: title, createBtnState: false });
 		}
@@ -108,7 +108,7 @@ class App extends Component {
 
 	deleteToDo = async (id) => {
 		if (this.state.todos.length >= 0) {
-			await delToDo(`http://localhost:8080/todos/${id}/delete`, this.state.token);
+			await delToDo(`/todos/${id}/delete`, this.state.token);
 
 			const toDoLists = [...this.state.todos];
 			const newToDos = toDoLists.filter((todo) => todo._id !== id);
@@ -123,12 +123,7 @@ class App extends Component {
 	//Body posts title & done, then recieves data from end point and updates state.
 	createItem = async (title) => {
 		if (this.state.toDoId !== '') {
-			const res = await postItem(
-				'http://localhost:8080/items/create',
-				title,
-				this.state.toDoId,
-				this.state.token
-			);
+			const res = await postItem('/items/create', title, this.state.toDoId, this.state.token);
 			console.log(this.state.toDoId);
 			this.setState({ toDoItems: [...this.state.toDoItems, res.data] });
 			console.log(this.state.toDoItems);
@@ -141,16 +136,12 @@ class App extends Component {
 	delete = async (id) => {
 		const ItemList = [...this.state.toDoItems];
 		const newItems = ItemList.filter((Item) => Item._id !== id);
-		await delItem(`http://localhost:8080/items/delete/${id}`, this.state.token);
+		await delItem(`/items/delete/${id}`, this.state.token);
 		this.setState({ toDoItems: newItems });
 	};
 
 	update = async (title) => {
-		await patchItem(
-			`http://localhost:8080/items/update/${this.state.selectedItem}`,
-			title,
-			this.state.token
-		);
+		await patchItem(`/items/update/${this.state.selectedItem}`, title, this.state.token);
 		const index = this.state.toDoItems.findIndex((Item) => Item._id === this.state.selectedItem);
 		const oldState = [...this.state.toDoItems];
 		oldState[index].title = title;
@@ -165,7 +156,7 @@ class App extends Component {
 		try {
 			if (this.state.toggleCreateOrder) {
 				const res = await getOrderBy(
-					`http://localhost:8080/items/sort/created/${-1}&${this.state.toDoId}`,
+					`/items/sort/created/${-1}&${this.state.toDoId}`,
 					this.state.token
 				);
 				if (Array.isArray(res.data)) {
@@ -178,7 +169,7 @@ class App extends Component {
 				}
 			} else if (!this.state.toggleCreateOrder) {
 				const res = await getOrderBy(
-					`http://localhost:8080/items/sort/created/${1}&${this.state.toDoId}`,
+					`/items/sort/created/${1}&${this.state.toDoId}`,
 					this.state.token
 				);
 				if (Array.isArray(res.data)) {
@@ -200,7 +191,7 @@ class App extends Component {
 		try {
 			if (this.state.toggleUpdatedOrder) {
 				axios
-					.get(`http://localhost:8080/items/sort/lastUpdated${-1}&${this.state.toDoId}`, {
+					.get(`/items/sort/lastUpdated${-1}&${this.state.toDoId}`, {
 						headers: {
 							Authorization: 'Bearer ' + this.state.token,
 						},
@@ -217,7 +208,7 @@ class App extends Component {
 					});
 			} else if (!this.state.toggleUpdatedOrder) {
 				axios
-					.get(`http://localhost:8080/items/sort/lastUpdated${1}&${this.state.toDoId}`, {
+					.get(`/items/sort/lastUpdated${1}&${this.state.toDoId}`, {
 						headers: {
 							Authorization: 'Bearer ' + this.state.token,
 						},
@@ -241,7 +232,7 @@ class App extends Component {
 	paginateFwrd = () => {
 		try {
 			axios
-				.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
+				.get(`/items/limit/${this.limit}&${this.state.toDoId}`, {
 					headers: {
 						Authorization: 'Bearer ' + this.state.token,
 					},
@@ -264,7 +255,7 @@ class App extends Component {
 	paginateBckwrd = () => {
 		try {
 			axios
-				.get(`http://localhost:8080/items/limit/${this.limit}&${this.state.toDoId}`, {
+				.get(`/items/limit/${this.limit}&${this.state.toDoId}`, {
 					headers: {
 						Authorization: 'Bearer ' + this.state.token,
 					},
@@ -313,12 +304,7 @@ class App extends Component {
 		});
 		const index = this.state.toDoItems.findIndex((Item) => Item._id === id);
 		const { title, done } = this.state.toDoItems[index];
-		await updateCompleted(
-			`http://localhost:8080/items/update/${id}`,
-			title,
-			done,
-			this.state.token
-		);
+		await updateCompleted(`/items/update/${id}`, title, done, this.state.token);
 	};
 
 	render() {

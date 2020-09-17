@@ -7,7 +7,7 @@ class Cookie extends Component {
 	async componentDidMount() {
 		try {
 			await axios
-				.get(`http://localhost:8080/users/getData`, {
+				.get(`/users/getData`, {
 					headers: {
 						Authorization: 'Bearer ' + this.props.token,
 					},
@@ -43,7 +43,7 @@ class Cookie extends Component {
 			sessionStorage.removeItem('name');
 			sessionStorage.removeItem('role');
 			await axios
-				.get(`http://localhost:8080/users/delete`, {
+				.get(`/users/delete`, {
 					headers: {
 						Authorization: 'Bearer ' + this.props.token,
 					},
