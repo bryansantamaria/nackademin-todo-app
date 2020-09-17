@@ -28,3 +28,4 @@ jobs:
         env:
           ENVIRONMENT: test
           DATABASE: todoList
+          SECRET: Hehehehiho

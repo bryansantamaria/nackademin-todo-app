@@ -35,7 +35,6 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 		this.currentTest.userId = user._id;
 
 		this.currentTest.token = await UserModel.loginUser('bryan@gmail.com', 'lol');
-		console.log(this.currentTest.token);
 		this.currentTest.payload = await UserModel.verifyToken(
 			this.currentTest.token,
 			process.env.SECRET
