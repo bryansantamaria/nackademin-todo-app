@@ -38,10 +38,6 @@ const create = async (req, res) => {
 	try {
 		// if (await checkAuthorization(req.user.role)) {
 		console.log('Authorized!!');
-		console.log(firstName);
-		console.log(lastName);
-		console.log(email);
-		console.log(password);
 
 		const doc = await createUser(firstName, lastName, email, password);
 		console.log(doc);
@@ -49,15 +45,16 @@ const create = async (req, res) => {
 		return res.status(200).json(doc);
 		// }
 	} catch (error) {
+		console.log(error);
 		return res.status(401).json(error);
 	}
 };
 
 const login = async (req, res) => {
-	console.log('Entering Login EEE');
 	const { email, password } = req.body;
 	try {
 		const token = await loginUser(email, password);
+		console.log(token);
 		return res.status(200).json(token);
 	} catch (error) {
 		return res.status(401).json(error);

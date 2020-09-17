@@ -77,8 +77,8 @@ const delItems = async (req, res) => {
 
 const sortCreate = async (req, res) => {
 	try {
-		const { userId, role } = req.user;
-		const toDoId = await getOneToDo(userId, req.params.toDoId);
+		const { role } = req.user;
+		const toDoId = await getOneToDo(req.params.toDoId);
 		if (await checkAuthorization(role)) {
 			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
@@ -86,14 +86,15 @@ const sortCreate = async (req, res) => {
 			const doc = await sortByCreated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		}
-	} catch (error) {}
-	return res.status(403).json(error);
+	} catch (error) {
+		return res.status(403).json(error);
+	}
 };
 
 const sortUpdated = async (req, res) => {
 	try {
-		const { userId, role } = req.user;
-		const toDoId = await getOneToDo(userId, req.params.toDoId);
+		const { role } = req.user;
+		const toDoId = await getOneToDo(req.params.toDoId);
 		if (await checkAuthorization(role)) {
 			const doc = await sortByUpdated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
@@ -101,16 +102,17 @@ const sortUpdated = async (req, res) => {
 			const doc = await sortByUpdated(req.params.order, toDoId._id);
 			return res.status(200).json(doc);
 		}
-	} catch (error) {}
-	return res.status(403).json(error);
+	} catch (error) {
+		return res.status(403).json(error);
+	}
 };
 
 const paginate = async (req, res) => {
 	try {
-		const { userId, role } = req.user;
+		const { role } = req.user;
 		let perPage = 5;
 		let skip = Math.max(0, req.params.skip);
-		const toDoId = await getOneToDo(userId, req.params.toDoId);
+		const toDoId = await getOneToDo(req.params.toDoId);
 		if (await checkAuthorization(role)) {
 			const doc = await limitPagination(perPage, skip, toDoId._id);
 			return res.status(200).json(doc);

@@ -29,6 +29,8 @@ const getAsUser = async (id) => {
 
 const getOneToDo = async (toDoId) => {
 	const doc = await ToDo.findOne({ _id: toDoId });
+	console.log(doc);
+	console.log(doc._doc);
 	return doc;
 };
 

@@ -16,33 +16,39 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const createUser = async (firstName, lastName, email, password, role = 'admin') => {
-	console.log('entering create user');
-	const doc = await User.findOne({ email: email });
-	console.log('After Doc :D');
-	console.log(doc);
-	if (!doc) {
-		const hash = bcrypt.hashSync(password, 10);
-		const doc = await User.create({
-			firstName,
-			lastName,
-			password: hash,
-			email,
-			role: role,
-		});
-		return doc._doc;
+	try {
+		console.log('entering create user');
+		const doc = await User.findOne({ email: email }).exec();
+		console.log('After Doc :D');
+		console.log(doc);
+		if (!doc) {
+			const hash = bcrypt.hashSync(password, 10);
+			const doc = await User.create({
+				firstName,
+				lastName,
+				password: hash,
+				email,
+				role: role,
+			});
+			return doc._doc;
+		}
+		return console.log('EMAIL already registered!');
+	} catch (err) {
+		console.log(err);
 	}
-	return console.log('EMAIL already registered!');
 };
 
 const loginUser = async (email, password) => {
 	console.log('Enter login');
+	console.log(email);
 	const doc = await User.findOne({ email: email });
+	console.log(doc);
 	if (!doc) return json('Email not found');
 
-	const success = await bcrypt.compareSync(password, doc.password);
+	const success = bcrypt.compareSync(password, doc.password);
 	if (!success) return json('Wrong password');
 
-	const token = await jwt.sign(
+	const token = jwt.sign(
 		{ email: doc.email, userId: doc._id, role: doc.role, name: doc.firstName },
 		process.env.SECRET,
 		{
