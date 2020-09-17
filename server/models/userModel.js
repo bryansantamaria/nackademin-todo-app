@@ -15,12 +15,9 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-const createUser = async (firstName, lastName, email, password, role = 'admin') => {
+const createUser = async (firstName, lastName, email, password, role = 'user') => {
 	try {
-		console.log('entering create user');
 		const doc = await User.findOne({ email: email }).exec();
-		console.log('After Doc :D');
-		console.log(doc);
 		if (!doc) {
 			const hash = bcrypt.hashSync(password, 10);
 			const doc = await User.create({
@@ -39,10 +36,7 @@ const createUser = async (firstName, lastName, email, password, role = 'admin') 
 };
 
 const loginUser = async (email, password) => {
-	console.log('Enter login');
-	console.log(email);
 	const doc = await User.findOne({ email: email });
-	console.log(doc);
 	if (!doc) return json('Email not found');
 
 	const success = bcrypt.compareSync(password, doc.password);
@@ -70,8 +64,8 @@ const clear = async () => {
 
 const removeUser = async (id) => {
 	const doc = await User.deleteOne({ _id: id });
-	await removeUserItems.deleteOne(id);
-	await removeUserToDo.deleteOne(id);
+	await removeUserItems(id);
+	await removeUserToDo(id);
 	return doc;
 };
 

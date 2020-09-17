@@ -29,8 +29,6 @@ const getAsUser = async (id) => {
 
 const getOneToDo = async (toDoId) => {
 	const doc = await ToDo.findOne({ _id: toDoId });
-	console.log(doc);
-	console.log(doc._doc);
 	return doc;
 };
 
@@ -55,7 +53,6 @@ const updateTodo = async (toDoId, title) => {
 };
 
 const isOwner = async (postId, userId) => {
-	console.log('Enter is owner');
 	const todoItem = await ToDo.findOne({ _id: postId });
 	console.log(todoItem.userId == userId ? true : false);
 	return todoItem.userId == userId ? true : false;

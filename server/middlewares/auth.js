@@ -2,11 +2,9 @@ const { verifyToken } = require('../models/userModel');
 
 const authenticate = async (req, res, next) => {
 	if (!req.headers.authorization) return res.sendStatus(403);
-	console.log('Entering Auth.js');
 	try {
 		const token = req.headers.authorization.replace('Bearer ', '');
 		const payload = await verifyToken(token, process.env.SECRET);
-		console.log(payload);
 		req.user = payload;
 		next();
 	} catch (error) {
