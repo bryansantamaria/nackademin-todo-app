@@ -24,13 +24,6 @@ describe('toDoModel', () => {
 
 	it('Should insert a toDo-list with a userId (owner)', async function () {
 		const todo = await ToDos.insertToDo('First Todo Title', this.test.userId);
-
-		todo.should.deep.equal({
-			__v: 0,
-			title: 'First Todo Title',
-			userId: this.test.userId,
-			_id: todo._id,
-		});
 		todo.should.be.an('object');
 	});
 

@@ -77,7 +77,7 @@ const getAllTodos = async (userId) => {
 };
 
 const removeUserToDo = async (id) => {
-	const doc = await ToDo.remove({ userId: id }, { multi: true });
+	const doc = await ToDo.deleteMany({ userId: id }, { multi: true });
 	return doc;
 };
 module.exports = {

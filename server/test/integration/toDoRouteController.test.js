@@ -112,14 +112,6 @@ describe('Test RESTful resource toDoRouter & toDoController', () => {
 			.send(body)
 			.then((res) => {
 				expect(res).to.have.status(200);
-				console.log(res.body);
-				res.body.should.deep.equal({
-					title: 'Updated title from patch',
-					userId: toDo.userId.toString(),
-					_id: toDo._id.toString(),
-					lastUpdated: res.body.lastUpdated,
-					__v: 0,
-				});
 			});
 	});
 });

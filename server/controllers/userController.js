@@ -1,6 +1,6 @@
 const { createUser, loginUser, checkAuthorization, removeUser } = require('../models/userModel');
-const { getAsUser, insertToDo } = require('../models/toDoModel');
-const { todoWithItems } = require('../models/itemModel');
+const { getAsUser, insertToDo, removeUserToDo } = require('../models/toDoModel');
+const { todoWithItems, removeUserItems } = require('../models/itemModel');
 
 const userData = async (req, res) => {
 	try {
@@ -25,8 +25,12 @@ const userData = async (req, res) => {
 
 const deleteUser = async (req, res) => {
 	try {
+		console.log('enter deleteUser');
 		await removeUser(req.user.userId);
+		await removeUserItems(req.user.userId);
+		await removeUserToDo(req.user.userId);
 		const message = `User, Lists and Items has been deleted for user ${req.user.userid} `;
+		console.log('finished deleteUser');
 		return res.status(200).json(message);
 	} catch (err) {
 		return res.status(400).json(err);

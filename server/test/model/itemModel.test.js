@@ -49,8 +49,6 @@ describe('Item Model', () => {
 
 		item.should.be.an('array');
 		item.should.have.lengthOf(1);
-		// expect(item[0]).to.include(['title', 'done', 'created', 'userId', 'toDoId', '_id', '__v']);
-		// item[0].should.have.property(['title', 'done', 'created', 'userId', 'toDoId', '_id', '__v']);
 	});
 
 	it('Should find all items as User', async function () {
