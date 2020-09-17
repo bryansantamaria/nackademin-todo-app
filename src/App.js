@@ -328,7 +328,7 @@ class App extends Component {
 							<ErrorBoundary>
 								<PrivateRoute
 									exact
-									path={'/items'}
+									path={'/'}
 									component={ToDoContainer}
 									isAuthenticated={this.state.token}
 									users={this.state.users}
