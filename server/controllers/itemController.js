@@ -1,7 +1,5 @@
 const {
 	insertItem,
-	// findAsAdmin,
-	// findAsUser,
 	findItems,
 	updateAsAdmin,
 	updateAsUser,
