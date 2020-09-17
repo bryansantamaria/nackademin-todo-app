@@ -173,7 +173,7 @@ export const getOrderBy = async (url, token) => {
 export const postAccount = async (firstName, lastName, email, password, token) => {
 	const data = await axios
 		.post(
-			'http://localhost:8080/users/create',
+			'/users/create',
 			{
 				firstName,
 				lastName,
@@ -194,7 +194,7 @@ export const postAccount = async (firstName, lastName, email, password, token) =
 
 export const postLogin = async (email, password) => {
 	const data = await axios
-		.post('http://localhost:8080/users/auth', {
+		.post('/users/auth', {
 			email,
 			password,
 		})
