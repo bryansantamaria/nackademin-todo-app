@@ -1,7 +1,7 @@
 const { verifyToken } = require('../models/userModel');
 
 const authenticate = async (req, res, next) => {
-	if (!req.headers.authorization) return res.status(403);
+	if (!req.headers.authorization) return res.sendStatus(403);
 	console.log('Entering Auth.js');
 	try {
 		const token = req.headers.authorization.replace('Bearer ', '');
