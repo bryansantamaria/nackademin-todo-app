@@ -14,7 +14,7 @@ const insertToDo = async (title, userId) => {
 		title,
 		userId,
 	});
-	return doc._doc;
+	return doc;
 };
 
 const getAsAdmin = async () => {
