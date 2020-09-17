@@ -1,1 +1,5 @@
-SECRET = "Enter some strings here, ex: this is a secret"
+ENVIRONMENT=test
+DB_USER=username
+DB_PASS=pw
+DB_HOST=hostname
+DB_NAME=databaseName

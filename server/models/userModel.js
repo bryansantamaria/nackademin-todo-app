@@ -2,8 +2,6 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { removeUserToDo } = require('./toDoModel');
-const { removeUserItems } = require('./itemModel');
 
 const userSchema = new mongoose.Schema({
 	firstName: String,
@@ -64,8 +62,6 @@ const clear = async () => {
 
 const removeUser = async (id) => {
 	console.log('entering removeUser');
-	await removeUserItems(id);
-	await removeUserToDo(id);
 	const doc = await User.deleteOne({ _id: id });
 	console.log('remove user finished');
 	return doc;
