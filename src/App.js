@@ -325,36 +325,38 @@ class App extends Component {
 								component={CreateAccount}
 								token={this.state.token}
 							/>
-							<PrivateRoute
-								exact
-								path={'/todo'}
-								component={ToDoContainer}
-								isAuthenticated={this.state.token}
-								users={this.state.users}
-								todos={this.state.todos}
-								toDoTitle={this.state.toDoTitle}
-								deleteToDo={this.deleteToDo}
-								createBtnState={this.state.createBtnState}
-								toDoItems={this.state.toDoItems}
-								getToDoWithId={this.getToDoWithId}
-								createToDo={this.createToDo}
-								complete={this.complete}
-								delete={this.delete}
-								selectItem={this.selectItem}
-								orderByCreated={this.orderByCreated}
-								toggleCreateOrder={this.state.toggleCreateOrder}
-								orderByUpdated={this.orderByUpdated}
-								toggleUpdatedOrder={this.state.toggleUpdatedOrder}
-								paginateFwrd={this.paginateFwrd}
-								paginateBckwrd={this.paginateBckwrd}
-								createItem={this.createItem}
-								update={this.update}
-								selectedItem={this.state.selectedItem}
-								inputField={this.state.inputField}
-								editBtnState={this.state.editBtnState}
-								handleBtnState={this.handleBtnState}
-							/>
-							<Cookie token={this.state.token} setCookie={this.setCookie} />
+							<ErrorBoundary>
+								<PrivateRoute
+									exact
+									path={'/todo'}
+									component={ToDoContainer}
+									isAuthenticated={this.state.token}
+									users={this.state.users}
+									todos={this.state.todos}
+									toDoTitle={this.state.toDoTitle}
+									deleteToDo={this.deleteToDo}
+									createBtnState={this.state.createBtnState}
+									toDoItems={this.state.toDoItems}
+									getToDoWithId={this.getToDoWithId}
+									createToDo={this.createToDo}
+									complete={this.complete}
+									delete={this.delete}
+									selectItem={this.selectItem}
+									orderByCreated={this.orderByCreated}
+									toggleCreateOrder={this.state.toggleCreateOrder}
+									orderByUpdated={this.orderByUpdated}
+									toggleUpdatedOrder={this.state.toggleUpdatedOrder}
+									paginateFwrd={this.paginateFwrd}
+									paginateBckwrd={this.paginateBckwrd}
+									createItem={this.createItem}
+									update={this.update}
+									selectedItem={this.state.selectedItem}
+									inputField={this.state.inputField}
+									editBtnState={this.state.editBtnState}
+									handleBtnState={this.handleBtnState}
+								/>
+								<Cookie token={this.state.token} setCookie={this.setCookie} />
+							</ErrorBoundary>
 							<Redirect to={{ pathname: '/' }} />
 						</Switch>
 					</BrowserRouter>
