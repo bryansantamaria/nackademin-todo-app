@@ -1,5 +1,6 @@
 {
 	"name": "nackademin-todo-app",
+	"homepage": "http://localhost:8080",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
@@ -46,5 +47,6 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
-	}
+	},
+	"proxy": "http://localhost:8080"
 }
