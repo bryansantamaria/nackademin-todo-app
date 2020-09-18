@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 let mongoDatabase;
-
+console.log(process.env.ENVIRONMENT);
 switch (process.env.ENVIRONMENT) {
 	case 'development':
 	case 'test':

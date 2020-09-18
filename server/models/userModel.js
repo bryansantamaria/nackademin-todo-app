@@ -35,10 +35,10 @@ const createUser = async (firstName, lastName, email, password, role = 'user') =
 
 const loginUser = async (email, password) => {
 	const doc = await User.findOne({ email: email });
-	if (!doc) return json('Email not found');
+	if (!doc) return console.log('email not found');
 
 	const success = bcrypt.compareSync(password, doc.password);
-	if (!success) return json('Wrong password');
+	if (!success) return console.log('password not correct');
 
 	const token = jwt.sign(
 		{ email: doc.email, userId: doc._id, role: doc.role, name: doc.firstName },

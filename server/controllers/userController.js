@@ -55,12 +55,14 @@ const create = async (req, res) => {
 };
 
 const login = async (req, res) => {
+	console.log('Entering LOGIN');
 	const { email, password } = req.body;
 	try {
 		const token = await loginUser(email, password);
 		console.log(token);
 		return res.status(200).json(token);
 	} catch (error) {
+		console.log(error);
 		return res.status(401).json(error);
 	}
 };

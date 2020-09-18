@@ -1,6 +1,5 @@
 const app = require('./index');
 const Database = require('./database/dataBase');
-let ok;
 const PORT = 8080;
 
 Database.connect().then(() =>
