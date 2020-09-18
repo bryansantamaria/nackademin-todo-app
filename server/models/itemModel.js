@@ -118,7 +118,7 @@ const todoWithItems = async (filter) => {
 };
 
 const removeUserItems = async (id) => {
-	const doc = await itemCollection.deleteMany({ userId: id }, { multi: true });
+	const doc = await Item.deleteMany({ userId: id }, { multi: true });
 	return doc;
 };
 

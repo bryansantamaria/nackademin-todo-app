@@ -33,6 +33,7 @@ const deleteUser = async (req, res) => {
 		console.log('finished deleteUser');
 		return res.status(200).json(message);
 	} catch (err) {
+		console.log(err);
 		return res.status(400).json(err);
 	}
 };
